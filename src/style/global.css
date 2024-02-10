@@ -1,0 +1,46 @@
+@font-face {
+  font-family: "Source Han Code JP";
+  src: url("/fonts/SourceHanCodeJP.ttc") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TsukuBRdGothic";
+  src: url("/fonts/AppleTsukuBRdGothic-Regular-AlphaNum-01.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TsukuBRdGothic";
+  src: url("/fonts/AppleTsukuBRdGothic-Bold-AlphaNum-02.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-content: "Quicksand", "TsukuBRdGothic", sans-serif;
+  --font-excel: "Source Han Code JP", monospace;
+  --font-code: "Fira Mono", monospace;
+
+  --font-weight-content: 400;
+  --font-weight-excel: 400;
+  --font-weight-code: 400;
+
+  --font-size-excel: 0.875rem;
+  --font-size-code: 0.875rem;
+}
+
+body {
+  font-family: var(--font-content);
+  font-weight: var(--font-weight-content);
+}
+
+code {
+  font-family: var(--font-code);
+  font-weight: var(--font-weight-code);
+  font-size: var(--font-size-code);
+}

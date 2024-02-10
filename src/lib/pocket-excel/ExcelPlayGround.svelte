@@ -35,6 +35,9 @@
     border-collapse: collapse;
     width: 100%;
     overflow-x: auto;
+    font-family: var(--font-excel);
+    font-weight: var(--font-weight-excel);
+    font-size: var(--font-size-excel);  
   }
 
   :where(td, th) {
