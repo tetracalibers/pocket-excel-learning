@@ -10,9 +10,10 @@
 </div>
 
 <style>
+  /** ref: https://css-tricks.com/auto-growing-inputs-textareas/#aa-other-ideas */
   .auto-resizer {
     display: grid;
-    grid-template-columns: max-content 1fr;
+    grid-template-columns: minmax(max-content, 100%);
     width: 100%;
   }
 
