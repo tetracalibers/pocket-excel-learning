@@ -1,11 +1,14 @@
 ---
 import { getCollection } from "astro:content"
 import RootDocument from "../layout/RootDocument.astro"
+import ExcelPlayGround from "../lib/pocket-excel/ExcelPlayGround.svelte"
+import excelData from "../data/produce101japan-s1-original.json"
 
 const allPosts = await getCollection("questions")
 ---
 
 <RootDocument>
+  <ExcelPlayGround data={excelData} />
   <h1>Questions</h1>
   <ul>
     {
