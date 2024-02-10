@@ -4,6 +4,10 @@ import mdx from "@astrojs/mdx"
 
 // https://astro.build/config
 export default defineConfig({
-  // Enable Svelte to support Svelte components.
-  integrations: [svelte(), mdx()]
+  integrations: [svelte(), mdx()],
+  markdown: {
+    shikiConfig: {
+      theme: "slack-ochin"
+    }
+  }
 })
