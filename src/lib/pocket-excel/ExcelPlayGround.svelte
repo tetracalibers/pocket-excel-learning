@@ -17,7 +17,7 @@
   <thead>
     <tr>
       {#each header as key}
-        <th>{key}</th>
+        <th><Cell value={key} /></th>
       {/each}
     </tr>
   </thead>
