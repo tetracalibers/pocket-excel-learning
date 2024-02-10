@@ -8,7 +8,7 @@ const allPosts = await getCollection("questions")
 ---
 
 <RootDocument>
-  <ExcelPlayGround data={excelData} />
+  <ExcelPlayGround data={excelData} client:visible />
   <h1>Questions</h1>
   <ul>
     {

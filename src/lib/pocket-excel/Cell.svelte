@@ -1,0 +1,39 @@
+<script lang="ts">
+  import { onMount } from "svelte"
+
+  export let value = ""
+</script>
+
+<div class="auto-resizer">
+  <input type="text" bind:value={value} />
+  <div class="fake" aria-hidden="true">{value}</div>
+</div>
+
+<style>
+  .auto-resizer {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    width: 100%;
+  }
+
+  .fake,
+  input {
+    width: auto;
+    min-width: 1em;
+    padding: 8px;
+    grid-column: 1 / 1;
+    border: none;
+    background: none;
+    appearance: none;
+    box-sizing: border-box;
+    font-family: var(--font-excel);
+    font-weight: var(--font-weight-excel);
+    font-size: var(--font-size-excel);
+  }
+
+  .fake {
+    visibility: hidden;
+    height: 0;
+    padding-block: 0;
+  }
+</style>

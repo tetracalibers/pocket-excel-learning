@@ -1,6 +1,8 @@
 <script lang="ts">
-  export let data: Array<Record<string, unknown>> = [];
-  
+  import Cell from "./Cell.svelte"
+
+  export let data: Array<Record<string, unknown>> = []
+
   const header = (() => {
     // Object.keysの要素数が最も大きいものを採用
     const keys = data.map((row) => Object.keys(row))
@@ -23,7 +25,7 @@
     {#each data as row, i}
       <tr>
         {#each header as key}
-          <td>{row[key] ?? ""}</td>
+          <td><Cell value={row[key]} /></td>
         {/each}
       </tr>
     {/each}
@@ -37,12 +39,11 @@
     overflow-x: auto;
     font-family: var(--font-excel);
     font-weight: var(--font-weight-excel);
-    font-size: var(--font-size-excel);  
+    font-size: var(--font-size-excel);
   }
 
   :where(td, th) {
     border: 1px solid #ddd;
-    padding: 8px;
     white-space: nowrap;
   }
 </style>
