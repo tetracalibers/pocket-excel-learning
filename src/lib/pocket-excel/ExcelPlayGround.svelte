@@ -107,6 +107,6 @@
     top: -0.5px;
   }
   :where(th[scope="col"], th[scope="row"]).--highlight::after {
-    background-color: var(--excel__cell__highlight-color);
+    background-color: var(--excel__header_cell__highlight-color);
   }
 </style>

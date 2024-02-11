@@ -4,7 +4,8 @@
   --excel__font-size: 0.875rem;
 
   --excel__cell__border-color: rgb(228, 228, 228);
-  --excel__cell__highlight-color: rgb(60, 103, 70);
+  --excel__cell__highlight-color: rgb(0, 92, 0);
+  --excel__header_cell__highlight-color: rgb(60, 103, 70);
 
   --excel__header_cell__background-color: rgb(230, 230, 230);
   --excel__header_cell__background-color--highlight: rgb(210, 210, 210);
