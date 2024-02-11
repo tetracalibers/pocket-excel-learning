@@ -10,6 +10,9 @@ export const useSpreadsheet = () => {
 
   const navigate = (table: HTMLTableElement) => {
     table.addEventListener("keydown", (e) => {
+      if (e.key.startsWith("Arrow")) {
+        e.preventDefault()
+      }
       switch (e.key) {
         case "ArrowUp":
           activeCell.update((cell) => (cell.r > 0 ? { ...cell, r: cell.r - 1 } : cell))
