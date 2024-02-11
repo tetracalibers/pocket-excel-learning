@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { onMount } from "svelte"
+  export let rowNumber: number
 </script>
 
 <button type="button">
-  <slot />
+  {rowNumber}
 </button>
 
 <style>
@@ -18,7 +18,8 @@
     font-size: var(--excel__font-size);
 
     background-color: var(--excel__header_cell__background-color);
-    padding: 8px;
     width: 100%;
+    padding: 0.5ch;
+    min-width: 3ch;
   }
 </style>

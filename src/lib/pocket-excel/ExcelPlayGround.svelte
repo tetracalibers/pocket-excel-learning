@@ -1,6 +1,8 @@
 <script lang="ts">
   import Cell from "./Cell.svelte"
-  import ButtonCell from "./ButtonCell.svelte"
+  import RowSelectButton from "./RowSelectButton.svelte"
+  import ColumnSelectButton from "./ColumnSelectButton.svelte"
+  import AllCellSelectButton from "./AllCellSelectButton.svelte"
 
   export let data: Array<Record<string, unknown>> = []
 
@@ -17,20 +19,28 @@
 <table>
   <tbody>
     <tr>
-      <th scope="col"></th>
+      <th scope="col">
+        <AllCellSelectButton />
+      </th>
       {#each header as _, i}
-        <th scope="col"><ButtonCell>{String.fromCharCode("A".charCodeAt(0) + i)}</ButtonCell></th>
+        <th scope="col">
+          <ColumnSelectButton colNumber={i + 1} />
+        </th>
       {/each}
     </tr>
     <tr>
-      <th scope="row"><ButtonCell>{1}</ButtonCell></th>
+      <th scope="row">
+        <RowSelectButton rowNumber={1} />
+      </th>
       {#each header as key}
         <th><Cell value={key} /></th>
       {/each}
     </tr>
     {#each data as row, i}
       <tr>
-        <th scope="row"><ButtonCell>{i + 2}</ButtonCell></th>
+        <th scope="row">
+          <RowSelectButton rowNumber={i + 2} />
+        </th>
         {#each header as key}
           <td><Cell value={row[key]} /></td>
         {/each}
