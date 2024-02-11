@@ -17,17 +17,20 @@
 <table>
   <tbody>
     <tr>
+      <th scope="col"></th>
       {#each header as _, i}
         <th scope="col"><ButtonCell value={String.fromCharCode("A".charCodeAt(0) + i)} /></th>
       {/each}
     </tr>
     <tr>
+      <th scope="row"><ButtonCell value={1} /></th>
       {#each header as key}
         <th><Cell value={key} /></th>
       {/each}
     </tr>
     {#each data as row, i}
       <tr>
+        <th scope="row"><ButtonCell value={i + 2} /></th>
         {#each header as key}
           <td><Cell value={row[key]} /></td>
         {/each}
@@ -51,7 +54,7 @@
     white-space: nowrap;
   }
   
-  :where(th[scope="col"]) {
+  :where(th[scope="col"], th[scope="row"]) {
     border-color: var(--excel__header_cell__border-color);
     background-color: var(--excel__header_cell__background-color);
   }
