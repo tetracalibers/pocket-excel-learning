@@ -2,10 +2,11 @@
   import { onMount } from "svelte"
 
   export let value = ""
+  export let setAsActiveCell: () => void
 </script>
 
 <div class="auto-resizer">
-  <input type="text" bind:value={value} />
+  <input type="text" bind:value={value} on:click={setAsActiveCell} />
   <div class="fake" aria-hidden="true">{value}</div>
 </div>
 

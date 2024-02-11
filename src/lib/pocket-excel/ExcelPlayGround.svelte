@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { onMount } from "svelte"
   import Cell from "./Cell.svelte"
   import RowSelectButton from "./RowSelectButton.svelte"
   import ColumnSelectButton from "./ColumnSelectButton.svelte"
   import AllCellSelectButton from "./AllCellSelectButton.svelte"
+  import { useSpreadsheet } from "./use-spread-sheet.ts"
 
   export let data: Array<Record<string, unknown>> = []
 
@@ -14,9 +16,12 @@
     }, [])
     return header
   })()
+
+  let table: HTMLTableElement
+  const [{ activeCell, activeCellElement }, { navigate, selectCell }] = useSpreadsheet(table)
 </script>
 
-<table>
+<table bind:this={table} use:navigate>
   <tbody>
     <tr>
       <th scope="col">
@@ -32,17 +37,24 @@
       <th scope="row">
         <RowSelectButton rowNumber={1} />
       </th>
-      {#each header as key}
-        <th><Cell value={key} /></th>
+      {#each header as key, columnNumber}
+        <td data-cell data-cell-column={columnNumber + 1} data-cell-row={1}>
+          <Cell value={key} setAsActiveCell={() => selectCell(1, columnNumber + 1)} />
+        </td>
       {/each}
     </tr>
-    {#each data as row, i}
+    {#each data as row, rowNumber}
       <tr>
         <th scope="row">
-          <RowSelectButton rowNumber={i + 2} />
+          <RowSelectButton rowNumber={rowNumber + 2} />
         </th>
-        {#each header as key}
-          <td><Cell value={row[key]} /></td>
+        {#each header as key, columnNumber}
+          <td data-cell data-cell-column={columnNumber + 1} data-cell-row={rowNumber + 2}>
+            <Cell
+              value={row[key]}
+              setAsActiveCell={() => selectCell(rowNumber + 2, columnNumber + 1)}
+            />
+          </td>
         {/each}
       </tr>
     {/each}
