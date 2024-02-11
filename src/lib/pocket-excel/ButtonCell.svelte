@@ -1,11 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte"
-
-  export let value = ""
 </script>
 
 <button type="button">
-  {value}
+  <slot />
 </button>
 
 <style>

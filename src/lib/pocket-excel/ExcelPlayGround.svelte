@@ -19,18 +19,18 @@
     <tr>
       <th scope="col"></th>
       {#each header as _, i}
-        <th scope="col"><ButtonCell value={String.fromCharCode("A".charCodeAt(0) + i)} /></th>
+        <th scope="col"><ButtonCell>{String.fromCharCode("A".charCodeAt(0) + i)}</ButtonCell></th>
       {/each}
     </tr>
     <tr>
-      <th scope="row"><ButtonCell value={1} /></th>
+      <th scope="row"><ButtonCell>{1}</ButtonCell></th>
       {#each header as key}
         <th><Cell value={key} /></th>
       {/each}
     </tr>
     {#each data as row, i}
       <tr>
-        <th scope="row"><ButtonCell value={i + 2} /></th>
+        <th scope="row"><ButtonCell>{i + 2}</ButtonCell></th>
         {#each header as key}
           <td><Cell value={row[key]} /></td>
         {/each}
