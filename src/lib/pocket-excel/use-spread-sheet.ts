@@ -15,14 +15,14 @@ export const useSpreadsheet = () => {
       }
       switch (e.key) {
         case "ArrowUp":
-          activeCell.update((cell) => (cell.r > 0 ? { ...cell, r: cell.r - 1 } : cell))
+          activeCell.update((cell) => (cell.r > 1 ? { ...cell, r: cell.r - 1 } : cell))
           break
         case "ArrowDown":
           const maxRow = table.rows.length - 1
           activeCell.update((cell) => (cell.r < maxRow ? { ...cell, r: cell.r + 1 } : cell))
           break
         case "ArrowLeft":
-          activeCell.update((cell) => (cell.c > 0 ? { ...cell, c: cell.c - 1 } : cell))
+          activeCell.update((cell) => (cell.c > 1 ? { ...cell, c: cell.c - 1 } : cell))
           break
         case "ArrowRight":
           const maxColumn = table.rows[0].cells.length - 1
