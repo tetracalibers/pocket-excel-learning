@@ -59,5 +59,6 @@
 
   .container:focus-within {
     outline: 2px solid var(--excel__cell__highlight-color);
+    outline-offset: -1px;
   }
 </style>
