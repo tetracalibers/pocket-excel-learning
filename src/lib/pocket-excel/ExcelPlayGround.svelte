@@ -41,13 +41,13 @@
     border-collapse: collapse;
     width: 100%;
     overflow-x: auto;
-    font-family: var(--font-excel);
-    font-weight: var(--font-weight-excel);
-    font-size: var(--font-size-excel);
+    font-family: var(--excel__font);
+    font-weight: var(--excel__font-weight);
+    font-size: var(--excel__font-size);
   }
 
   :where(td, th) {
-    border: 1px solid #ddd;
+    border: 1px solid var(--excel__cell__border-color);
     white-space: nowrap;
   }
 </style>

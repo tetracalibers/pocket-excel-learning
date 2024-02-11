@@ -27,9 +27,9 @@
     background: none;
     appearance: none;
     box-sizing: border-box;
-    font-family: var(--font-excel);
-    font-weight: var(--font-weight-excel);
-    font-size: var(--font-size-excel);
+    font-family: var(--excel__font);
+    font-weight: var(--excel__font-weight);
+    font-size: var(--excel__font-size);
   }
 
   .fake {

@@ -23,14 +23,11 @@
 
 :root {
   --font-content: "Quicksand", "TsukuBRdGothic", sans-serif;
-  --font-excel: "Source Han Code JP", monospace;
   --font-code: "Fira Mono", monospace;
 
   --font-weight-content: 400;
-  --font-weight-excel: 400;
   --font-weight-code: 400;
 
-  --font-size-excel: 0.875rem;
   --font-size-code: 0.875rem;
 }
 
