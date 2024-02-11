@@ -74,6 +74,7 @@
   :where(td, th) {
     border: 1px solid var(--excel__cell__border-color);
     white-space: nowrap;
+    padding: 0;
   }
 
   :where(th[scope="col"], th[scope="row"]) {

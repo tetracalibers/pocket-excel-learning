@@ -7,7 +7,7 @@
   let editMode: boolean = false
 </script>
 
-<div class="auto-resizer">
+<div class="auto-resizer container">
   <input
     type="text"
     bind:value={value}
@@ -29,6 +29,7 @@
     display: grid;
     grid-template-columns: minmax(max-content, 100%);
     width: 100%;
+    box-sizing: border-box;
   }
 
   .fake,
@@ -50,5 +51,13 @@
     visibility: hidden;
     height: 0;
     padding-block: 0;
+  }
+
+  input {
+    outline: none;
+  }
+
+  .container:focus-within {
+    outline: 2px solid var(--excel__cell__highlight-color);
   }
 </style>
