@@ -77,6 +77,10 @@
     padding: 0;
   }
 
+  th {
+    position: relative;
+  }
+
   :where(th[scope="col"], th[scope="row"]) {
     border-color: var(--excel__header_cell__border-color);
     background-color: var(--excel__header_cell__background-color);
@@ -85,10 +89,24 @@
   :where(th[scope="col"], th[scope="row"]).--highlight {
     background-color: var(--excel__header_cell__background-color--highlight);
   }
-  :where(th[scope="col"].--highlight) {
-    border-block-end: 2px solid var(--excel__cell__highlight-color);
+  :where(th[scope="col"], th[scope="row"])::after {
+    content: "";
+    display: block;
+    position: absolute;
   }
-  :where(th[scope="row"].--highlight) {
-    border-inline-end: 2px solid var(--excel__cell__highlight-color);
+  :where(th[scope="col"])::after {
+    bottom: -1px;
+    width: calc(100% + 1px);
+    height: 2px;
+    right: -0.5px;
+  }
+  :where(th[scope="row"])::after {
+    width: 2px;
+    height: calc(100% + 1px);
+    right: -1px;
+    top: -0.5px;
+  }
+  :where(th[scope="col"], th[scope="row"]).--highlight::after {
+    background-color: var(--excel__cell__highlight-color);
   }
 </style>
