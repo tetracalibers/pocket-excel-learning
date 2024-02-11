@@ -28,13 +28,13 @@
         <AllCellSelectButton />
       </th>
       {#each header as _, i}
-        <th scope="col">
+        <th scope="col" class:--highlight={$activeCell.c === i + 1}>
           <ColumnSelectButton colNumber={i + 1} />
         </th>
       {/each}
     </tr>
     <tr>
-      <th scope="row">
+      <th scope="row" class:--highlight={$activeCell.r === 1}>
         <RowSelectButton rowNumber={1} />
       </th>
       {#each header as key, columnNumber}
@@ -45,7 +45,7 @@
     </tr>
     {#each data as row, rowNumber}
       <tr>
-        <th scope="row">
+        <th scope="row" class:--highlight={$activeCell.r === rowNumber + 2}>
           <RowSelectButton rowNumber={rowNumber + 2} />
         </th>
         {#each header as key, columnNumber}
@@ -79,5 +79,15 @@
   :where(th[scope="col"], th[scope="row"]) {
     border-color: var(--excel__header_cell__border-color);
     background-color: var(--excel__header_cell__background-color);
+  }
+
+  :where(th[scope="col"], th[scope="row"]).--highlight {
+    background-color: var(--excel__header_cell__background-color--highlight);
+  }
+  :where(th[scope="col"].--highlight) {
+    border-block-end: 2px solid var(--excel__cell__highlight-color);
+  }
+  :where(th[scope="row"].--highlight) {
+    border-inline-end: 2px solid var(--excel__cell__highlight-color);
   }
 </style>

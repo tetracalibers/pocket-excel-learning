@@ -17,7 +17,6 @@
     font-weight: var(--excel__font-weight);
     font-size: var(--excel__font-size);
 
-    background-color: var(--excel__header_cell__background-color);
     padding: 8px;
     width: 100%;
   }
