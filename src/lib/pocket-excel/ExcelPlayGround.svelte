@@ -53,7 +53,7 @@
     border: 1px solid var(--excel__cell__border-color);
     white-space: nowrap;
   }
-  
+
   :where(th[scope="col"], th[scope="row"]) {
     border-color: var(--excel__header_cell__border-color);
     background-color: var(--excel__header_cell__background-color);
