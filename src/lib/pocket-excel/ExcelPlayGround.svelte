@@ -1,5 +1,6 @@
 <script lang="ts">
   import Cell from "./Cell.svelte"
+  import ButtonCell from "./ButtonCell.svelte"
 
   export let data: Array<Record<string, unknown>> = []
 
@@ -14,14 +15,17 @@
 </script>
 
 <table>
-  <thead>
+  <tbody>
+    <tr>
+      {#each header as _, i}
+        <th scope="col"><ButtonCell value={String.fromCharCode("A".charCodeAt(0) + i)} /></th>
+      {/each}
+    </tr>
     <tr>
       {#each header as key}
         <th><Cell value={key} /></th>
       {/each}
     </tr>
-  </thead>
-  <tbody>
     {#each data as row, i}
       <tr>
         {#each header as key}
