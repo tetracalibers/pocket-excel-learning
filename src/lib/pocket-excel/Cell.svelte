@@ -3,10 +3,23 @@
 
   export let value = ""
   export let setAsActiveCell: () => void
+
+  let editMode: boolean = false
 </script>
 
 <div class="auto-resizer">
-  <input type="text" bind:value={value} on:click={setAsActiveCell} />
+  <input
+    type="text"
+    bind:value={value}
+    on:click={() => {
+      setAsActiveCell()
+      editMode = true
+    }}
+    on:blur={() => {
+      editMode = false
+    }}
+    readonly={!editMode}
+  />
   <div class="fake" aria-hidden="true">{value}</div>
 </div>
 
