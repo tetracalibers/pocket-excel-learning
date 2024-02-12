@@ -38,78 +38,88 @@
   }
 </script>
 
-<CellValueEditor bind:value={$activeCellDraftValue} />
-<table bind:this={table} use:navigate use:hatching>
-  <tbody>
-    <tr>
-      <th scope="col">
-        <AllCellSelectButton select={selectAll} selected={$allSelected} />
-      </th>
-      {#each header as _, i}
-        <th scope="col" class:--highlight={$activeCell.c === i + 1 || $activeRow}>
-          <ColumnSelectButton
-            colNumber={i + 1}
-            select={selectColumn}
-            selected={$activeColumn === i + 1 || $allSelected}
-          />
-        </th>
-      {/each}
-    </tr>
-    <tr>
-      <th scope="row" class:--highlight={$activeCell.r === 1 || $activeColumn}>
-        <RowSelectButton
-          rowNumber={1}
-          select={selectRow}
-          selected={$activeRow === 1 || $allSelected}
-        />
-      </th>
-      {#each header as key, columnNumber}
-        {@const c = columnNumber + 1}
-        {@const isActive = isActiveCell(1, c)}
-        <td>
-          <Cell
-            initialValue={key}
-            setAsActiveCell={() => selectCell(1, c)}
-            linkedEditor={{ value: $activeCellDraftValue, syncValue: editActiveCell }}
-            active={isActive}
-          />
-        </td>
-      {/each}
-    </tr>
-    {#each data as row, rowNumber}
-      {@const r = rowNumber + 2}
+<div class="excel-layout">
+  <CellValueEditor bind:value={$activeCellDraftValue} />
+  <table bind:this={table} use:navigate use:hatching style:--columns={header.length}>
+    <tbody>
       <tr>
-        <th scope="row" class:--highlight={$activeCell.r === r || $activeColumn}>
+        <th scope="col">
+          <AllCellSelectButton select={selectAll} selected={$allSelected} />
+        </th>
+        {#each header as _, i}
+          <th scope="col" class:--highlight={$activeCell.c === i + 1 || $activeRow}>
+            <ColumnSelectButton
+              colNumber={i + 1}
+              select={selectColumn}
+              selected={$activeColumn === i + 1 || $allSelected}
+            />
+          </th>
+        {/each}
+      </tr>
+      <tr>
+        <th scope="row" class:--highlight={$activeCell.r === 1 || $activeColumn}>
           <RowSelectButton
-            rowNumber={r}
+            rowNumber={1}
             select={selectRow}
-            selected={$activeRow === r || $allSelected}
+            selected={$activeRow === 1 || $allSelected}
           />
         </th>
         {#each header as key, columnNumber}
           {@const c = columnNumber + 1}
-          {@const isActive = isActiveCell(r, c)}
+          {@const isActive = isActiveCell(1, c)}
           <td>
             <Cell
-              initialValue={row[key]}
-              setAsActiveCell={() => selectCell(r, c)}
-              active={isActive}
+              initialValue={key}
+              setAsActiveCell={() => selectCell(1, c)}
               linkedEditor={{ value: $activeCellDraftValue, syncValue: editActiveCell }}
+              active={isActive}
             />
           </td>
         {/each}
       </tr>
-    {/each}
-  </tbody>
-</table>
+      {#each data as row, rowNumber}
+        {@const r = rowNumber + 2}
+        <tr>
+          <th scope="row" class:--highlight={$activeCell.r === r || $activeColumn}>
+            <RowSelectButton
+              rowNumber={r}
+              select={selectRow}
+              selected={$activeRow === r || $allSelected}
+            />
+          </th>
+          {#each header as key, columnNumber}
+            {@const c = columnNumber + 1}
+            {@const isActive = isActiveCell(r, c)}
+            <td>
+              <Cell
+                initialValue={row[key]}
+                setAsActiveCell={() => selectCell(r, c)}
+                active={isActive}
+                linkedEditor={{ value: $activeCellDraftValue, syncValue: editActiveCell }}
+              />
+            </td>
+          {/each}
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+</div>
 {#if $hatchingArea}
   <Hatching {...$hatchingArea} />
 {/if}
 
 <style>
+  .excel-layout {
+    --table-height: calc(100dvh - 5em - 2.5rem);
+    display: grid;
+    background-color: #f1f5f9;
+    padding: 1rem;
+    gap: 0.5rem;
+    grid-template-rows: 5em var(--table-height);
+  }
+
   table {
     width: 100%;
-    overflow-x: auto;
     font-family: var(--excel__font);
     font-weight: var(--excel__font-weight);
     font-size: var(--excel__font-size);
@@ -117,6 +127,15 @@
     /** table-cellを［position:sticky;］で固定したときのボーダーが消える現象を解消 */
     border-collapse: separate;
     border-spacing: 0;
+
+    /** スクロールさせるため */
+    display: block;
+    overflow: auto;
+  }
+
+  tbody {
+    /** スクロールさせるため */
+    display: contents;
   }
 
   :where(td, th) {
@@ -177,17 +196,19 @@
   }
 
   /** 固定表示 */
-  th[scope="row"]:first-child {
+  tr > :first-child {
     position: sticky;
     left: 0;
     z-index: 1;
   }
-  th[scope="col"] {
+  tr:first-child > :not(:first-child) {
     position: sticky;
     top: 0;
     z-index: 1;
   }
-  th[scope="col"]:first-child {
+  tr:first-child > :first-child {
+    position: sticky;
+    top: 0;
     left: 0;
     z-index: 2;
   }

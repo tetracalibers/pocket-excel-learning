@@ -55,7 +55,6 @@
     padding: 8px;
     grid-column: 1 / 1;
     border: none;
-    background: none;
     appearance: none;
     box-sizing: border-box;
     font-family: var(--excel__font);
