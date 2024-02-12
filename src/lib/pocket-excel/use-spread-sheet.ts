@@ -17,7 +17,8 @@ interface HatchingArea {
 
 export const useSpreadsheet = () => {
   const activeCell = writable<CellIndex>({ r: 0, c: 0 })
-  const activeCellElement = writable<HTMLTableCellElement | null>(null)
+  const activeCellElement = writable<HTMLInputElement | null>(null)
+  const activeCellDraftValue = writable<string>("")
 
   const activeColumn = writable<number>(0)
   const activeRow = writable<number>(0)
@@ -25,6 +26,10 @@ export const useSpreadsheet = () => {
   const allSelected = writable<boolean>(false)
 
   const hatchingArea = writable<HatchingArea>(null)
+
+  const editActiveCell = (value: string) => {
+    activeCellDraftValue.set(value)
+  }
 
   const selectCell = (row: number, column: number) => {
     activeCell.set({ r: row, c: column })
@@ -133,16 +138,28 @@ export const useSpreadsheet = () => {
     })
 
     activeCell.subscribe(({ r, c }) => {
-      const cell = table.rows[r].cells[c]
-      activeCellElement.set(cell)
+      const cellBox = table.rows[r].cells[c]
+      const cell = cellBox.querySelector("input")
 
-      const input$ = cell.querySelector("input")
-      input$?.focus()
+      if (!cell) return
+
+      activeCellElement.set(cell)
+      activeCellDraftValue.set(cell.value)
+
+      cell.focus()
     })
   }
 
   return [
-    { activeCell, activeCellElement, activeColumn, activeRow, allSelected, hatchingArea },
-    { navigate, selectCell, selectColumn, selectRow, selectAll, hatching }
+    {
+      activeCell,
+      activeCellElement,
+      activeColumn,
+      activeRow,
+      allSelected,
+      hatchingArea,
+      activeCellDraftValue
+    },
+    { navigate, selectCell, selectColumn, selectRow, selectAll, hatching, editActiveCell }
   ] as const
 }

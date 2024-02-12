@@ -1,8 +1,19 @@
 <script lang="ts">
   import { onMount } from "svelte"
 
-  export let value = ""
+  export let initialValue = ""
   export let setAsActiveCell: () => void
+  export let active: boolean
+  export let linkedEditor: {
+    value: string
+    syncValue: (value: string) => void
+  }
+
+  let value = initialValue
+
+  $: if (active && linkedEditor.value !== value) {
+    value = linkedEditor.value
+  }
 
   let editMode: boolean = false
 </script>
@@ -10,13 +21,18 @@
 <div class="auto-resizer container">
   <input
     type="text"
-    bind:value={value}
+    value={value}
     on:click={() => {
       setAsActiveCell()
       editMode = true
     }}
     on:blur={() => {
       editMode = false
+    }}
+    on:input={(e) => {
+      if (active) {
+        linkedEditor.syncValue(e.target.value)
+      }
     }}
     readonly={!editMode}
   />

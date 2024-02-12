@@ -5,6 +5,7 @@
   import ColumnSelectButton from "./ColumnSelectButton.svelte"
   import AllCellSelectButton from "./AllCellSelectButton.svelte"
   import Hatching from "./Hatching.svelte"
+  import CellValueEditor from "./CellValueEditor.svelte"
   import { useSpreadsheet } from "./use-spread-sheet.ts"
 
   export let data: Array<Record<string, unknown>> = []
@@ -20,11 +21,24 @@
 
   let table: HTMLTableElement
   const [
-    { activeCell, activeCellElement, activeColumn, activeRow, allSelected, hatchingArea },
-    { navigate, selectCell, selectColumn, selectRow, selectAll, hatching }
+    {
+      activeCell,
+      activeCellElement,
+      activeColumn,
+      activeRow,
+      allSelected,
+      hatchingArea,
+      activeCellDraftValue
+    },
+    { navigate, selectCell, selectColumn, selectRow, selectAll, hatching, editActiveCell }
   ] = useSpreadsheet(table)
+
+  $: isActiveCell = (r: number, c: number) => {
+    return $activeCell.r === r && $activeCell.c === c
+  }
 </script>
 
+<CellValueEditor bind:value={$activeCellDraftValue} />
 <table bind:this={table} use:navigate use:hatching>
   <tbody>
     <tr>
@@ -50,25 +64,37 @@
         />
       </th>
       {#each header as key, columnNumber}
+        {@const c = columnNumber + 1}
+        {@const isActive = isActiveCell(1, c)}
         <td>
-          <Cell value={key} setAsActiveCell={() => selectCell(1, columnNumber + 1)} />
+          <Cell
+            initialValue={key}
+            setAsActiveCell={() => selectCell(1, c)}
+            linkedEditor={{ value: $activeCellDraftValue, syncValue: editActiveCell }}
+            active={isActive}
+          />
         </td>
       {/each}
     </tr>
     {#each data as row, rowNumber}
+      {@const r = rowNumber + 2}
       <tr>
-        <th scope="row" class:--highlight={$activeCell.r === rowNumber + 2 || $activeColumn}>
+        <th scope="row" class:--highlight={$activeCell.r === r || $activeColumn}>
           <RowSelectButton
-            rowNumber={rowNumber + 2}
+            rowNumber={r}
             select={selectRow}
-            selected={$activeRow === rowNumber + 2 || $allSelected}
+            selected={$activeRow === r || $allSelected}
           />
         </th>
         {#each header as key, columnNumber}
+          {@const c = columnNumber + 1}
+          {@const isActive = isActiveCell(r, c)}
           <td>
             <Cell
-              value={row[key]}
-              setAsActiveCell={() => selectCell(rowNumber + 2, columnNumber + 1)}
+              initialValue={row[key]}
+              setAsActiveCell={() => selectCell(r, c)}
+              active={isActive}
+              linkedEditor={{ value: $activeCellDraftValue, syncValue: editActiveCell }}
             />
           </td>
         {/each}
