@@ -128,4 +128,20 @@
   :where(th[scope="col"], th[scope="row"]).--highlight::after {
     background-color: var(--excel__header_cell__highlight-color);
   }
+
+  /** 固定表示 */
+  th[scope="row"]:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+  }
+  th[scope="col"] {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  th[scope="col"]:first-child {
+    left: 0;
+    z-index: 2;
+  }
 </style>
