@@ -82,7 +82,6 @@
 
 <style>
   table {
-    border-collapse: collapse;
     width: 100%;
     overflow-x: auto;
     font-family: var(--excel__font);
