@@ -1,11 +1,53 @@
 import { writable } from "svelte/store"
 
+interface CellIndex {
+  r: number
+  c: number
+}
+
+interface HatchingArea {
+  left: number
+  top: number
+  width: number
+  height: number
+  cellHeight: number
+}
+
 export const useSpreadsheet = () => {
-  const activeCell = writable<{ r: number; c: number }>({ r: 0, c: 0 })
+  const activeCell = writable<CellIndex>({ r: 0, c: 0 })
   const activeCellElement = writable<HTMLTableCellElement | null>(null)
+
+  const activeColumn = writable<number>(0)
+
+  const hatchingArea = writable<HatchingArea>(null)
 
   const selectCell = (row: number, column: number) => {
     activeCell.set({ r: row, c: column })
+
+    // clear other selections
+    hatchingArea.set(null)
+    activeColumn.set(0)
+  }
+
+  const selectColumn = (column: number) => {
+    activeColumn.set(column)
+
+    // clear other selections
+    activeCell.set({ r: 0, c: 0 })
+  }
+
+  const columnHighlight = (table: HTMLTableElement) => {
+    activeColumn.subscribe((activeColumn) => {
+      if (activeColumn === 0) return
+      const rows = [...table.rows]
+      const startCell = rows[1].cells[activeColumn]
+      const endCell = rows[rows.length - 1].cells[activeColumn]
+      const { left, top, height: cellHeight } = startCell.getBoundingClientRect()
+      const { right, bottom } = endCell.getBoundingClientRect()
+      const width = right - left
+      const height = bottom - top
+      hatchingArea.set({ left, top, width, height, cellHeight })
+    })
   }
 
   const navigate = (table: HTMLTableElement) => {
@@ -41,7 +83,7 @@ export const useSpreadsheet = () => {
   }
 
   return [
-    { activeCell, activeCellElement },
-    { navigate, selectCell }
+    { activeCell, activeCellElement, activeColumn, hatchingArea },
+    { navigate, selectCell, selectColumn, columnHighlight }
   ] as const
 }

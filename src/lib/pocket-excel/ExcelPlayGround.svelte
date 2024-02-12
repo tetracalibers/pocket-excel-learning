@@ -4,6 +4,7 @@
   import RowSelectButton from "./RowSelectButton.svelte"
   import ColumnSelectButton from "./ColumnSelectButton.svelte"
   import AllCellSelectButton from "./AllCellSelectButton.svelte"
+  import Hatching from "./Hatching.svelte"
   import { useSpreadsheet } from "./use-spread-sheet.ts"
 
   export let data: Array<Record<string, unknown>> = []
@@ -18,10 +19,13 @@
   })()
 
   let table: HTMLTableElement
-  const [{ activeCell, activeCellElement }, { navigate, selectCell }] = useSpreadsheet(table)
+  const [
+    { activeCell, activeCellElement, activeColumn, hatchingArea },
+    { navigate, selectCell, selectColumn, columnHighlight }
+  ] = useSpreadsheet(table)
 </script>
 
-<table bind:this={table} use:navigate>
+<table bind:this={table} use:navigate use:columnHighlight>
   <tbody>
     <tr>
       <th scope="col">
@@ -29,12 +33,16 @@
       </th>
       {#each header as _, i}
         <th scope="col" class:--highlight={$activeCell.c === i + 1}>
-          <ColumnSelectButton colNumber={i + 1} />
+          <ColumnSelectButton
+            colNumber={i + 1}
+            select={selectColumn}
+            selected={$activeColumn === i + 1}
+          />
         </th>
       {/each}
     </tr>
     <tr>
-      <th scope="row" class:--highlight={$activeCell.r === 1}>
+      <th scope="row" class:--highlight={$activeCell.r === 1 || $activeColumn}>
         <RowSelectButton rowNumber={1} />
       </th>
       {#each header as key, columnNumber}
@@ -45,7 +53,7 @@
     </tr>
     {#each data as row, rowNumber}
       <tr>
-        <th scope="row" class:--highlight={$activeCell.r === rowNumber + 2}>
+        <th scope="row" class:--highlight={$activeCell.r === rowNumber + 2 || $activeColumn}>
           <RowSelectButton rowNumber={rowNumber + 2} />
         </th>
         {#each header as key, columnNumber}
@@ -60,6 +68,9 @@
     {/each}
   </tbody>
 </table>
+{#if $hatchingArea}
+  <Hatching {...$hatchingArea} />
+{/if}
 
 <style>
   table {
