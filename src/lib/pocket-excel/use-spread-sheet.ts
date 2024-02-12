@@ -141,7 +141,11 @@ export const useSpreadsheet = () => {
       const cellBox = table.rows[r].cells[c]
       const cell = cellBox.querySelector("input")
 
-      if (!cell) return
+      if (!cell) {
+        activeCellElement.set(null)
+        activeCellDraftValue.set("")
+        return
+      }
 
       activeCellElement.set(cell)
       activeCellDraftValue.set(cell.value)
