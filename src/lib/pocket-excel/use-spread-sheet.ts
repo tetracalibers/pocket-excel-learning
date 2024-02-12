@@ -110,7 +110,7 @@ export const useSpreadsheet = () => {
 
   const navigate = (table: HTMLTableElement) => {
     table.addEventListener("keydown", (e) => {
-      if (e.key.startsWith("Arrow")) {
+      if (e.key.startsWith("Arrow") || e.key === "Enter") {
         e.preventDefault()
       }
       switch (e.key) {
@@ -118,6 +118,7 @@ export const useSpreadsheet = () => {
           activeCell.update((cell) => (cell.r > 1 ? { ...cell, r: cell.r - 1 } : cell))
           break
         case "ArrowDown":
+        case "Enter":
           const maxRow = table.rows.length - 1
           activeCell.update((cell) => (cell.r < maxRow ? { ...cell, r: cell.r + 1 } : cell))
           break
