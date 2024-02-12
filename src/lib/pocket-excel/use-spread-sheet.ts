@@ -11,6 +11,8 @@ interface HatchingArea {
   width: number
   height: number
   cellHeight: number
+  cellWidth: number
+  layout: "COLUMN" | "ROW"
 }
 
 export const useSpreadsheet = () => {
@@ -18,6 +20,7 @@ export const useSpreadsheet = () => {
   const activeCellElement = writable<HTMLTableCellElement | null>(null)
 
   const activeColumn = writable<number>(0)
+  const activeRow = writable<number>(0)
 
   const hatchingArea = writable<HatchingArea>(null)
 
@@ -27,6 +30,7 @@ export const useSpreadsheet = () => {
     // clear other selections
     hatchingArea.set(null)
     activeColumn.set(0)
+    activeRow.set(0)
   }
 
   const selectColumn = (column: number) => {
@@ -34,19 +38,40 @@ export const useSpreadsheet = () => {
 
     // clear other selections
     activeCell.set({ r: 0, c: 0 })
+    activeRow.set(0)
   }
 
-  const columnHighlight = (table: HTMLTableElement) => {
+  const selectRow = (row: number) => {
+    activeRow.set(row)
+
+    // clear other selections
+    activeCell.set({ r: 0, c: 0 })
+    activeColumn.set(0)
+  }
+
+  const hatching = (table: HTMLTableElement) => {
     activeColumn.subscribe((activeColumn) => {
       if (activeColumn === 0) return
       const rows = [...table.rows]
       const startCell = rows[1].cells[activeColumn]
       const endCell = rows[rows.length - 1].cells[activeColumn]
-      const { left, top, height: cellHeight } = startCell.getBoundingClientRect()
+      const { left, top, height: cellHeight, width: cellWidth } = startCell.getBoundingClientRect()
       const { right, bottom } = endCell.getBoundingClientRect()
       const width = right - left
       const height = bottom - top
-      hatchingArea.set({ left, top, width, height, cellHeight })
+      hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "COLUMN" })
+    })
+
+    activeRow.subscribe((activeRow) => {
+      if (activeRow === 0) return
+      const row = table.rows[activeRow]
+      const startCell = row.cells[1]
+      const endCell = row.cells[row.cells.length - 1]
+      const { left, top, height: cellHeight, width: cellWidth } = startCell.getBoundingClientRect()
+      const { right, bottom } = endCell.getBoundingClientRect()
+      const width = right - left
+      const height = bottom - top
+      hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ROW" })
     })
   }
 
@@ -83,7 +108,7 @@ export const useSpreadsheet = () => {
   }
 
   return [
-    { activeCell, activeCellElement, activeColumn, hatchingArea },
-    { navigate, selectCell, selectColumn, columnHighlight }
+    { activeCell, activeCellElement, activeColumn, activeRow, hatchingArea },
+    { navigate, selectCell, selectColumn, selectRow, hatching }
   ] as const
 }

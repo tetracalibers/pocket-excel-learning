@@ -1,8 +1,10 @@
 <script lang="ts">
   export let rowNumber: number
+  export let select: (colNumber: number) => void
+  export let selected: boolean = false
 </script>
 
-<button type="button">
+<button type="button" on:click={() => select(rowNumber)} class:selected={selected}>
   {rowNumber}
 </button>
 
@@ -17,8 +19,13 @@
     font-weight: var(--excel__font-weight);
     font-size: var(--excel__font-size);
 
-    width: 100%;
     padding: 0.5ch;
     min-width: 3ch;
+    position: absolute;
+    inset: 0;
+  }
+
+  button.selected {
+    background-color: var(--excel__header_cell__active-color);
   }
 </style>

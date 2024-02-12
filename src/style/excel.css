@@ -5,8 +5,8 @@
 
   --excel__cell__border-color: rgb(228, 228, 228);
 
-  --excel__cell__highlight-color: rgb(0, 92, 0);
-  --excel__header_cell__highlight-color: #0d9276;
+  --excel__cell__highlight-color: #0d9276;
+  --excel__header_cell__highlight-color: #047857;
   --excel__header_cell__active-color: #8adab2;
 
   --excel__header_cell__background-color: rgb(230, 230, 230);
