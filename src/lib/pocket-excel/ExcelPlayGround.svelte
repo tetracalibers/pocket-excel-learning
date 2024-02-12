@@ -50,7 +50,7 @@
         />
       </th>
       {#each header as key, columnNumber}
-        <td data-cell data-cell-column={columnNumber + 1} data-cell-row={1}>
+        <td>
           <Cell value={key} setAsActiveCell={() => selectCell(1, columnNumber + 1)} />
         </td>
       {/each}
@@ -65,7 +65,7 @@
           />
         </th>
         {#each header as key, columnNumber}
-          <td data-cell data-cell-column={columnNumber + 1} data-cell-row={rowNumber + 2}>
+          <td>
             <Cell
               value={row[key]}
               setAsActiveCell={() => selectCell(rowNumber + 2, columnNumber + 1)}
