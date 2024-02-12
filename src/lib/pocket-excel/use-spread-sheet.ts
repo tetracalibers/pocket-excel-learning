@@ -69,8 +69,10 @@ export const useSpreadsheet = () => {
       const rows = [...table.rows]
       const startCell = rows[1].cells[activeColumn]
       const endCell = rows[rows.length - 1].cells[activeColumn]
-      const { left, top, height: cellHeight, width: cellWidth } = startCell.getBoundingClientRect()
-      const { right, bottom } = endCell.getBoundingClientRect()
+      const left = window.scrollX + startCell.getBoundingClientRect().left
+      const right = window.scrollX + endCell.getBoundingClientRect().right
+      const { top, height: cellHeight, width: cellWidth } = startCell.getBoundingClientRect()
+      const { bottom } = endCell.getBoundingClientRect()
       const width = right - left
       const height = bottom - top
       hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "COLUMN" })
@@ -81,8 +83,10 @@ export const useSpreadsheet = () => {
       const row = table.rows[activeRow]
       const startCell = row.cells[1]
       const endCell = row.cells[row.cells.length - 1]
-      const { left, top, height: cellHeight, width: cellWidth } = startCell.getBoundingClientRect()
-      const { right, bottom } = endCell.getBoundingClientRect()
+      const top = window.scrollY + startCell.getBoundingClientRect().top
+      const bottom = window.scrollY + endCell.getBoundingClientRect().bottom
+      const { left, height: cellHeight, width: cellWidth } = startCell.getBoundingClientRect()
+      const { right } = endCell.getBoundingClientRect()
       const width = right - left
       const height = bottom - top
       hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ROW" })
@@ -92,13 +96,11 @@ export const useSpreadsheet = () => {
       if (allSelected) {
         const startCell = table.rows[1].cells[1]
         const endCell = table.rows[table.rows.length - 1].cells[table.rows[0].cells.length - 1]
-        const {
-          left,
-          top,
-          height: cellHeight,
-          width: cellWidth
-        } = startCell.getBoundingClientRect()
-        const { right, bottom } = endCell.getBoundingClientRect()
+        const left = window.scrollX + startCell.getBoundingClientRect().left
+        const top = window.scrollY + startCell.getBoundingClientRect().top
+        const right = window.scrollX + endCell.getBoundingClientRect().right
+        const bottom = window.scrollY + endCell.getBoundingClientRect().bottom
+        const { height: cellHeight, width: cellWidth } = startCell.getBoundingClientRect()
         const width = right - left
         const height = bottom - top
         hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ALL" })
