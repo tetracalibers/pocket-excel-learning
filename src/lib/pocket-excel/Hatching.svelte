@@ -5,7 +5,7 @@
   export let height: number
   export let cellHeight: number
   export let cellWidth: number
-  export let layout: "COLUMN" | "ROW"
+  export let layout: "COLUMN" | "ROW" | "ALL"
 
   const px = (n: number) => `${n}px`
 </script>
@@ -20,6 +20,7 @@
   style:--cell-width={px(cellWidth)}
   class:--layout-column={layout === "COLUMN"}
   class:--layout-row={layout === "ROW"}
+  class:--layout-fill={layout === "ALL"}
 ></div>
 
 <style>
@@ -53,5 +54,18 @@
     width: calc(100% - var(--cell-width));
     height: 100%;
     margin-left: var(--cell-width);
+  }
+
+  .hatching.--layout-fill::after {
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(
+      var(--cell-width) 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 var(--cell-height),
+      var(--cell-width) var(--cell-height)
+    );
   }
 </style>

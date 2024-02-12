@@ -1,4 +1,9 @@
-<button>
+<script lang="ts">
+  export let select: () => void
+  export let selected: boolean = false
+</script>
+
+<button type="button" on:click={select} class:selected={selected}>
   <span class="triangle"></span>
 </button>
 
@@ -24,5 +29,9 @@
     background-color: rgb(183, 183, 183);
     padding: 1em;
     clip-path: polygon(100% 100%, 100% 0, 0 100%, 100% 100%);
+  }
+
+  button.selected > .triangle {
+    background-color: var(--excel__header_cell__highlight-color);
   }
 </style>

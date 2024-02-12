@@ -20,8 +20,8 @@
 
   let table: HTMLTableElement
   const [
-    { activeCell, activeCellElement, activeColumn, activeRow, hatchingArea },
-    { navigate, selectCell, selectColumn, selectRow, hatching }
+    { activeCell, activeCellElement, activeColumn, activeRow, allSelected, hatchingArea },
+    { navigate, selectCell, selectColumn, selectRow, selectAll, hatching }
   ] = useSpreadsheet(table)
 </script>
 
@@ -29,21 +29,25 @@
   <tbody>
     <tr>
       <th scope="col">
-        <AllCellSelectButton />
+        <AllCellSelectButton select={selectAll} selected={$allSelected} />
       </th>
       {#each header as _, i}
         <th scope="col" class:--highlight={$activeCell.c === i + 1 || $activeRow}>
           <ColumnSelectButton
             colNumber={i + 1}
             select={selectColumn}
-            selected={$activeColumn === i + 1}
+            selected={$activeColumn === i + 1 || $allSelected}
           />
         </th>
       {/each}
     </tr>
     <tr>
       <th scope="row" class:--highlight={$activeCell.r === 1 || $activeColumn}>
-        <RowSelectButton rowNumber={1} select={selectRow} selected={$activeRow === 1} />
+        <RowSelectButton
+          rowNumber={1}
+          select={selectRow}
+          selected={$activeRow === 1 || $allSelected}
+        />
       </th>
       {#each header as key, columnNumber}
         <td data-cell data-cell-column={columnNumber + 1} data-cell-row={1}>
@@ -57,7 +61,7 @@
           <RowSelectButton
             rowNumber={rowNumber + 2}
             select={selectRow}
-            selected={$activeRow === rowNumber + 2}
+            selected={$activeRow === rowNumber + 2 || $allSelected}
           />
         </th>
         {#each header as key, columnNumber}

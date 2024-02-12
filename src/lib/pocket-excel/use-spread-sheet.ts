@@ -12,7 +12,7 @@ interface HatchingArea {
   height: number
   cellHeight: number
   cellWidth: number
-  layout: "COLUMN" | "ROW"
+  layout: "COLUMN" | "ROW" | "ALL"
 }
 
 export const useSpreadsheet = () => {
@@ -21,6 +21,8 @@ export const useSpreadsheet = () => {
 
   const activeColumn = writable<number>(0)
   const activeRow = writable<number>(0)
+
+  const allSelected = writable<boolean>(false)
 
   const hatchingArea = writable<HatchingArea>(null)
 
@@ -31,6 +33,7 @@ export const useSpreadsheet = () => {
     hatchingArea.set(null)
     activeColumn.set(0)
     activeRow.set(0)
+    allSelected.set(false)
   }
 
   const selectColumn = (column: number) => {
@@ -39,6 +42,7 @@ export const useSpreadsheet = () => {
     // clear other selections
     activeCell.set({ r: 0, c: 0 })
     activeRow.set(0)
+    allSelected.set(false)
   }
 
   const selectRow = (row: number) => {
@@ -47,6 +51,16 @@ export const useSpreadsheet = () => {
     // clear other selections
     activeCell.set({ r: 0, c: 0 })
     activeColumn.set(0)
+    allSelected.set(false)
+  }
+
+  const selectAll = () => {
+    allSelected.set(true)
+
+    // clear other selections
+    activeCell.set({ r: 0, c: 0 })
+    activeColumn.set(0)
+    activeRow.set(0)
   }
 
   const hatching = (table: HTMLTableElement) => {
@@ -72,6 +86,23 @@ export const useSpreadsheet = () => {
       const width = right - left
       const height = bottom - top
       hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ROW" })
+    })
+
+    allSelected.subscribe((allSelected) => {
+      if (allSelected) {
+        const startCell = table.rows[1].cells[1]
+        const endCell = table.rows[table.rows.length - 1].cells[table.rows[0].cells.length - 1]
+        const {
+          left,
+          top,
+          height: cellHeight,
+          width: cellWidth
+        } = startCell.getBoundingClientRect()
+        const { right, bottom } = endCell.getBoundingClientRect()
+        const width = right - left
+        const height = bottom - top
+        hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ALL" })
+      }
     })
   }
 
@@ -108,7 +139,7 @@ export const useSpreadsheet = () => {
   }
 
   return [
-    { activeCell, activeCellElement, activeColumn, activeRow, hatchingArea },
-    { navigate, selectCell, selectColumn, selectRow, hatching }
+    { activeCell, activeCellElement, activeColumn, activeRow, allSelected, hatchingArea },
+    { navigate, selectCell, selectColumn, selectRow, selectAll, hatching }
   ] as const
 }
