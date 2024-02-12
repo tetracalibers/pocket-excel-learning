@@ -88,12 +88,20 @@
     font-family: var(--excel__font);
     font-weight: var(--excel__font-weight);
     font-size: var(--excel__font-size);
+
+    /** table-cellを［position:sticky;］で固定したときのボーダーが消える現象を解消 */
+    border-collapse: separate;
+    border-spacing: 0;
   }
 
   :where(td, th) {
-    border: 1px solid var(--excel__cell__border-color);
     white-space: nowrap;
     padding: 0;
+  }
+
+  :where(td, th) + td {
+    border-block-end: 1px solid var(--excel__cell__border-color);
+    border-inline-end: 1px solid var(--excel__cell__border-color);
   }
 
   th {
@@ -101,8 +109,22 @@
   }
 
   :where(th[scope="col"], th[scope="row"]) {
-    border-color: var(--excel__header_cell__border-color);
     background-color: var(--excel__header_cell__background-color);
+  }
+
+  th[scope="col"] {
+    border-block: 1px solid var(--excel__header_cell__border-color);
+  }
+  th[scope="col"]:first-child {
+    border-inline: 1px solid var(--excel__header_cell__border-color);
+  }
+  th[scope="col"] + th[scope="col"] {
+    border-inline-end: 1px solid var(--excel__header_cell__border-color);
+  }
+
+  th[scope="row"] {
+    border-inline: 1px solid var(--excel__header_cell__border-color);
+    border-block-end: 1px solid var(--excel__header_cell__border-color);
   }
 
   :where(th[scope="col"], th[scope="row"]).--highlight {
