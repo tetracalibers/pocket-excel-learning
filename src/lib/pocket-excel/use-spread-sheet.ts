@@ -120,7 +120,7 @@ export const useSpreadsheet = () => {
       hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ROW" })
     })
 
-    combineLatest([isSelectedAll$, scrollX$, scrollY$]).subscribe(([selected, x, y]) => {
+    combineLatest([isSelectedAll$, scrollY$]).subscribe(([selected]) => {
       if (!selected) return
 
       const endCellRect =
