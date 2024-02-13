@@ -1,6 +1,6 @@
 import { writable } from "svelte/store"
 import { toObservable } from "../with-rxjs"
-import { fromEvent, map, combineLatest, debounceTime, merge } from "rxjs"
+import { fromEvent, map, combineLatest, debounceTime, merge, filter } from "rxjs"
 
 interface CellIndex {
   r: number
@@ -74,39 +74,48 @@ export const useSpreadsheet = () => {
     const rows = [...table.rows]
 
     const activeColumn$ = toObservable(activeColumn)
+    const columnHatching$ = activeColumn$.pipe(filter((col) => col !== 0)).pipe(
+      map((col) => ({
+        startCell: rows[1].cells[col],
+        endCell: rows[rows.length - 1].cells[col]
+      }))
+    )
+
     const activeRow$ = toObservable(activeRow)
+    const rowHatching$ = activeRow$.pipe(filter((row) => row !== 0)).pipe(
+      map((row) => ({
+        startCell: rows[row].cells[1],
+        endCell: rows[row].cells[rows[0].cells.length - 1]
+      }))
+    )
 
     const scroll$ = fromEvent(table, "scroll").pipe(debounceTime(2))
-    const trigger$ = merge(scroll$, activeColumn$)
+    const trigger$ = merge(scroll$, activeColumn$, activeRow$)
     const scrollX$ = trigger$.pipe(map(() => window.scrollX))
     const scrollY$ = trigger$.pipe(map(() => window.scrollY))
 
-    combineLatest([activeColumn$, scrollX$]).subscribe(([col, x]) => {
-      if (col === 0) return
+    combineLatest([columnHatching$, scrollX$]).subscribe(([{ startCell, endCell }, x]) => {
+      const startCellRect = startCell.getBoundingClientRect()
+      const endCellRect = endCell.getBoundingClientRect()
 
-      const startCell = rows[1].cells[col]
-      const endCell = rows[rows.length - 1].cells[col]
-
-      const left = x + startCell.getBoundingClientRect().left
-      const right = x + endCell.getBoundingClientRect().right
-      const { top, height: cellHeight, width: cellWidth } = startCell.getBoundingClientRect()
-      const { bottom } = endCell.getBoundingClientRect()
+      const left = x + startCellRect.left
+      const right = x + endCellRect.right
+      const { top, height: cellHeight, width: cellWidth } = startCellRect
+      const { bottom } = endCellRect
       const width = right - left
       const height = bottom - top
 
       hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "COLUMN" })
     })
 
-    combineLatest([activeRow$, scrollY$]).subscribe(([row, y]) => {
-      if (row === 0) return
+    combineLatest([rowHatching$, scrollY$]).subscribe(([{ startCell, endCell }, y]) => {
+      const startCellRect = startCell.getBoundingClientRect()
+      const endCellRect = endCell.getBoundingClientRect()
 
-      const startCell = rows[row].cells[1]
-      const endCell = rows[row].cells[rows[0].cells.length - 1]
-
-      const top = y + startCell.getBoundingClientRect().top
-      const bottom = y + endCell.getBoundingClientRect().bottom
-      const { left, height: cellHeight, width: cellWidth } = startCell.getBoundingClientRect()
-      const { right } = endCell.getBoundingClientRect()
+      const top = y + startCellRect.top
+      const bottom = y + endCellRect.bottom
+      const { left, height: cellHeight, width: cellWidth } = startCellRect
+      const { right } = endCellRect
       const width = right - left
       const height = bottom - top
 
