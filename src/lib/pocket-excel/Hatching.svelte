@@ -41,6 +41,12 @@
     pointer-events: none;
   }
 
+  .hatching.--layout-column,
+  .hatching.--layout-fill {
+    top: 2px;
+    height: calc(var(--height) - 2px);
+  }
+
   .hatching::after {
     content: "";
     display: block;
