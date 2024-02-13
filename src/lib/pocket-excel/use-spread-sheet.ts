@@ -1,6 +1,6 @@
 import { writable } from "svelte/store"
 import { toObservable } from "../with-rxjs"
-import { fromEvent, map, combineLatest, debounceTime, merge, filter } from "rxjs"
+import { fromEvent, map, combineLatest, debounceTime, merge } from "rxjs"
 
 interface CellIndex {
   r: number
