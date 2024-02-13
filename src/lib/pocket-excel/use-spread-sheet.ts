@@ -1,4 +1,6 @@
 import { writable } from "svelte/store"
+import { toObservable } from "../with-rxjs"
+import { fromEvent, map, combineLatest, debounceTime, merge } from "rxjs"
 
 interface CellIndex {
   r: number
@@ -69,31 +71,45 @@ export const useSpreadsheet = () => {
   }
 
   const hatching = (table: HTMLTableElement) => {
-    activeColumn.subscribe((activeColumn) => {
-      if (activeColumn === 0) return
-      const rows = [...table.rows]
-      const startCell = rows[1].cells[activeColumn]
-      const endCell = rows[rows.length - 1].cells[activeColumn]
-      const left = window.scrollX + startCell.getBoundingClientRect().left
-      const right = window.scrollX + endCell.getBoundingClientRect().right
+    const rows = [...table.rows]
+
+    const activeColumn$ = toObservable(activeColumn)
+    const activeRow$ = toObservable(activeRow)
+
+    const scroll$ = fromEvent(table, "scroll").pipe(debounceTime(2))
+    const trigger$ = merge(scroll$, activeColumn$)
+    const scrollX$ = trigger$.pipe(map(() => window.scrollX))
+    const scrollY$ = trigger$.pipe(map(() => window.scrollY))
+
+    combineLatest([activeColumn$, scrollX$]).subscribe(([col, x]) => {
+      if (col === 0) return
+
+      const startCell = rows[1].cells[col]
+      const endCell = rows[rows.length - 1].cells[col]
+
+      const left = x + startCell.getBoundingClientRect().left
+      const right = x + endCell.getBoundingClientRect().right
       const { top, height: cellHeight, width: cellWidth } = startCell.getBoundingClientRect()
       const { bottom } = endCell.getBoundingClientRect()
       const width = right - left
       const height = bottom - top
+
       hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "COLUMN" })
     })
 
-    activeRow.subscribe((activeRow) => {
-      if (activeRow === 0) return
-      const row = table.rows[activeRow]
-      const startCell = row.cells[1]
-      const endCell = row.cells[row.cells.length - 1]
-      const top = window.scrollY + startCell.getBoundingClientRect().top
-      const bottom = window.scrollY + endCell.getBoundingClientRect().bottom
+    combineLatest([activeRow$, scrollY$]).subscribe(([row, y]) => {
+      if (row === 0) return
+
+      const startCell = rows[row].cells[1]
+      const endCell = rows[row].cells[rows[0].cells.length - 1]
+
+      const top = y + startCell.getBoundingClientRect().top
+      const bottom = y + endCell.getBoundingClientRect().bottom
       const { left, height: cellHeight, width: cellWidth } = startCell.getBoundingClientRect()
       const { right } = endCell.getBoundingClientRect()
       const width = right - left
       const height = bottom - top
+
       hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ROW" })
     })
 
