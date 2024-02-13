@@ -26,8 +26,10 @@
 <style>
   .hatching {
     position: absolute;
-    top: var(--top);
-    left: var(--left);
+    top: 0;
+    left: 0;
+
+    transform: translate(var(--left), var(--top));
 
     display: block;
     width: var(--width);
