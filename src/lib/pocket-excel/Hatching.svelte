@@ -55,7 +55,7 @@
 
   .hatching.--layout-column,
   .hatching.--layout-fill {
-    top: 2px;
+    top: var(--thickness);
     height: calc(var(--height) - var(--thickness));
   }
 
