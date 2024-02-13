@@ -77,29 +77,26 @@
     display: block;
     background-color: var(--excel__hatching__background-color);
   }
-
   .hatching.--layout-column::after {
     width: 100%;
     height: calc(100% - var(--cell-height));
-    margin-top: var(--cell-height);
+    margin-top: calc(var(--cell-height) - var(--thickness));
   }
-
   .hatching.--layout-row::after {
     width: calc(100% - var(--cell-width));
     height: 100%;
-    margin-left: var(--cell-width);
+    margin-left: calc(var(--cell-width) - var(--thickness));
   }
-
   .hatching.--layout-fill::after {
     width: 100%;
     height: 100%;
     clip-path: polygon(
-      var(--cell-width) 0,
+      calc(var(--cell-width) - var(--thickness)) 0,
       100% 0,
       100% 100%,
       0 100%,
-      0 var(--cell-height),
-      var(--cell-width) var(--cell-height)
+      0 calc(var(--cell-height) - var(--thickness)),
+      calc(var(--cell-width) - var(--thickness)) calc(var(--cell-height) - var(--thickness))
     );
   }
 </style>
