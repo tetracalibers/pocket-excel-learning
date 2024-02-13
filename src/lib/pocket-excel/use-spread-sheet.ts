@@ -15,6 +15,12 @@ interface HatchingArea {
   cellHeight: number
   cellWidth: number
   layout: "COLUMN" | "ROW" | "ALL"
+  overflow: {
+    top: boolean
+    bottom: boolean
+    left: boolean
+    right: boolean
+  }
 }
 
 export const useSpreadsheet = () => {
@@ -101,7 +107,23 @@ export const useSpreadsheet = () => {
       const width = right - left
       const height = bottom - top
 
-      hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "COLUMN" })
+      const overflow = {
+        top: startCellRect.top < top,
+        bottom: endCellRect.bottom > tableRect.bottom,
+        left: x + startCellRect.left <= absLeftTopCellRect.left,
+        right: width < 0
+      }
+
+      hatchingArea.set({
+        left,
+        top,
+        width,
+        height,
+        cellHeight,
+        cellWidth,
+        layout: "COLUMN",
+        overflow
+      })
     })
 
     combineLatest([activeRow$, scrollY$]).subscribe(([row, y]) => {
@@ -113,16 +135,23 @@ export const useSpreadsheet = () => {
       const top = Math.max(y + startCellRect.top, tableRect.top)
       const bottom = Math.min(y + endCellRect.bottom, tableRect.bottom)
       const left = absLeftTopCellRect.left
-      const right = tableRect.right
-      const width = right - left
+      const width = tableRect.width + (tableRect.left - absLeftTopCellRect.left)
       const height = bottom - top
 
-      hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ROW" })
+      const overflow = {
+        top: top < startCellRect.top || top === absLeftTopCellRect.top,
+        bottom: endCellRect.bottom > tableRect.bottom,
+        left: startCellRect.left < left,
+        right: Math.round(endCellRect.right) !== tableRect.right
+      }
+
+      hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ROW", overflow })
     })
 
     combineLatest([isSelectedAll$, scrollY$]).subscribe(([selected]) => {
       if (!selected) return
 
+      const startCellRect = rows[1].cells[1].getBoundingClientRect()
       const endCellRect =
         rows[rows.length - 1].cells[rows[0].cells.length - 1].getBoundingClientRect()
 
@@ -133,7 +162,14 @@ export const useSpreadsheet = () => {
       const width = right - left
       const height = bottom - top
 
-      hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ALL" })
+      const overflow = {
+        top: startCellRect.top < tableRect.top,
+        bottom: endCellRect.bottom > tableRect.bottom,
+        left: startCellRect.left < left,
+        right: Math.round(endCellRect.right) !== tableRect.right
+      }
+
+      hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ALL", overflow })
     })
   }
 

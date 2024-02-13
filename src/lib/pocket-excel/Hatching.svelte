@@ -6,6 +6,12 @@
   export let cellHeight: number
   export let cellWidth: number
   export let layout: "COLUMN" | "ROW" | "ALL"
+  export let overflow: {
+    top: boolean
+    bottom: boolean
+    left: boolean
+    right: boolean
+  }
 
   const px = (n: number) => `${n}px`
 </script>
@@ -21,6 +27,10 @@
   class:--layout-column={layout === "COLUMN"}
   class:--layout-row={layout === "ROW"}
   class:--layout-fill={layout === "ALL"}
+  class:--overflow-top={overflow.top}
+  class:--overflow-bottom={overflow.bottom}
+  class:--overflow-left={overflow.left}
+  class:--overflow-right={overflow.right}
 ></div>
 
 <style>
@@ -45,6 +55,19 @@
   .hatching.--layout-fill {
     top: 2px;
     height: calc(var(--height) - 2px);
+  }
+
+  .hatching.--overflow-top {
+    border-top: none;
+  }
+  .hatching.--overflow-bottom {
+    border-bottom: none;
+  }
+  .hatching.--overflow-left {
+    border-left: none;
+  }
+  .hatching.--overflow-right {
+    border-right: none;
   }
 
   .hatching::after {
