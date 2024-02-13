@@ -73,6 +73,12 @@ export const useSpreadsheet = () => {
   const hatching = (table: HTMLTableElement) => {
     const rows = [...table.rows]
 
+    const tableRect = table.getBoundingClientRect()
+    const absLeftTopCellRect = rows[1].cells[1].getBoundingClientRect()
+
+    const cellHeight = absLeftTopCellRect.height
+    const cellWidth = absLeftTopCellRect.width
+
     const activeColumn$ = toObservable(activeColumn)
     const activeRow$ = toObservable(activeRow)
     const isSelectedAll$ = toObservable(allSelected)
@@ -88,10 +94,10 @@ export const useSpreadsheet = () => {
       const startCellRect = rows[1].cells[col].getBoundingClientRect()
       const endCellRect = rows[rows.length - 1].cells[col].getBoundingClientRect()
 
-      const left = x + startCellRect.left
-      const right = x + endCellRect.right
-      const { top, height: cellHeight, width: cellWidth } = startCellRect
-      const { bottom } = endCellRect
+      const left = Math.max(x + startCellRect.left, absLeftTopCellRect.left)
+      const right = Math.min(x + endCellRect.right, tableRect.right)
+      const bottom = Math.min(tableRect.bottom, endCellRect.bottom)
+      const top = tableRect.top + cellHeight
       const width = right - left
       const height = bottom - top
 
@@ -104,10 +110,10 @@ export const useSpreadsheet = () => {
       const startCellRect = rows[row].cells[1].getBoundingClientRect()
       const endCellRect = rows[row].cells[rows[0].cells.length - 1].getBoundingClientRect()
 
-      const top = y + startCellRect.top
-      const bottom = y + endCellRect.bottom
-      const { left, height: cellHeight, width: cellWidth } = startCellRect
-      const { right } = endCellRect
+      const top = Math.max(y + startCellRect.top, tableRect.top)
+      const bottom = Math.min(y + endCellRect.bottom, tableRect.bottom)
+      const left = absLeftTopCellRect.left
+      const right = tableRect.right
       const width = right - left
       const height = bottom - top
 
@@ -117,15 +123,13 @@ export const useSpreadsheet = () => {
     combineLatest([isSelectedAll$, scrollX$, scrollY$]).subscribe(([selected, x, y]) => {
       if (!selected) return
 
-      const startCellRect = rows[1].cells[1].getBoundingClientRect()
       const endCellRect =
         rows[rows.length - 1].cells[rows[0].cells.length - 1].getBoundingClientRect()
 
-      const left = x + startCellRect.left
-      const top = y + startCellRect.top
-      const right = x + endCellRect.right
-      const bottom = y + endCellRect.bottom
-      const { height: cellHeight, width: cellWidth } = startCellRect
+      const left = absLeftTopCellRect.left
+      const top = tableRect.top + cellHeight
+      const right = tableRect.right
+      const bottom = Math.min(tableRect.bottom, endCellRect.bottom)
       const width = right - left
       const height = bottom - top
 
