@@ -35,6 +35,8 @@
 
 <style>
   .hatching {
+    --thickness: 2px;
+
     position: absolute;
     top: 0;
     left: 0;
@@ -45,7 +47,7 @@
     width: var(--width);
     height: var(--height);
 
-    border: 2px solid var(--excel__cell__highlight-color);
+    border: var(--thickness) solid var(--excel__cell__highlight-color);
     box-sizing: border-box;
 
     pointer-events: none;
@@ -54,7 +56,7 @@
   .hatching.--layout-column,
   .hatching.--layout-fill {
     top: 2px;
-    height: calc(var(--height) - 2px);
+    height: calc(var(--height) - var(--thickness));
   }
 
   .hatching.--overflow-top {
