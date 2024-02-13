@@ -74,37 +74,19 @@ export const useSpreadsheet = () => {
     const rows = [...table.rows]
 
     const activeColumn$ = toObservable(activeColumn)
-    const columnHatching$ = activeColumn$.pipe(filter((col) => col !== 0)).pipe(
-      map((col) => ({
-        startCell: rows[1].cells[col],
-        endCell: rows[rows.length - 1].cells[col]
-      }))
-    )
-
     const activeRow$ = toObservable(activeRow)
-    const rowHatching$ = activeRow$.pipe(filter((row) => row !== 0)).pipe(
-      map((row) => ({
-        startCell: rows[row].cells[1],
-        endCell: rows[row].cells[rows[0].cells.length - 1]
-      }))
-    )
-
     const isSelectedAll$ = toObservable(allSelected)
-    const allHatching$ = isSelectedAll$.pipe(filter((selected) => selected)).pipe(
-      map(() => ({
-        startCell: rows[1].cells[1],
-        endCell: rows[rows.length - 1].cells[rows[0].cells.length - 1]
-      }))
-    )
 
     const scroll$ = fromEvent(table, "scroll").pipe(debounceTime(2))
     const trigger$ = merge(scroll$, activeColumn$, activeRow$, isSelectedAll$)
     const scrollX$ = trigger$.pipe(map(() => window.scrollX))
     const scrollY$ = trigger$.pipe(map(() => window.scrollY))
 
-    combineLatest([columnHatching$, scrollX$]).subscribe(([{ startCell, endCell }, x]) => {
-      const startCellRect = startCell.getBoundingClientRect()
-      const endCellRect = endCell.getBoundingClientRect()
+    combineLatest([activeColumn$, scrollX$]).subscribe(([col, x]) => {
+      if (col === 0) return
+
+      const startCellRect = rows[1].cells[col].getBoundingClientRect()
+      const endCellRect = rows[rows.length - 1].cells[col].getBoundingClientRect()
 
       const left = x + startCellRect.left
       const right = x + endCellRect.right
@@ -116,9 +98,11 @@ export const useSpreadsheet = () => {
       hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "COLUMN" })
     })
 
-    combineLatest([rowHatching$, scrollY$]).subscribe(([{ startCell, endCell }, y]) => {
-      const startCellRect = startCell.getBoundingClientRect()
-      const endCellRect = endCell.getBoundingClientRect()
+    combineLatest([activeRow$, scrollY$]).subscribe(([row, y]) => {
+      if (row === 0) return
+
+      const startCellRect = rows[row].cells[1].getBoundingClientRect()
+      const endCellRect = rows[row].cells[rows[0].cells.length - 1].getBoundingClientRect()
 
       const top = y + startCellRect.top
       const bottom = y + endCellRect.bottom
@@ -130,22 +114,23 @@ export const useSpreadsheet = () => {
       hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ROW" })
     })
 
-    combineLatest([allHatching$, scrollX$, scrollY$]).subscribe(
-      ([{ startCell, endCell }, x, y]) => {
-        const startCellRect = startCell.getBoundingClientRect()
-        const endCellRect = endCell.getBoundingClientRect()
+    combineLatest([isSelectedAll$, scrollX$, scrollY$]).subscribe(([selected, x, y]) => {
+      if (!selected) return
 
-        const left = x + startCellRect.left
-        const top = y + startCellRect.top
-        const right = x + endCellRect.right
-        const bottom = y + endCellRect.bottom
-        const { height: cellHeight, width: cellWidth } = startCellRect
-        const width = right - left
-        const height = bottom - top
+      const startCellRect = rows[1].cells[1].getBoundingClientRect()
+      const endCellRect =
+        rows[rows.length - 1].cells[rows[0].cells.length - 1].getBoundingClientRect()
 
-        hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ALL" })
-      }
-    )
+      const left = x + startCellRect.left
+      const top = y + startCellRect.top
+      const right = x + endCellRect.right
+      const bottom = y + endCellRect.bottom
+      const { height: cellHeight, width: cellWidth } = startCellRect
+      const width = right - left
+      const height = bottom - top
+
+      hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ALL" })
+    })
   }
 
   const navigate = (table: HTMLTableElement) => {
