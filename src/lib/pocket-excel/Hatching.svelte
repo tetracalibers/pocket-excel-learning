@@ -35,8 +35,9 @@
     width: var(--width);
     height: var(--height);
 
-    outline: 2px solid var(--excel__cell__highlight-color);
-    outline-offset: -1px;
+    border: 2px solid var(--excel__cell__highlight-color);
+    box-sizing: border-box;
+
     pointer-events: none;
   }
 
