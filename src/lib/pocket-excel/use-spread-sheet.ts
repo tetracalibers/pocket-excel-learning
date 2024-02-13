@@ -89,8 +89,16 @@ export const useSpreadsheet = () => {
       }))
     )
 
+    const isSelectedAll$ = toObservable(allSelected)
+    const allHatching$ = isSelectedAll$.pipe(filter((selected) => selected)).pipe(
+      map(() => ({
+        startCell: rows[1].cells[1],
+        endCell: rows[rows.length - 1].cells[rows[0].cells.length - 1]
+      }))
+    )
+
     const scroll$ = fromEvent(table, "scroll").pipe(debounceTime(2))
-    const trigger$ = merge(scroll$, activeColumn$, activeRow$)
+    const trigger$ = merge(scroll$, activeColumn$, activeRow$, isSelectedAll$)
     const scrollX$ = trigger$.pipe(map(() => window.scrollX))
     const scrollY$ = trigger$.pipe(map(() => window.scrollY))
 
@@ -122,20 +130,22 @@ export const useSpreadsheet = () => {
       hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ROW" })
     })
 
-    allSelected.subscribe((allSelected) => {
-      if (allSelected) {
-        const startCell = table.rows[1].cells[1]
-        const endCell = table.rows[table.rows.length - 1].cells[table.rows[0].cells.length - 1]
-        const left = window.scrollX + startCell.getBoundingClientRect().left
-        const top = window.scrollY + startCell.getBoundingClientRect().top
-        const right = window.scrollX + endCell.getBoundingClientRect().right
-        const bottom = window.scrollY + endCell.getBoundingClientRect().bottom
-        const { height: cellHeight, width: cellWidth } = startCell.getBoundingClientRect()
+    combineLatest([allHatching$, scrollX$, scrollY$]).subscribe(
+      ([{ startCell, endCell }, x, y]) => {
+        const startCellRect = startCell.getBoundingClientRect()
+        const endCellRect = endCell.getBoundingClientRect()
+
+        const left = x + startCellRect.left
+        const top = y + startCellRect.top
+        const right = x + endCellRect.right
+        const bottom = y + endCellRect.bottom
+        const { height: cellHeight, width: cellWidth } = startCellRect
         const width = right - left
         const height = bottom - top
+
         hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ALL" })
       }
-    })
+    )
   }
 
   const navigate = (table: HTMLTableElement) => {
