@@ -46,9 +46,7 @@ export const useHatching = (state: State) => {
     const scrollX$ = trigger$.pipe(map(() => window.scrollX))
     const scrollY$ = trigger$.pipe(map(() => window.scrollY))
 
-    combineLatest([activeColumn$, scrollX$]).subscribe(([col, x]) => {
-      if (col === 0) return
-
+    const columnHatching = (col: number, x: number) => {
       const startCellRect = rows[1].cells[col].getBoundingClientRect()
       const endCellRect = rows[rows.length - 1].cells[col].getBoundingClientRect()
 
@@ -76,11 +74,9 @@ export const useHatching = (state: State) => {
         layout: "COLUMN",
         overflow
       })
-    })
+    }
 
-    combineLatest([activeRow$, scrollY$]).subscribe(([row, y]) => {
-      if (row === 0) return
-
+    const rowHatching = (row: number, y: number) => {
       const startCellRect = rows[row].cells[1].getBoundingClientRect()
       const endCellRect = rows[row].cells[rows[0].cells.length - 1].getBoundingClientRect()
 
@@ -98,11 +94,9 @@ export const useHatching = (state: State) => {
       }
 
       hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ROW", overflow })
-    })
+    }
 
-    combineLatest([isSelectedAll$, scrollY$]).subscribe(([selected]) => {
-      if (!selected) return
-
+    const allHatching = () => {
       const startCellRect = rows[1].cells[1].getBoundingClientRect()
       const endCellRect =
         rows[rows.length - 1].cells[rows[0].cells.length - 1].getBoundingClientRect()
@@ -122,6 +116,21 @@ export const useHatching = (state: State) => {
       }
 
       hatchingArea.set({ left, top, width, height, cellHeight, cellWidth, layout: "ALL", overflow })
+    }
+
+    combineLatest([activeColumn$, scrollX$]).subscribe(([col, x]) => {
+      if (col === 0) return
+      columnHatching(col, x)
+    })
+
+    combineLatest([activeRow$, scrollY$]).subscribe(([row, y]) => {
+      if (row === 0) return
+      rowHatching(row, y)
+    })
+
+    combineLatest([isSelectedAll$, scrollY$]).subscribe(([selected]) => {
+      if (!selected) return
+      allHatching()
     })
   }
 }
