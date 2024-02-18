@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content"
+import RootDocument from "../../layout/RootDocument.astro"
+
+const all = await getCollection("questions")
+---
+
+<RootDocument>
+  <h1>Questions</h1>
+  <ul>
+    {
+      all.map((q) => (
+        <li>
+          <a href={`/question/${q.slug}`}>{q.data.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</RootDocument>

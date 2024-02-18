@@ -1,22 +1,9 @@
 ---
-import { getCollection } from "astro:content"
 import RootDocument from "../layout/RootDocument.astro"
-import ExcelPlayGround from "../lib/pocket-excel/ExcelPlayGround.svelte"
-import excelData from "../data/produce101japan-s1-original.json"
-
-const allPosts = await getCollection("questions")
 ---
 
 <RootDocument>
-  <ExcelPlayGround data={excelData} client:visible />
-  <!-- <h1>Questions</h1>
-  <ul>
-    {
-      allPosts.map((post) => (
-        <li>
-          <a href={`/questions/${post.slug}`}>{post.data.title}</a>
-        </li>
-      ))
-    }
-  </ul> -->
+  <a href="/question">Questions</a>
+  <a href="/fn">Functions</a>
+  <a href="playground">PlayGround</a>
 </RootDocument>
