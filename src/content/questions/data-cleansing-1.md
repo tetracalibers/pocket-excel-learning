@@ -2,12 +2,12 @@
 title: 生年月日のデータクレンジング
 created: 2024/02/04
 useFn:
-  - IF
-  - ISERROR
-  - LEN
-  - MID
-  - SEARCH
-  - TRIM
+  - if
+  - iserror
+  - len
+  - mid
+  - search
+  - trim
 category:
   - string
 ---
