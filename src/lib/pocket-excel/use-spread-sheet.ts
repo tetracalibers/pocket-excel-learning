@@ -1,5 +1,5 @@
 import { writable } from "svelte/store"
-import { useHatching, type HatchingArea } from "./spread-sheet/hatching"
+import { useHatching } from "./spread-sheet/hatching"
 
 interface CellIndex {
   r: number
@@ -16,8 +16,6 @@ export const useSpreadsheet = () => {
 
   const allSelected = writable<boolean>(false)
 
-  const hatchingArea = writable<HatchingArea>(null)
-
   const editActiveCell = (value: string) => {
     activeCellDraftValue.set(value)
   }
@@ -26,7 +24,6 @@ export const useSpreadsheet = () => {
     activeCell.set({ r: row, c: column })
 
     // clear other selections
-    hatchingArea.set(null)
     activeColumn.set(0)
     activeRow.set(0)
     allSelected.set(false)
@@ -62,8 +59,7 @@ export const useSpreadsheet = () => {
   const hatching = useHatching({
     activeColumn,
     activeRow,
-    allSelected,
-    hatchingArea
+    allSelected
   })
 
   const navigate = (table: HTMLTableElement) => {
@@ -114,7 +110,6 @@ export const useSpreadsheet = () => {
       activeColumn,
       activeRow,
       allSelected,
-      hatchingArea,
       activeCellDraftValue
     },
     { navigate, selectCell, selectColumn, selectRow, selectAll, hatching, editActiveCell }

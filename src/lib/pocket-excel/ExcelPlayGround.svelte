@@ -21,15 +21,7 @@
 
   let table: HTMLTableElement
   const [
-    {
-      activeCell,
-      activeCellElement,
-      activeColumn,
-      activeRow,
-      allSelected,
-      hatchingArea,
-      activeCellDraftValue
-    },
+    { activeCell, activeCellElement, activeColumn, activeRow, allSelected, activeCellDraftValue },
     { navigate, selectCell, selectColumn, selectRow, selectAll, hatching, editActiveCell }
   ] = useSpreadsheet(table)
 
@@ -104,9 +96,6 @@
     </tbody>
   </table>
 </div>
-{#if $hatchingArea}
-  <Hatching {...$hatchingArea} />
-{/if}
 
 <style>
   .excel-layout {

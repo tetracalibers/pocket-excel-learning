@@ -15,4 +15,22 @@
   --excel__header_cell__border-color: rgb(162, 162, 162);
 
   --excel__hatching__background-color: rgba(0, 0, 0, 0.2);
+  --excel__hathching__thickness: 2px;
+}
+
+/** 行/列/全セル選択時の網掛け表示 */
+.hatching_border {
+  border: var(--excel__hathching__thickness) solid var(--excel__cell__highlight-color);
+}
+.hatching_border-top {
+  border-top: var(--excel__hathching__thickness) solid var(--excel__cell__highlight-color);
+}
+.hatching_border-right {
+  border-right: var(--excel__hathching__thickness) solid var(--excel__cell__highlight-color);
+}
+.hatching_border-bottom {
+  border-bottom: var(--excel__hathching__thickness) solid var(--excel__cell__highlight-color);
+}
+.hatching_border-left {
+  border-left: var(--excel__hathching__thickness) solid var(--excel__cell__highlight-color);
 }
