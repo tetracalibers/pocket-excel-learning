@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@acab/reset.css@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@acab/reset.css/-/reset.css-0.8.0.tgz#c927f8aa7a311a07fee77bf104d929191bc55e95"
+  integrity sha512-uLTamlIusQU1Y7d4Wc68Zh7XfqYL6xEFHP8AcXh4gTizWeEnM7NEeGBbmTLBc0zzdJSTzjYKnyQhmJ3BLFz6og==
+
 "@ampproject/remapping@^2.2.0", "@ampproject/remapping@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.1.tgz#99e8e11851128b8702cd57c33684f1d0f260b630"
