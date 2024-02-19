@@ -1,7 +1,6 @@
 @font-face {
   font-family: "Source Han Code JP";
   src: url("/fonts/SourceHanCodeJP.ttc") format("truetype");
-  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -22,13 +21,13 @@
 }
 
 :root {
-  --font-content: "Quicksand", "TsukuBRdGothic", sans-serif;
-  --font-code: "Fira Mono", monospace;
+  --font-content: "Ysabeau Infant", "TsukuBRdGothic", sans-serif;
+  --font-code: "Roboto Mono", "Source Han Code JP";
 
   --font-weight-content: 400;
-  --font-weight-code: 400;
+  --font-weight-code: 300;
 
-  --font-size-code: 0.875rem;
+  --font-size-code: 1rem;
 }
 
 body {
