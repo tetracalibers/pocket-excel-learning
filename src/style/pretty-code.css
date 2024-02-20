@@ -2,19 +2,21 @@
 
 :root {
   --pretty-light-bg: #fafafa;
-  --pretty-dark-bg: #212121;
+  --pretty-dark-bg: rgba(40, 42, 54, 1);
 }
 
-[data-rehype-pretty-code-fragment] > pre[data-theme="light"] {
-  background-color: var(--pretty-light-bg);
+/* color */
+
+[data-rehype-pretty-code-figure] {
+  filter: brightness(1.5);
 }
-[data-rehype-pretty-code-fragment] > pre[data-theme="dark"] {
+[data-rehype-pretty-code-figure] > :is(pre, code) {
   background-color: var(--pretty-dark-bg);
 }
 
-/* layout */
+/** block code */
 
-div[data-rehype-pretty-code-fragment] {
+[data-rehype-pretty-code-figure]:has(> pre) {
   margin-block: 1.7em;
 
   /** for title */
@@ -22,7 +24,7 @@ div[data-rehype-pretty-code-fragment] {
   flex-direction: column;
 }
 
-div[data-rehype-pretty-code-fragment] > pre {
+[data-rehype-pretty-code-figure] > pre {
   padding-block: 0.8em;
   padding-inline: 0;
   margin: 0;
@@ -32,53 +34,14 @@ div[data-rehype-pretty-code-fragment] > pre {
 }
 
 pre > code > [data-line] {
-  padding-inline-start: 0.5em;
-  padding-inline-end: 1em;
+  padding-inline: 1em;
 }
 
-/** line highlight */
+/** inline code */
 
-pre > code > [data-line] {
-  border-inline-start: 0.5em solid transparent;
-}
-
-pre > code[data-theme="light"] > [data-highlighted-line] {
-  background-color: rgb(206 253 255 / 45%);
-  border-color: #f6c6ea;
-}
-pre > code[data-theme="dark"] > [data-highlighted-line] {
-  background-color: rgb(74, 76, 94);
-  border-color: #b2a4ff;
-}
-
-pre > code:has([data-highlighted-line]) > :not([data-highlighted-line]) {
-  opacity: 0.8;
-}
-
-/** show line numbers */
-
-pre > code > [data-line]::before {
-  content: "";
-  display: inline-block;
-  width: 1ch;
-  text-align: right;
-}
-pre > code[data-line-numbers-max-digits="2"] > [data-line]::before {
-  width: 2ch;
-}
-pre > code[data-line-numbers-max-digits="3"] > [data-line]::before {
-  width: 3ch;
-}
-
-pre > code[data-line-numbers] {
-  counter-reset: line;
-}
-pre > code[data-line-numbers] > [data-line]::before {
-  counter-increment: line;
-  content: counter(line);
-
-  margin-inline-end: 1em;
-  color: #7ca2dfad;
+[data-rehype-pretty-code-figure] > code {
+  padding: 0.25em 0.5em;
+  border-radius: 0.3em;
 }
 
 /** title */
