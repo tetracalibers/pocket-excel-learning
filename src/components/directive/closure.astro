@@ -10,3 +10,9 @@ const { label } = Astro.props
   <summary>{label}</summary>
   <slot />
 </details>
+
+<style>
+  details :global(> *) {
+    margin-block: 0;
+  }
+</style>
