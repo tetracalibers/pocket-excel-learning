@@ -6,9 +6,11 @@ import { visit } from "unist-util-visit"
 import type { ContainerDirective, TextDirective, LeafDirective } from "mdast-util-directive"
 import { makeComponentNode } from "./ast-node"
 import { closureContainer } from "./component/closure"
+import { popoverExcelFnText } from "./component/popover-excel-fn"
 
 export const directiveAutoImport: Record<string, [string, string][]> = {
-  ...closureContainer.import
+  ...closureContainer.import,
+  ...popoverExcelFnText.import
 }
 
 function remarkDirectiveComponent(): unified.Plugin<[], mdast.Root> {
@@ -21,6 +23,7 @@ function remarkDirectiveComponent(): unified.Plugin<[], mdast.Root> {
       // @ts-ignore
       if (_node.type === "containerDirective") {
         const node: ContainerDirective = _node
+
         if (closureContainer.is(node)) {
           parent.children[index] = makeComponentNode(closureContainer.parse(node))
           return
@@ -36,7 +39,11 @@ function remarkDirectiveComponent(): unified.Plugin<[], mdast.Root> {
       // @ts-ignore
       if (_node.type === "textDirective") {
         const node: TextDirective = _node
-        // add your own textDirective here
+
+        if (popoverExcelFnText.is(node)) {
+          parent.children[index] = makeComponentNode(popoverExcelFnText.parse(node))
+          return
+        }
       }
     })
   }

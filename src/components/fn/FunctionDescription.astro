@@ -1,0 +1,27 @@
+---
+import { type CollectionEntry } from "astro:content"
+import FunctionSignature from "./FunctionSignature.astro"
+import FunctionReturn from "./FunctionReturn.astro"
+import { Hr } from "flowbite-svelte"
+
+interface Props {
+  entry: CollectionEntry<"fn">
+}
+
+const { entry } = Astro.props
+const { data } = entry
+---
+
+<div class="flex flex-col gap-4 p-2">
+  <FunctionSignature name={data.name} args={data.args} />
+  <p class="text-sm">{data.summary}</p>
+  {
+    data.return && (
+      <div>
+        <div>実行結果</div>
+        <FunctionReturn returns={data.return} />
+      </div>
+    )
+  }
+  <a href={`/fn/${entry.slug}`} class="inline-block text-end underline text-sm">もっと読む</a>
+</div>
