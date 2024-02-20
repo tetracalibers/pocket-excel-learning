@@ -2,7 +2,7 @@
 name: ISERROR
 summary: エラーかどうか調べる関数
 args:
-  - summary: エラーかどうか調べたいセル
+  - summary: セル
 return:
   - if: セルがエラーなら
     summary: TRUE
