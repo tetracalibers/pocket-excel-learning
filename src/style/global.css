@@ -5,23 +5,8 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "TsukuBRdGothic";
-  src: url("/fonts/AppleTsukuBRdGothic-Regular-AlphaNum-01.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "TsukuBRdGothic";
-  src: url("/fonts/AppleTsukuBRdGothic-Bold-AlphaNum-02.otf") format("opentype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
-  --font-content: "Ysabeau Infant", "TsukuBRdGothic", sans-serif;
+  --font-content: "Ysabeau Infant", "Zen Kaku Gothic New";
   --font-code: "Roboto Mono", "Source Han Code JP";
 
   --font-weight-content: 400;
