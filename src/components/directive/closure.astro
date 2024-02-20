@@ -1,0 +1,12 @@
+---
+interface Props {
+  label: string
+}
+
+const { label } = Astro.props
+---
+
+<details>
+  <summary>{label}</summary>
+  <slot />
+</details>
