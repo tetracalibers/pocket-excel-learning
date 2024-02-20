@@ -3,8 +3,9 @@ import svelte from "@astrojs/svelte"
 import mdx from "@astrojs/mdx"
 import rehypePrettyCode from "rehype-pretty-code"
 import tailwind from "@astrojs/tailwind"
+
 const prettyCodeOptions = {
-  theme: "material-theme-lighter",
+  theme: "dracula",
   keepBackground: false,
   defaultLang: "elm"
 }
