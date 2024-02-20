@@ -5,6 +5,9 @@ import rehypePrettyCode from "rehype-pretty-code"
 import tailwind from "@astrojs/tailwind"
 import AutoImport from "astro-auto-import"
 import { astroMdxDirective, directiveAutoImport } from "./integration/mdx-directive"
+import { resolve } from "node:path"
+
+const __dirname = new URL(".", import.meta.url).pathname
 
 const prettyCodeOptions = {
   theme: "dracula",
@@ -24,5 +27,12 @@ export default defineConfig({
   markdown: {
     syntaxHighlight: false,
     rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]]
+  },
+  vite: {
+    resolve: {
+      alias: {
+        "@": resolve(__dirname, "src")
+      }
+    }
   }
 })
