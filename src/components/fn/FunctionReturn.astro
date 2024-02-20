@@ -1,0 +1,19 @@
+---
+import { type FnReturn } from "../../content/config"
+import FunctionReturnPattern from "./FunctionReturnPattern.astro"
+import FunctionReturnValue from "./FunctionReturnValue.astro"
+
+interface Props {
+  returns: FnReturn[] | FnReturn
+}
+
+const { returns } = Astro.props
+---
+
+{
+  Array.isArray(returns) ? (
+    <FunctionReturnPattern patterns={returns} />
+  ) : (
+    <FunctionReturnValue value={returns} />
+  )
+}

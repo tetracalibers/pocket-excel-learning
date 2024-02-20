@@ -1,0 +1,40 @@
+---
+import { type FnArgument } from "../../content/config"
+
+interface Props {
+  name: string
+  args: FnArgument[]
+}
+
+const { name, args } = Astro.props
+---
+
+<code class="siguneture text-lg pb-2">
+  <span>{name}</span>
+  <span>(</span>
+  <div class="arguments">{args.map((arg) => <span class="argument">{arg.summary}</span>)}</div>
+  <div>)</div>
+</code>
+
+<style>
+  .siguneture {
+    font-family: var(--font-code);
+    font-weight: var(--font-weight-code);
+
+    display: flex;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    white-space: nowrap;
+  }
+
+  .arguments {
+    display: contents;
+  }
+
+  .argument:not(:last-child)::after {
+    content: ",";
+    display: contents;
+  }
+</style>

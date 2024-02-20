@@ -1,0 +1,16 @@
+---
+name: FIND
+summary: 部分文字列を検索し、始まる位置を求める関数
+args:
+  - summary: 検索文字列
+  - summary: 検索対象
+return:
+  - if: 指定した文字列が見つかれば
+    summary: 指定した文字列の開始位置（何文字目か）
+    type: number
+  - if: 指定した文字列が見つからなければ
+    summary: VALUEエラー
+    type: error
+category: string
+---
+

@@ -1,0 +1,13 @@
+---
+import { type FnReturn } from "../../content/config"
+
+interface Props {
+  value: Omit<FnReturn, "if">
+}
+
+const { value } = Astro.props
+---
+
+<div class="px-6 text-sm">
+  {value.summary}
+</div>

@@ -3,7 +3,7 @@ import { getCollection } from "astro:content"
 import RootDocument from "../../layout/RootDocument.astro"
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection("questions")
+  const blogEntries = await getCollection("fn")
   return blogEntries.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry }
@@ -16,6 +16,6 @@ const { Content } = await entry.render()
 ---
 
 <RootDocument>
-  <h1>{data.title}</h1>
+  <h1>{data.name}</h1>
   <Content />
 </RootDocument>

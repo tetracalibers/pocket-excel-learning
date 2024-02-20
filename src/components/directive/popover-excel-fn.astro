@@ -1,0 +1,24 @@
+---
+import { getEntry } from "astro:content"
+import FunctionDescription from "../fn/FunctionDescription.astro"
+import { Popover } from "flowbite-svelte"
+
+interface Props {
+  fn: string
+}
+
+const { fn } = Astro.props
+const fnId = fn.toLowerCase()
+const entry = await getEntry("fn", fnId)
+
+const hash = Math.random().toString(32).substring(2)
+const id = `popover-${hash}`
+---
+
+<button type="button" id={id} class="leading-none">
+  {fn}
+</button>
+
+<Popover client:only trigger="click" triggeredBy={`#${id}`} class="max-w-full z-[999]">
+  <FunctionDescription entry={entry} />
+</Popover>

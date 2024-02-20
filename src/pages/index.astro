@@ -1,22 +1,13 @@
 ---
-import { getCollection } from "astro:content"
 import RootDocument from "../layout/RootDocument.astro"
-import ExcelPlayGround from "../lib/pocket-excel/ExcelPlayGround.svelte"
-import excelData from "../data/produce101japan-s1-original.json"
-
-const allPosts = await getCollection("questions")
+import { Heading } from "flowbite-svelte"
 ---
 
 <RootDocument>
-  <ExcelPlayGround data={excelData} client:visible />
-  <!-- <h1>Questions</h1>
+  <Heading tag="h1">Pocket Excel Learning</Heading>
   <ul>
-    {
-      allPosts.map((post) => (
-        <li>
-          <a href={`/questions/${post.slug}`}>{post.data.title}</a>
-        </li>
-      ))
-    }
-  </ul> -->
+    <li><a href="/question">問題集</a></li>
+    <li><a href="/fn">Excel関数リファレンス</a></li>
+    <li><a href="/playground">準備中: プレイグラウンド</a></li>
+  </ul>
 </RootDocument>

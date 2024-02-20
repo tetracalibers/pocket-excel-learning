@@ -1,0 +1,14 @@
+---
+name: ISERROR
+summary: エラーかどうか調べる関数
+args:
+  - summary: セル
+return:
+  - if: セルがエラーなら
+    summary: "TRUE"
+    type: boolean
+  - if: セルがエラーでないなら
+    summary: "FALSE"
+    type: boolean
+category: condition
+---

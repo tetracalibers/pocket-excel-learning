@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content"
+import RootDocument from "../../layout/RootDocument.astro"
+
+const all = await getCollection("fn")
+---
+
+<RootDocument>
+  <h1>Functions</h1>
+  <ul>
+    {
+      all.map((fn) => (
+        <li>
+          <a href={`/fn/${fn.slug}`}>{fn.data.name}</a>
+        </li>
+      ))
+    }
+  </ul>
+</RootDocument>

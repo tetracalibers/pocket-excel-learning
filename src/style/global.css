@@ -1,40 +1,36 @@
 @font-face {
   font-family: "Source Han Code JP";
   src: url("/fonts/SourceHanCodeJP.ttc") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "TsukuBRdGothic";
-  src: url("/fonts/AppleTsukuBRdGothic-Regular-AlphaNum-01.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "TsukuBRdGothic";
-  src: url("/fonts/AppleTsukuBRdGothic-Bold-AlphaNum-02.otf") format("opentype");
-  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
-  --font-content: "Quicksand", "TsukuBRdGothic", sans-serif;
-  --font-code: "Fira Mono", monospace;
+  --font-content: "Ysabeau Infant", "Zen Kaku Gothic New";
+  --font-code: "Roboto Mono", "Source Han Code JP";
 
   --font-weight-content: 400;
-  --font-weight-code: 400;
+  --font-weight-code: 300;
+  --font-size-code: 1rem;
 
-  --font-size-code: 0.875rem;
+  --bg-color: #fff;
+  --tx-color: #354259;
 }
 
 body {
   margin: 0;
   font-family: var(--font-content);
   font-weight: var(--font-weight-content);
+
+  color: var(--tx-color);
+  padding: 2rem 1.5rem;
+  background-color: var(--bg-color);
+  background-image: linear-gradient(90deg, transparent 0%, transparent 50%, #fff 50%, #fff 100%),
+    linear-gradient(180deg, #ccc 1px, transparent 1px);
+  background-size:
+    8px 100%,
+    100% 2.5rem;
+  line-height: 2.5rem;
 }
 
 code {

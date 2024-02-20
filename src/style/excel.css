@@ -16,3 +16,79 @@
 
   --excel__hatching__background-color: rgba(0, 0, 0, 0.2);
 }
+
+table.Excel-table {
+  font-family: var(--excel__font);
+  font-weight: var(--excel__font-weight);
+  font-size: var(--excel__font-size);
+
+  /** table-cellを［position:sticky;］で固定したときのボーダーが消える現象を解消 */
+  border-collapse: separate;
+  border-spacing: 0;
+
+  /** スクロールさせるため */
+  width: 100%;
+  display: block;
+  overflow: auto;
+}
+
+table.Excel-table tbody {
+  /** スクロールさせるため */
+  display: contents;
+}
+
+table.Excel-table :is(td, th) {
+  white-space: nowrap;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+/** 罫線 */
+table.Excel-table :is(td, th) + td {
+  border-block-end: 1px solid var(--excel__cell__border-color);
+  border-inline-end: 1px solid var(--excel__cell__border-color);
+}
+
+/** セル */
+table.Excel-table td {
+  background-color: #fff;
+}
+
+/** 行番号/列アルファベット */
+table.Excel-table th:is([scope="col"], [scope="row"]) {
+  background-color: var(--excel__header_cell__background-color);
+}
+table.Excel-table th[scope="col"] {
+  border-block: 1px solid var(--excel__header_cell__border-color);
+}
+table.Excel-table th[scope="col"]:first-child {
+  border-inline: 1px solid var(--excel__header_cell__border-color);
+}
+table.Excel-table th[scope="col"] + th[scope="col"] {
+  border-inline-end: 1px solid var(--excel__header_cell__border-color);
+}
+table.Excel-table th[scope="row"] {
+  border-inline: 1px solid var(--excel__header_cell__border-color);
+  border-block-end: 1px solid var(--excel__header_cell__border-color);
+
+  padding: 0.5ch;
+  min-width: 3ch;
+}
+
+/** 固定表示 */
+table.Excel-table tr > :first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+table.Excel-table tr:first-child > :not(:first-child) {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+table.Excel-table tr:first-child > :first-child {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
