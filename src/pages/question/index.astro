@@ -1,12 +1,13 @@
 ---
 import { getCollection } from "astro:content"
 import RootDocument from "../../layout/RootDocument.astro"
+import { Heading } from "flowbite-svelte"
 
 const all = await getCollection("questions")
 ---
 
 <RootDocument>
-  <h1>Questions</h1>
+  <Heading tag="h1">Questions</Heading>
   <ul>
     {
       all.map((q) => (

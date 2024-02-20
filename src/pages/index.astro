@@ -1,9 +1,13 @@
 ---
 import RootDocument from "../layout/RootDocument.astro"
+import { Heading } from "flowbite-svelte"
 ---
 
 <RootDocument>
-  <a href="/question">Questions</a>
-  <a href="/fn">Functions</a>
-  <a href="playground">PlayGround</a>
+  <Heading tag="h1">Pocket Excel Learning</Heading>
+  <ul>
+    <li><a href="/question">問題集</a></li>
+    <li><a href="/fn">Excel関数リファレンス</a></li>
+    <li><a href="/playground">準備中: プレイグラウンド</a></li>
+  </ul>
 </RootDocument>

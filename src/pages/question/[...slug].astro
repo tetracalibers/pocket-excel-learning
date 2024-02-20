@@ -1,6 +1,10 @@
 ---
 import { getCollection } from "astro:content"
 import RootDocument from "../../layout/RootDocument.astro"
+import H2 from "../../components/content/H2.astro"
+import H3 from "../../components/content/H3.astro"
+import UList from "../../components/content/UList.astro"
+import { Heading, Li } from "flowbite-svelte"
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("questions")
@@ -16,6 +20,15 @@ const { Content } = await entry.render()
 ---
 
 <RootDocument>
-  <h1>{data.title}</h1>
-  <Content />
+  <article class="page">
+    <Heading tag="h1" class="my-10 text-center">{data.title}</Heading>
+    <Content components={{ h2: H2, h3: H3, ul: UList, li: Li }} />
+  </article>
 </RootDocument>
+
+<style>
+  .page {
+    max-width: 60rem;
+    margin-inline: auto;
+  }
+</style>
