@@ -5,10 +5,10 @@ args:
   - summary: セル
 return:
   - if: セルがエラーなら
-    summary: TRUE
+    summary: "TRUE"
     type: boolean
   - if: セルがエラーでないなら
-    summary: FALSE
+    summary: "FALSE"
     type: boolean
 category: condition
 ---
