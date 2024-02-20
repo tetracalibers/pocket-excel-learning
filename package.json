@@ -15,6 +15,7 @@
     "@astrojs/mdx": "^2.1.1",
     "@astrojs/svelte": "^5.0.3",
     "@astrojs/tailwind": "^5.1.0",
+    "@formulajs/formulajs": "^4.4.1",
     "astro": "^4.3.5",
     "astro-auto-import": "^0.4.2",
     "flowbite": "^2.3.0",
