@@ -7,14 +7,16 @@ const all = await getCollection("questions")
 ---
 
 <RootDocument>
-  <Heading tag="h1">Questions</Heading>
-  <ul>
-    {
-      all.map((q) => (
-        <li>
-          <a href={`/question/${q.slug}`}>{q.data.title}</a>
-        </li>
-      ))
-    }
-  </ul>
+  <div class="max-w-screen-md mx-auto">
+    <Heading tag="h1" class="my-10">Questions</Heading>
+    <ul>
+      {
+        all.map((q) => (
+          <li>
+            <a href={`/question/${q.slug}`}>{q.data.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </RootDocument>
