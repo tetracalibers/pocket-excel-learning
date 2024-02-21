@@ -3,6 +3,7 @@ import { getCollection } from "astro:content"
 import RootDocument from "../../layout/RootDocument.astro"
 import ColorTag from "@/components/tag/ColorTag.astro"
 import FunctionSignature from "@/components/fn/FunctionSignature.astro"
+import FunctionReturn from "@/components/fn/FunctionReturn.astro"
 import { Heading, Hr } from "flowbite-svelte"
 
 export async function getStaticPaths() {
@@ -47,8 +48,18 @@ const { category } = data
         </td>
       </tr>
     </table>
+    {
+      data.return && (
+        <>
+          <h2>実行結果</h2>
+          <FunctionReturn returns={data.return} />
+        </>
+      )
+    }
     <Hr />
-    <div class="_content"><Content /></div>
+    <div class="_content">
+      <Content />
+    </div>
   </article>
 </RootDocument>
 
