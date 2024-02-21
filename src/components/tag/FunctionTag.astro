@@ -1,0 +1,30 @@
+---
+import { getEntry } from "astro:content"
+
+interface Props {
+  slug: string
+}
+
+const { slug } = Astro.props
+
+const entry = await getEntry("fn", slug)
+const { color } = entry.data.category
+
+const name = slug.toUpperCase()
+---
+
+<a class="tag" href={`/fn/${slug}`}>{name}</a>
+
+<style define:vars={{ "category-color": color }}>
+  .tag {
+    display: inline-block;
+    border-radius: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 14px;
+    line-height: 1.2;
+    background: var(--category-color);
+    margin: 0;
+    white-space: nowrap;
+  }
+</style>

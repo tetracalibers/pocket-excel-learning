@@ -4,7 +4,9 @@ import RootDocument from "../../layout/RootDocument.astro"
 import H2 from "../../components/content/H2.astro"
 import H3 from "../../components/content/H3.astro"
 import UList from "../../components/content/UList.astro"
-import { Heading, Li } from "flowbite-svelte"
+import FunctionTag from "@/components/tag/FunctionTag.astro"
+import ColorTag from "@/components/tag/ColorTag.astro"
+import { Heading, Li, Hr } from "flowbite-svelte"
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("questions")
@@ -20,15 +22,53 @@ const { Content } = await entry.render()
 ---
 
 <RootDocument>
-  <article class="page">
-    <Heading tag="h1" class="my-10 text-center font-normal">{data.title}</Heading>
+  <article class="max-w-screen-md mx-auto">
+    <Heading tag="h1" class="my-10 font-normal">{data.title}</Heading>
+    <table>
+      <tr>
+        <th class="flex mr-6 whitespace-nowrap">使う関数</th>
+        <td>
+          <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+            {
+              data.useFn.map((fn) => (
+                <li class="flex">
+                  <FunctionTag slug={fn.slug} />
+                </li>
+              ))
+            }
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <th class="flex mr-6 whitespace-nowrap">カテゴリー</th>
+        <td>
+          <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+            {
+              data.category.map((cat) => (
+                <li>
+                  <ColorTag {...cat} />
+                </li>
+              ))
+            }
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <th class="flex mr-6 whitespace-nowrap">使えるバージョン</th>
+        <td>
+          <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+            {
+              data.available.map((version) => (
+                <li>
+                  <ColorTag label={version} color="rgba(227, 226, 224, 0.5)" />
+                </li>
+              ))
+            }
+          </ul>
+        </td>
+      </tr>
+    </table>
+    <Hr />
     <Content components={{ h2: H2, h3: H3, ul: UList, li: Li }} />
   </article>
 </RootDocument>
-
-<style>
-  .page {
-    max-width: 60rem;
-    margin-inline: auto;
-  }
-</style>
