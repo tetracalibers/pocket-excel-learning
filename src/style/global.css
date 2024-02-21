@@ -6,7 +6,9 @@
 }
 
 :root {
-  --font-content: "Ysabeau Infant", "Zen Kaku Gothic New";
+  --font-ja: "Zen Kaku Gothic New";
+  --font-en: "Ysabeau Infant";
+  --font-content: var(--font-en), var(--font-ja);
   --font-code: "Roboto Mono", "Source Han Code JP";
 
   --font-weight-content: 400;
@@ -27,11 +29,6 @@ body {
   color: var(--tx-color);
   padding: var(--body-padding-y) 1.5rem;
   background-color: var(--bg-color);
-  background-image: linear-gradient(90deg, transparent 0%, transparent 50%, #fff 50%, #fff 100%),
-    linear-gradient(180deg, #ccc 1px, transparent 1px);
-  background-size:
-    8px 100%,
-    100% 2.5rem;
   line-height: 2.5rem;
 }
 
