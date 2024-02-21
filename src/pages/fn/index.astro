@@ -1,19 +1,25 @@
 ---
 import { getCollection } from "astro:content"
 import RootDocument from "../../layout/RootDocument.astro"
+import FunctionSignature from "@/components/fn/FunctionSignature.astro"
+import { Heading } from "flowbite-svelte"
 
 const all = await getCollection("fn")
 ---
 
 <RootDocument>
-  <h1>Functions</h1>
-  <ul>
-    {
-      all.map((fn) => (
-        <li>
-          <a href={`/fn/${fn.slug}`}>{fn.data.name}</a>
-        </li>
-      ))
-    }
-  </ul>
+  <div class="w-full max-w-screen-md mx-auto">
+    <Heading tag="h1" class="my-10">Functions</Heading>
+    <ul class="grid gap-4 overflow-x-auto pt-8 pb-2">
+      {
+        all.map((fn) => (
+          <li>
+            <a href={`/fn/${fn.slug}`} class="underline-offset-[10px] decoration-solid">
+              <FunctionSignature name={fn.data.name} args={fn.data.args} coloring />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </RootDocument>

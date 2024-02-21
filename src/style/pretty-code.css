@@ -87,3 +87,9 @@ div[data-rehype-pretty-code-title] + pre {
 [data-rehype-pretty-code-title][data-theme="dark"] {
   --_pretty-title-border: var(--pretty-dark-title-border);
 }
+
+/** caption */
+[data-rehype-pretty-code-caption] {
+  font-size: 0.85em;
+  line-height: 1.7;
+}

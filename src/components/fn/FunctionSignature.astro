@@ -4,15 +4,26 @@ import { type FnArgument } from "../../content/config"
 interface Props {
   name: string
   args: FnArgument[]
+  coloring?: boolean
 }
 
-const { name, args } = Astro.props
+const { name, args, coloring = false } = Astro.props
+
+const hues = coloring ? args.map((_, i) => i * (360 / args.length) + "deg") : []
 ---
 
 <code class="siguneture text-lg pb-2">
   <span>{name}</span>
   <span>(</span>
-  <div class="arguments">{args.map((arg) => <span class="argument">{arg.summary}</span>)}</div>
+  <div class:list={["arguments", { coloring }]}>
+    {
+      args.map((arg, i) => (
+        <span class="argument" style={hues[i] ? `--hue: ${hues[i]}` : ""}>
+          <span class="summary">{arg.summary}</span>
+        </span>
+      ))
+    }
+  </div>
   <div>)</div>
 </code>
 
@@ -36,5 +47,10 @@ const { name, args } = Astro.props
   .argument:not(:last-child)::after {
     content: ",";
     display: contents;
+  }
+
+  .coloring .summary {
+    --marker-color: hsl(var(--hue), 100%, 95%);
+    background: linear-gradient(rgba(255, 255, 255, 0) 40%, var(--marker-color) 70%);
   }
 </style>

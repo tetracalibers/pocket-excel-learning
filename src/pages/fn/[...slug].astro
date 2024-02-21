@@ -1,6 +1,10 @@
 ---
 import { getCollection } from "astro:content"
 import RootDocument from "../../layout/RootDocument.astro"
+import ColorTag from "@/components/tag/ColorTag.astro"
+import FunctionSignature from "@/components/fn/FunctionSignature.astro"
+import FunctionReturn from "@/components/fn/FunctionReturn.astro"
+import { Heading, Hr } from "flowbite-svelte"
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("fn")
@@ -13,9 +17,68 @@ export async function getStaticPaths() {
 const { entry } = Astro.props
 const { data } = entry
 const { Content } = await entry.render()
+
+const { category } = data
 ---
 
 <RootDocument>
-  <h1>{data.name}</h1>
-  <Content />
+  <article class="max-w-screen-md mx-auto">
+    <Heading tag="h1" class="my-10 font-normal">{data.name}</Heading>
+    <FunctionSignature name={data.name} args={data.args} coloring />
+    <p class="my-6">{data.summary}</p>
+    <table>
+      <tr>
+        <th class="flex mr-6 whitespace-nowrap">カテゴリー</th>
+        <td>
+          <ColorTag {...category} />
+        </td>
+      </tr>
+      <tr>
+        <th class="flex mr-6 whitespace-nowrap">使えるバージョン</th>
+        <td>
+          <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+            {
+              data.available.map((version) => (
+                <li>
+                  <ColorTag label={version} color="rgba(227, 226, 224, 0.5)" />
+                </li>
+              ))
+            }
+          </ul>
+        </td>
+      </tr>
+    </table>
+    {
+      data.return && (
+        <>
+          <h2>実行結果</h2>
+          <FunctionReturn returns={data.return} />
+        </>
+      )
+    }
+    <Hr />
+    <div class="_content">
+      <Content />
+    </div>
+  </article>
 </RootDocument>
+
+<style>
+  ._content :global(h2) {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 400;
+  }
+
+  ._content :global(h3) {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 400;
+  }
+</style>
