@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content"
 import RootDocument from "../../layout/RootDocument.astro"
+import { Heading } from "flowbite-svelte"
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("fn")
@@ -16,6 +17,6 @@ const { Content } = await entry.render()
 ---
 
 <RootDocument>
-  <h1>{data.name}</h1>
+  <Heading tag="h1" class="my-10 font-normal">{data.name}</Heading>
   <Content />
 </RootDocument>
