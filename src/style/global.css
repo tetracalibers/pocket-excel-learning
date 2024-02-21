@@ -37,3 +37,11 @@ code {
   font-weight: var(--font-weight-code);
   font-size: var(--font-size-code);
 }
+
+a {
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-underline-offset: 0.4em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: #cbd5e1;
+}
