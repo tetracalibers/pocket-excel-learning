@@ -1,7 +1,8 @@
 ---
 import { getCollection } from "astro:content"
 import RootDocument from "../../layout/RootDocument.astro"
-import { Heading } from "flowbite-svelte"
+import ColorTag from "@/components/tag/ColorTag.astro"
+import { Heading, Hr } from "flowbite-svelte"
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("fn")
@@ -14,11 +15,22 @@ export async function getStaticPaths() {
 const { entry } = Astro.props
 const { data } = entry
 const { Content } = await entry.render()
+
+const { category } = data
 ---
 
 <RootDocument>
   <article class="max-w-screen-md mx-auto">
     <Heading tag="h1" class="my-10 font-normal">{data.name}</Heading>
+    <table>
+      <tr>
+        <th class="flex mr-6 whitespace-nowrap">カテゴリー</th>
+        <td>
+          <ColorTag {...category} />
+        </td>
+      </tr>
+    </table>
+    <Hr />
     <div class="_content"><Content /></div>
   </article>
 </RootDocument>
