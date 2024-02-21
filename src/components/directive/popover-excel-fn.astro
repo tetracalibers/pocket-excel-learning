@@ -13,12 +13,20 @@ const entry = await getEntry("fn", fnId)
 
 const hash = Math.random().toString(32).substring(2)
 const id = `popover-${hash}`
+
+const color = entry.data.category.color
 ---
 
-<button type="button" id={id} class="leading-none">
+<button type="button" id={id} class="leading-none p-0.5 rounded _fn-name">
   {fn}
 </button>
 
 <Popover client:only trigger="click" triggeredBy={`#${id}`} class="max-w-full z-[999]">
   <FunctionDescription entry={entry} />
 </Popover>
+
+<style define:vars={{ "category-color": color }}>
+  ._fn-name {
+    background-color: var(--category-color);
+  }
+</style>
