@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content"
 import RootDocument from "../../layout/RootDocument.astro"
 import ColorTag from "@/components/tag/ColorTag.astro"
+import FunctionSignature from "@/components/fn/FunctionSignature.astro"
 import { Heading, Hr } from "flowbite-svelte"
 
 export async function getStaticPaths() {
@@ -22,7 +23,8 @@ const { category } = data
 <RootDocument>
   <article class="max-w-screen-md mx-auto">
     <Heading tag="h1" class="my-10 font-normal">{data.name}</Heading>
-    <p class="my-10">{data.summary}</p>
+    <FunctionSignature name={data.name} args={data.args} coloring />
+    <p class="mb-10 mt-6">{data.summary}</p>
     <table>
       <tr>
         <th class="flex mr-6 whitespace-nowrap">カテゴリー</th>
