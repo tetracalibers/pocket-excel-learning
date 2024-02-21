@@ -1,11 +1,10 @@
 ---
 import { getCollection } from "astro:content"
 import RootDocument from "../../layout/RootDocument.astro"
-import H2 from "../../components/content/H2.astro"
-import H3 from "../../components/content/H3.astro"
 import UList from "../../components/content/UList.astro"
 import FunctionTag from "@/components/tag/FunctionTag.astro"
 import ColorTag from "@/components/tag/ColorTag.astro"
+import Toc from "@/components/article/Toc.astro"
 import { Heading, Li, Hr } from "flowbite-svelte"
 
 export async function getStaticPaths() {
@@ -18,7 +17,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props
 const { data } = entry
-const { Content } = await entry.render()
+const { Content, headings } = await entry.render()
 ---
 
 <RootDocument>
@@ -69,6 +68,29 @@ const { Content } = await entry.render()
       </tr>
     </table>
     <Hr />
-    <Content components={{ h2: H2, h3: H3, ul: UList, li: Li }} />
+    <Toc headings={headings} />
+    <div class="_content"><Content components={{ ul: UList, li: Li }} /></div>
   </article>
 </RootDocument>
+
+<style>
+  ._content :global(h2) {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  ._content :global(h3) {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 400;
+    color: #111827;
+  }
+</style>
