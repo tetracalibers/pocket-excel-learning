@@ -33,7 +33,7 @@
 
 <div>
   <!-- <CellValueEditor /> -->
-  <div class="relative" use:watchCellSelection>
+  <div class="relative _table-wrapper" use:watchCellSelection>
     <ExTable table={table} computeCellExtendStyle={computeCellExtendStyle} />
     <ExtendOverlay
       extension={$extension}
@@ -53,3 +53,11 @@
     <DraggableSquare squareStyle={$squareStyle} />
   </div>
 </div>
+
+<style>
+  ._table-wrapper {
+    --table-height: calc(100dvh - var(--body-padding-y));
+    display: grid;
+    grid-template-rows: var(--table-height);
+  }
+</style>
