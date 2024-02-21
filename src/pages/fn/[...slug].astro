@@ -17,6 +17,8 @@ const { Content } = await entry.render()
 ---
 
 <RootDocument>
-  <Heading tag="h1" class="my-10 font-normal">{data.name}</Heading>
-  <Content />
+  <article class="max-w-screen-md mx-auto">
+    <Heading tag="h1" class="my-10 font-normal">{data.name}</Heading>
+    <Content />
+  </article>
 </RootDocument>
