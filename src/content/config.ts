@@ -1,5 +1,10 @@
 import { z, defineCollection, reference } from "astro:content"
 
+const COLORS = {
+  string: "rgb(219, 237, 219)",
+  logical: "rgb(232, 222, 238)"
+}
+
 const zCategory = z.enum(["lookup", "string", "condition"]).transform((val) => {
   if (val === "lookup")
     return {
@@ -9,12 +14,12 @@ const zCategory = z.enum(["lookup", "string", "condition"]).transform((val) => {
   if (val === "string")
     return {
       label: "文字列操作",
-      color: "#bef264"
+      color: COLORS.string
     }
   if (val === "condition")
     return {
       label: "条件分岐",
-      color: "#c4b5fd"
+      color: COLORS.logical
     }
 })
 
@@ -47,7 +52,7 @@ const zValueType = z.enum(["string", "number", "boolean", "error"]).transform((v
   if (val === "string")
     return {
       label: "文字列",
-      color: "#bef264"
+      color: COLORS.string
     }
   if (val === "number")
     return {
@@ -57,7 +62,7 @@ const zValueType = z.enum(["string", "number", "boolean", "error"]).transform((v
   if (val === "boolean")
     return {
       label: "真偽値",
-      color: "#c4b5fd"
+      color: COLORS.logical
     }
   if (val === "error")
     return {
