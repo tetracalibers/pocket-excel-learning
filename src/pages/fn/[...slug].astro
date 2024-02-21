@@ -29,6 +29,20 @@ const { category } = data
           <ColorTag {...category} />
         </td>
       </tr>
+      <tr>
+        <th class="flex mr-6 whitespace-nowrap">使えるバージョン</th>
+        <td>
+          <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+            {
+              data.available.map((version) => (
+                <li>
+                  <ColorTag label={version} color="rgba(227, 226, 224, 0.5)" />
+                </li>
+              ))
+            }
+          </ul>
+        </td>
+      </tr>
     </table>
     <Hr />
     <div class="_content"><Content /></div>
