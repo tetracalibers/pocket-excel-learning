@@ -4,6 +4,7 @@ import RootDocument from "../../layout/RootDocument.astro"
 import ColorTag from "@/components/tag/ColorTag.astro"
 import FunctionSignature from "@/components/fn/FunctionSignature.astro"
 import FunctionReturn from "@/components/fn/FunctionReturn.astro"
+import Breadcrumb from "@/components/article/Breadcrumb.astro"
 import { Heading, Hr } from "flowbite-svelte"
 
 export async function getStaticPaths() {
@@ -22,45 +23,48 @@ const { category } = data
 ---
 
 <RootDocument>
-  <article class="max-w-screen-md mx-auto">
-    <Heading tag="h1" class="my-10 font-normal">{data.name}</Heading>
-    <FunctionSignature name={data.name} args={data.args} coloring />
-    <p class="my-6">{data.summary}</p>
-    <table>
-      <tr>
-        <th class="flex mr-6 whitespace-nowrap">カテゴリー</th>
-        <td>
-          <ColorTag {...category} />
-        </td>
-      </tr>
-      <tr>
-        <th class="flex mr-6 whitespace-nowrap">使えるバージョン</th>
-        <td>
-          <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
-            {
-              data.available.map((version) => (
-                <li>
-                  <ColorTag label={version} color="rgba(227, 226, 224, 0.5)" />
-                </li>
-              ))
-            }
-          </ul>
-        </td>
-      </tr>
-    </table>
-    {
-      data.return && (
-        <>
-          <h2>実行結果</h2>
-          <FunctionReturn returns={data.return} />
-        </>
-      )
-    }
-    <Hr />
-    <div class="_content">
-      <Content />
-    </div>
-  </article>
+  <main class="max-w-screen-md mx-auto">
+    <Breadcrumb />
+    <article>
+      <Heading tag="h1" class="mb-10 mt-14 font-normal">{data.name}</Heading>
+      <FunctionSignature name={data.name} args={data.args} coloring />
+      <p class="my-6">{data.summary}</p>
+      <table>
+        <tr>
+          <th class="flex mr-6 whitespace-nowrap">カテゴリー</th>
+          <td>
+            <ColorTag {...category} />
+          </td>
+        </tr>
+        <tr>
+          <th class="flex mr-6 whitespace-nowrap">使えるバージョン</th>
+          <td>
+            <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+              {
+                data.available.map((version) => (
+                  <li>
+                    <ColorTag label={version} color="rgba(227, 226, 224, 0.5)" />
+                  </li>
+                ))
+              }
+            </ul>
+          </td>
+        </tr>
+      </table>
+      {
+        data.return && (
+          <>
+            <h2>実行結果</h2>
+            <FunctionReturn returns={data.return} />
+          </>
+        )
+      }
+      <Hr />
+      <div class="_content">
+        <Content />
+      </div>
+    </article>
+  </main>
 </RootDocument>
 
 <style>
