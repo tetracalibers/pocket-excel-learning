@@ -21,7 +21,7 @@ const color = entry.data.category.color
   {fn}
 </button>
 
-<Popover client:only trigger="click" triggeredBy={`#${id}`} class="max-w-full z-[999]">
+<Popover client:only="svelte" trigger="click" triggeredBy={`#${id}`} class="max-w-full z-[999]">
   <FunctionDescription entry={entry} />
 </Popover>
 
