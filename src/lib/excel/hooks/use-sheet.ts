@@ -1,6 +1,6 @@
 import { fromEvent, BehaviorSubject, combineLatest } from "rxjs"
 import { decodeCell, encode, type CellAddress } from "../utils/cell"
-import { mergeSelectExtends } from "@/lib/spread-sheet/utilities"
+import { mergeSelectExtends } from "@/lib/excel/utils/cell"
 import { writable } from "svelte/store"
 
 export interface TopStyle {
