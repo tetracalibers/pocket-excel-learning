@@ -1,21 +1,22 @@
 export const SITE_TITLE = "Pocket Excel Learning"
+export const SITE_BASE = "/pocket-excel-learning"
 
 export const NAV = [
   {
     title: SITE_TITLE,
-    href: "/"
+    href: SITE_BASE + "/"
   },
   {
     title: "問題集",
-    href: "/question"
+    href: SITE_BASE + "/question"
   },
   {
     title: "Excel関数リファレンス",
-    href: "/fn"
+    href: SITE_BASE + "/fn"
   },
   {
     title: "プレイグラウンド",
-    href: "/sheet",
+    href: SITE_BASE + "/sheet",
     draft: true
   }
 ]

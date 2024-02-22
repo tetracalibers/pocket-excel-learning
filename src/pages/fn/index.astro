@@ -4,6 +4,7 @@ import RootDocument from "../../layout/RootDocument.astro"
 import FunctionSignature from "@/components/fn/FunctionSignature.astro"
 import Breadcrumb from "@/components/article/Breadcrumb.astro"
 import { Heading } from "flowbite-svelte"
+import { SITE_BASE } from "@/site-config"
 
 const all = await getCollection("fn")
 ---
@@ -16,7 +17,7 @@ const all = await getCollection("fn")
       {
         all.map((fn) => (
           <li>
-            <a href={`/fn/${fn.slug}`} class="underline-offset-[10px] decoration-solid">
+            <a href={`${SITE_BASE}/fn/${fn.slug}`} class="underline-offset-[10px] decoration-solid">
               <FunctionSignature name={fn.data.name} args={fn.data.args} coloring />
             </a>
           </li>

@@ -17,6 +17,8 @@ const prettyCodeOptions = {
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://tetracalibers.github.io",
+  base: "/pocket-excel-learning",
   integrations: [
     AutoImport({
       imports: [directiveAutoImport]

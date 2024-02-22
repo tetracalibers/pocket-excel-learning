@@ -2,9 +2,9 @@
 import { NAV } from "@/site-config"
 
 const routes = Astro.url.pathname.split("/").filter(Boolean)
-const [category] = routes
+const [base, category] = routes
 
-const current = NAV.find((item) => item.href === `/${category}`)
+const current = NAV.find((item) => item.href === `/${base}/${category}`)
 const prevItems = [NAV[0], current]
 ---
 

@@ -32,7 +32,7 @@ function remarkDirectiveComponent(): unified.Plugin<[], mdast.Root> {
 
       // @ts-ignore
       if (_node.type === "leafDirective") {
-        const node: LeafDirective = _node
+        // const node: LeafDirective = _node
         // add your own leafDirective here
       }
 
