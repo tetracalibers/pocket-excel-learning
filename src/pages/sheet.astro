@@ -1,13 +1,15 @@
 ---
 import RootDocument from "@/layout/RootDocument.astro"
-import ExcelSheet from "@/lib/excel/Sheet.svelte"
-import data from "@/data/json/produce101japan-s1-original.json"
+import ExcelTable from "@/components/excel/ExcelTable.tsx"
+import data from "@/data/array/produce101japan-s1-original.json"
 ---
 
-<RootDocument><ExcelSheet data={data} client:only /></RootDocument>
+<RootDocument>
+  <ExcelTable data={data} readonly client:load />
+</RootDocument>
 
 <style>
   :global(body) {
-    overflow-y: hidden;
+    overflow: hidden;
   }
 </style>
