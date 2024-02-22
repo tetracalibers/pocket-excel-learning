@@ -1,15 +1,23 @@
 ---
 import RootDocument from "../layout/RootDocument.astro"
 import { Heading } from "flowbite-svelte"
+import { SITE_TITLE, NAV } from "@/site-config"
+
+const [_, ..._pages] = NAV
+const pages = import.meta.env.DEV ? _pages : _pages.filter((page) => !page.draft)
 ---
 
 <RootDocument>
   <div class="max-w-screen-md mx-auto">
-    <Heading tag="h1" class="my-10">Pocket Excel Learning</Heading>
+    <Heading tag="h1" class="my-10">{SITE_TITLE}</Heading>
     <ul>
-      <li><a href="/question">問題集</a></li>
-      <li><a href="/fn">Excel関数リファレンス</a></li>
-      <li><a href="/sheet">開発中: プレイグラウンド</a></li>
+      {
+        pages.map((page) => (
+          <li>
+            <a href={page.href}>{page.title}</a>
+          </li>
+        ))
+      }
     </ul>
   </div>
 </RootDocument>
