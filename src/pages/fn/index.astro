@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content"
 import RootDocument from "../../layout/RootDocument.astro"
 import FunctionSignature from "@/components/fn/FunctionSignature.astro"
+import Breadcrumb from "@/components/article/Breadcrumb.astro"
 import { Heading } from "flowbite-svelte"
 
 const all = await getCollection("fn")
@@ -9,7 +10,8 @@ const all = await getCollection("fn")
 
 <RootDocument>
   <div class="w-full max-w-screen-md mx-auto">
-    <Heading tag="h1" class="my-10">Functions</Heading>
+    <Breadcrumb />
+    <Heading tag="h1" class="mb-10 mt-14">Functions</Heading>
     <ul class="grid gap-4 overflow-x-auto pt-8 pb-2">
       {
         all.map((fn) => (
