@@ -1,4 +1,5 @@
 ---
+import { SITE_BASE } from "@/site-config"
 import { getEntry } from "astro:content"
 
 interface Props {
@@ -13,7 +14,7 @@ const { color } = entry.data.category
 const name = slug.toUpperCase()
 ---
 
-<a class="tag" href={`/fn/${slug}`}>{name}</a>
+<a class="tag" href={`${SITE_BASE}/fn/${slug}`}>{name}</a>
 
 <style define:vars={{ "category-color": color }}>
   .tag {
