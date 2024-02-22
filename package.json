@@ -8,7 +8,8 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "prettier --write --plugin prettier-plugin-astro --plugin prettier-plugin-svelte ."
+    "format": "prettier --write --plugin prettier-plugin-astro --plugin prettier-plugin-svelte .",
+    "json-to-array": "node ./script/json-to-array.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.2",
