@@ -3,6 +3,7 @@ import { getCollection } from "astro:content"
 import RootDocument from "../../layout/RootDocument.astro"
 import Breadcrumb from "@/components/article/Breadcrumb.astro"
 import { Heading } from "flowbite-svelte"
+import { SITE_BASE } from "@/site-config"
 
 const all = await getCollection("questions")
 ---
@@ -15,7 +16,7 @@ const all = await getCollection("questions")
       {
         all.map((q) => (
           <li>
-            <a href={`/question/${q.slug}`}>{q.data.title}</a>
+            <a href={`${SITE_BASE}/question/${q.slug}`}>{q.data.title}</a>
           </li>
         ))
       }

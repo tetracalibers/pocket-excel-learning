@@ -2,6 +2,7 @@
 import { type CollectionEntry } from "astro:content"
 import FunctionSignature from "./FunctionSignature.astro"
 import FunctionReturn from "./FunctionReturn.astro"
+import { SITE_BASE } from "@/site-config"
 
 interface Props {
   entry: CollectionEntry<"fn">
@@ -22,7 +23,7 @@ const { data } = entry
       </div>
     )
   }
-  <a href={`/fn/${entry.slug}`} class="inline-block text-end text-sm decoration-double">
+  <a href={`${SITE_BASE}/fn/${entry.slug}`} class="inline-block text-end text-sm decoration-double">
     もっと読む
   </a>
 </div>
