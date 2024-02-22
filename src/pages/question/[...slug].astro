@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content"
-import RootDocument from "../../layout/RootDocument.astro"
+import ArticlePageRoot from "@/layout/ArticlePageRoot.astro"
 import UList from "../../components/content/UList.astro"
 import FunctionTag from "@/components/tag/FunctionTag.astro"
 import ColorTag from "@/components/tag/ColorTag.astro"
@@ -21,7 +21,7 @@ const { data } = entry
 const { Content, headings } = await entry.render()
 ---
 
-<RootDocument>
+<ArticlePageRoot>
   <main class="max-w-screen-md mx-auto">
     <Breadcrumb />
     <article>
@@ -75,7 +75,7 @@ const { Content, headings } = await entry.render()
       <div class="_content"><Content components={{ ul: UList, li: Li }} /></div>
     </article>
   </main>
-</RootDocument>
+</ArticlePageRoot>
 
 <style>
   ._content :global(h2) {

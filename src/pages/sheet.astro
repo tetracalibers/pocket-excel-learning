@@ -1,12 +1,12 @@
 ---
-import RootDocument from "@/layout/RootDocument.astro"
+import WorksheetPageRoot from "@/layout/WorksheetPageRoot.astro"
 import ExcelTable from "@/components/excel/ExcelTable.tsx"
 import data from "@/data/array/produce101japan-s1-original.json"
 ---
 
-<RootDocument>
+<WorksheetPageRoot>
   <ExcelTable data={data} readonly client:load />
-</RootDocument>
+</WorksheetPageRoot>
 
 <style>
   :global(body) {

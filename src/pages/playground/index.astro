@@ -1,9 +1,9 @@
 ---
-import RootDocument from "../../layout/RootDocument.astro"
+import WorksheetPageRoot from "@/layout/WorksheetPageRoot.astro"
 import ExcelPlayGround from "../../lib/pocket-excel/ExcelPlayGround.svelte"
 import excelData from "../../data/json/produce101japan-s1-original.json"
 ---
 
-<RootDocument>
+<WorksheetPageRoot>
   <ExcelPlayGround data={excelData} client:visible />
-</RootDocument>
+</WorksheetPageRoot>
