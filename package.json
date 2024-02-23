@@ -17,7 +17,6 @@
     "@astrojs/react": "^3.0.10",
     "@astrojs/svelte": "^5.0.3",
     "@astrojs/tailwind": "^5.1.0",
-    "@formulajs/formulajs": "^4.4.1",
     "@handsontable/react": "^14.1.0",
     "@types/react": "^18.2.57",
     "@types/react-dom": "^18.2.19",
@@ -26,18 +25,15 @@
     "flowbite": "^2.3.0",
     "flowbite-svelte": "^0.44.23",
     "handsontable": "^14.1.0",
-    "hotkeys-js": "^3.13.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rehype-pretty-code": "^0.13.0",
     "remark-directive": "^3.0.0",
-    "rxjs": "^7.8.1",
     "shiki": "^1.1.5",
     "svelte": "^4.2.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",
-    "unist-util-remove": "^4.0.0",
-    "xlsx": "^0.18.5"
+    "unist-util-remove": "^4.0.0"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
