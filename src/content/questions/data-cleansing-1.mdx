@@ -29,33 +29,50 @@ C列の「生年月日」は現状、`(2001-08-04) 2001年8月4日（22歳）` �
   pickRows={[1, 2, 3, 4, 101]}
   pickCols={["A", "C"]}
   highlightCells={["C2"]}
-  sheetName="data"
+  sheetName="sheet1"
 />
 
-D列を新規作成し、
+別なシート（sheet2）を作成し、そのC列に、
 
-- `(xxxx-xx-xx)` の部分を消す
+- `(xxxx-xx-xx)` の部分を消して表示する
 - `-` とだけ入力されている番組辞退者のセルには、`非公開` と入力する
 
 <ExcelDemoSlice
-  source={{ data, sheetName: "data" }}
+  source={{ data, sheetName: "sheet1" }}
   formula={{
-    C2: '=IF(ISERROR(SEARCH("(????-??-??)", data!C2)), "非公開", TRIM(MID(data!C2, 13, LEN(data!C2))))'
+    C2: '=IF(ISERROR(SEARCH("(????-??-??)", sheet1!C2)), "非公開", TRIM(MID(sheet1!C2, 13, LEN(sheet1!C2))))'
   }}
   pickRows={[1, 2, 3, 4, 101]}
   pickCols={["A", "C"]}
   emptyCols={["C"]}
   highlightCells={["C2"]}
-  sheetName="playground"
+  sheetName="sheet2"
 />
+
+:::details[デモの操作方法]
+
+- C2セルをダブルクリックして関数を確認
+- C2セルをクリックし、右下の四角を下にドラッグして関数をコピー
+
+:::
 
 ## Answer
 
-セルD2に以下の関数を入力する。
+sheet2のセルC2に以下の関数を入力し、ドラッグ操作でセルC102までコピーする。
 
-:::answer
+:::details[解答例]
 
 ```
+=IF(ISERROR(SEARCH("(????-??-??)", C2)), "非公開", TRIM(MID(C2, 13, LEN(C2))))
+```
+
+:::
+
+Excel 2021以降やOffice 365では、関数内で`C2:C102`のように複数のセルを一度に指定して、Enterを押すことで、C102セルまで一気に関数が実行される。（スピル機能）
+
+:::details[解答例（スピル機能が使える場合）]
+
+```elm caption="「C2」ではなく「C2:C102」のようにセル範囲を指定"
 =IF(ISERROR(SEARCH("(????-??-??)", C2:C102)), "非公開", TRIM(MID(C2:C102, 13, LEN(C2:C102))))
 ```
 
