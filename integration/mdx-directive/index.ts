@@ -3,14 +3,16 @@ import type * as mdast from "mdast"
 import remarkDirective from "remark-directive"
 import type * as unified from "unified"
 import { visit } from "unist-util-visit"
-import type { ContainerDirective, TextDirective, LeafDirective } from "mdast-util-directive"
+import type { ContainerDirective, TextDirective } from "mdast-util-directive"
 import { makeComponentNode } from "./ast-node"
 import { closureContainer } from "./component/closure"
 import { popoverExcelFnText } from "./component/popover-excel-fn"
+import { kbdText } from "./component/kbd"
 
 export const directiveAutoImport: Record<string, [string, string][]> = {
   ...closureContainer.import,
-  ...popoverExcelFnText.import
+  ...popoverExcelFnText.import,
+  ...kbdText.import
 }
 
 function remarkDirectiveComponent(): unified.Plugin<[], mdast.Root> {
@@ -42,6 +44,11 @@ function remarkDirectiveComponent(): unified.Plugin<[], mdast.Root> {
 
         if (popoverExcelFnText.is(node)) {
           parent.children[index] = makeComponentNode(popoverExcelFnText.parse(node))
+          return
+        }
+
+        if (kbdText.is(node)) {
+          parent.children[index] = makeComponentNode(kbdText.parse(node))
           return
         }
       }

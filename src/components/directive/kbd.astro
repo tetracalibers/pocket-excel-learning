@@ -1,0 +1,42 @@
+---
+interface Props {
+  shortcutKey: string
+}
+
+const { shortcutKey } = Astro.props
+const keyNames = shortcutKey.split("+").map((key) => key.trim())
+const count = keyNames.length - 1
+---
+
+<span class="_keys inline-flex justify-center items-center gap-1.5 leading-tight">
+  {
+    keyNames.map((keyName, i) => (
+      <>
+        <kbd class="_key inline-flex justify-center items-center min-w-[2.125rem] m-0 px-2.5 py-1.5 rounded-[10px] font-bold">
+          {keyName}
+        </kbd>
+        {i < count && <span class="_combinator inline-block text-lg">+</span>}
+      </>
+    ))
+  }
+</span>
+
+<style>
+  ._keys {
+    --_shadow-width: 2px;
+    --_shadow-height: 3px;
+
+    font-family: arial;
+
+    position: relative;
+    top: calc(-1 * var(--_shadow-height));
+  }
+  ._key {
+    background: #ededed;
+    box-shadow: var(--_shadow-width) var(--_shadow-height) 0px 0px rgba(0, 0, 0, 0.3);
+    color: #808080;
+  }
+  ._combinator {
+    padding-inline-start: var(--_shadow-width);
+  }
+</style>
