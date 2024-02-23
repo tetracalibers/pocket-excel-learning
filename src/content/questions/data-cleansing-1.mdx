@@ -13,14 +13,9 @@ category:
   - string
 ---
 
-import _data from "@/data/json/produce101japan-members-1.json"
 import data from "@/data/array/produce101japan-members-1.json"
-import ExcelDataSlice from "@/components/excel/ExcelDataSlice.astro"
 import ExcelTableSlice from "@/components/excel/ExcelTableSlice.astro"
-import { IF, SEARCH, ISERROR, TRIM, MID, LEN } from "@/lib/formulajs"
-
-export const formula = (cvalue) =>
-  IF(ISERROR(SEARCH("(????-??-??)", cvalue)), "非公開", TRIM(MID(cvalue, 13, LEN(cvalue))))
+import ExcelDemoSlice from "@/components/excel/ExcelDemoSlice.astro"
 
 ## Question
 
@@ -28,9 +23,9 @@ C列の「生年月日」は現状、`(2001-08-04) 2001年8月4日（22歳）` �
 
 <ExcelTableSlice
   data={data}
-  pickRows={[1, 2, 101]}
-  pickColumns={["A", "C"]}
-  highlightCells={["C2", "C101"]}
+  pickRows={[1, 2, 3, 4, 101]}
+  pickCols={["A", "C"]}
+  highlightCells={["C2"]}
 />
 
 D列を新規作成し、
@@ -38,12 +33,16 @@ D列を新規作成し、
 - `(xxxx-xx-xx)` の部分を消す
 - `-` とだけ入力されている番組辞退者のセルには、`非公開` と入力する
 
-<ExcelDataSlice
-  header={true}
-  data={_data}
-  rows={[2, 101]}
-  columns={["C"]}
-  addColumns={[{ name: "D", header: "作業列", source: "C", formula }]}
+<ExcelDemoSlice
+  source={{ data, sheetName: "data" }}
+  formula={{
+    C2: '=IF(ISERROR(SEARCH("(????-??-??)", data!C2)), "非公開", TRIM(MID(data!C2, 13, LEN(data!C2))))'
+  }}
+  pickRows={[1, 2, 3, 4, 101]}
+  pickCols={["A", "C"]}
+  emptyCols={["C"]}
+  highlightCells={["C2"]}
+  sheetName="playground"
 />
 
 ## Answer
