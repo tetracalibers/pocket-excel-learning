@@ -25,7 +25,6 @@
     "flowbite": "^2.3.0",
     "flowbite-svelte": "^0.44.23",
     "handsontable": "^14.1.0",
-    "hotkeys-js": "^3.13.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rehype-pretty-code": "^0.13.0",
