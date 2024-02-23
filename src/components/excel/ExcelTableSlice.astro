@@ -1,5 +1,6 @@
 ---
 import MiniExcelTable from "./MiniExcelTable"
+import SheetName from "./SheetName.astro"
 import { decodeColumnAlpha, decodeCell } from "./utils"
 
 interface Props {
@@ -7,9 +8,10 @@ interface Props {
   pickRows: number[]
   pickCols: string[]
   highlightCells?: string[]
+  sheetName?: string
 }
 
-const { data, pickRows, pickCols, highlightCells = [] } = Astro.props
+const { data, pickRows, pickCols, highlightCells = [], sheetName } = Astro.props
 
 const pickColsAsIdx = pickCols.map(decodeColumnAlpha)
 
@@ -39,6 +41,7 @@ const highlights = highlightCells.map((cell) => ({
 ---
 
 <div class="my-10">
+  {sheetName && <SheetName name={sheetName} />}
   <MiniExcelTable
     data={sliced}
     readonly

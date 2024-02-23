@@ -1,0 +1,38 @@
+---
+interface Props {
+  name: string
+}
+
+const { name } = Astro.props
+---
+
+<div class="leading-loose tracking-tight font-light text-xs text-zinc-500 _sheet-name">
+  {name}シート
+</div>
+
+<style>
+  ._sheet-name {
+    --_sheet-name-border: #bdbdbd;
+    font-family: var(--font-code), var(--font-ja);
+    width: fit-content;
+    padding-block: 0;
+    padding-inline: 0.7em;
+    border-top-left-radius: 0.3em;
+    border-top-right-radius: 0.3em;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--_sheet-name-border);
+    position: relative;
+    left: -6px;
+  }
+
+  ._sheet-name::before {
+    position: absolute;
+    top: calc(100% + 1px);
+    left: -1px;
+    content: "";
+    border: 3px solid transparent;
+    border-top: 3px solid var(--_sheet-name-border);
+    border-right: 3px solid var(--_sheet-name-border);
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import { decodeColumnAlpha, decodeCell, encodeColumn } from "./utils"
 import MiniExcelDemo from "./MiniExcelDemo"
+import SheetName from "./SheetName.astro"
 
 interface Props {
   source: {
@@ -82,12 +83,15 @@ const highlights = highlightCells.map((cell) => ({
 }))
 ---
 
-<MiniExcelDemo
-  source={source}
-  data={sliced}
-  hiddenRows={hiddenRows}
-  hiddenCols={hiddenCols}
-  sheetName={sheetName}
-  highlights={highlights}
-  client:load
-/>
+<div class="my-10">
+  <SheetName name={sheetName} />
+  <MiniExcelDemo
+    source={source}
+    data={sliced}
+    hiddenRows={hiddenRows}
+    hiddenCols={hiddenCols}
+    sheetName={sheetName}
+    highlights={highlights}
+    client:load
+  />
+</div>
