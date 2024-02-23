@@ -99,7 +99,8 @@ const questionsCollection = defineCollection({
     category: zCategory.array(),
     topics: z.array(z.string()).default([]),
     useFn: z.array(reference("fn")).default([]),
-    available: zAvailableVersion
+    available: zAvailableVersion,
+    sheet: z.string().optional()
   })
 })
 
