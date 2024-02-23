@@ -6,7 +6,9 @@ import FunctionTag from "@/components/tag/FunctionTag.astro"
 import ColorTag from "@/components/tag/ColorTag.astro"
 import Toc from "@/components/article/Toc.astro"
 import Breadcrumb from "@/components/article/Breadcrumb.astro"
+import ExternalLinkIcon from "@/icons/iconamoon/link-external-thin.astro"
 import { Heading, Li, Hr } from "flowbite-svelte"
+import { SITE_BASE } from "@/site-config"
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("questions")
@@ -26,49 +28,69 @@ const { Content, headings } = await entry.render()
     <Breadcrumb />
     <article>
       <Heading tag="h1" class="mb-10 mt-14 font-normal">{data.title}</Heading>
-      <table>
-        <tr>
-          <th class="flex mr-6 whitespace-nowrap">使う関数</th>
-          <td>
-            <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
-              {
-                data.useFn.map((fn) => (
-                  <li class="flex">
-                    <FunctionTag slug={fn.slug} />
-                  </li>
-                ))
-              }
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <th class="flex mr-6 whitespace-nowrap">カテゴリー</th>
-          <td>
-            <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
-              {
-                data.category.map((cat) => (
-                  <li>
-                    <ColorTag {...cat} />
-                  </li>
-                ))
-              }
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <th class="flex mr-6 whitespace-nowrap">使えるバージョン</th>
-          <td>
-            <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
-              {
-                data.available.map((version) => (
-                  <li>
-                    <ColorTag label={version} color="rgba(227, 226, 224, 0.5)" />
-                  </li>
-                ))
-              }
-            </ul>
-          </td>
-        </tr>
+      <table class="grid auto-cols-[minmax(0,max-content)] leading-snug gap-y-4 py-3">
+        <tbody class="contents">
+          <tr class="grid grid-cols-subgrid col-span-2 items-baseline gap-6">
+            <th class="flex whitespace-nowrap">使う関数</th>
+            <td>
+              <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+                {
+                  data.useFn.map((fn) => (
+                    <li class="flex">
+                      <FunctionTag slug={fn.slug} />
+                    </li>
+                  ))
+                }
+              </ul>
+            </td>
+          </tr>
+          <tr class="grid grid-cols-subgrid col-span-2 items-baseline gap-6">
+            <th class="flex whitespace-nowrap">カテゴリー</th>
+            <td>
+              <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+                {
+                  data.category.map((cat) => (
+                    <li>
+                      <ColorTag {...cat} />
+                    </li>
+                  ))
+                }
+              </ul>
+            </td>
+          </tr>
+          <tr class="grid grid-cols-subgrid col-span-2 items-baseline gap-6">
+            <th class="flex whitespace-nowrap">使えるバージョン</th>
+            <td>
+              <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+                {
+                  data.available.map((version) => (
+                    <li>
+                      <ColorTag label={version} color="rgba(227, 226, 224, 0.5)" />
+                    </li>
+                  ))
+                }
+              </ul>
+            </td>
+          </tr>
+          {
+            data.sheet && (
+              <tr class="grid grid-cols-subgrid col-span-2 items-baseline gap-6">
+                <th class="flex whitespace-nowrap">作業に使うデータ</th>
+                <td>
+                  <a
+                    href={`${SITE_BASE}/sheet/${data.sheet}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-1"
+                  >
+                    <span class="inline-block truncate">{data.sheet}</span>
+                    <ExternalLinkIcon svgClass="w-2.5 shrink-0" />
+                  </a>
+                </td>
+              </tr>
+            )
+          }
+        </tbody>
       </table>
       <Hr />
       <Toc headings={headings} />
