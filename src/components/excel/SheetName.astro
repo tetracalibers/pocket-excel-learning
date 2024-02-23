@@ -6,8 +6,8 @@ interface Props {
 const { name } = Astro.props
 ---
 
-<div class="leading-loose tracking-tight font-light text-xs text-zinc-500 _sheet-name">
-  {name}シート
+<div class="leading-relaxed tracking-tight font-light text-xs text-zinc-500 _sheet-name">
+  {name}
 </div>
 
 <style>
@@ -22,13 +22,14 @@ const { name } = Astro.props
     border-width: 1px;
     border-style: solid;
     border-color: var(--_sheet-name-border);
+    border-bottom-width: 0;
     position: relative;
     left: -6px;
   }
 
   ._sheet-name::before {
     position: absolute;
-    top: calc(100% + 1px);
+    top: 100%;
     left: -1px;
     content: "";
     border: 3px solid transparent;
