@@ -1,0 +1,53 @@
+---
+import MiniExcelTable from "./MiniExcelTable"
+import SheetName from "./SheetName.astro"
+import { decodeColumnAlpha, decodeCell } from "./utils"
+
+interface Props {
+  data: unknown[][]
+  pickRows: number[]
+  pickCols: string[]
+  highlightCells?: string[]
+  sheetName?: string
+}
+
+const { data, pickRows, pickCols, highlightCells = [], sheetName } = Astro.props
+
+const pickColsAsIdx = pickCols.map(decodeColumnAlpha)
+
+const allRowCount = data.length
+const allColCount = data[0].length
+
+const firstRow = Math.max(Math.min(...pickRows) - 1, 0)
+const firstCol = Math.max(Math.min(...pickColsAsIdx), 0)
+
+const lastRow = Math.min(Math.max(...pickRows) + 1, allRowCount)
+const lastCol = Math.min(Math.max(...pickColsAsIdx) + 2, allColCount)
+
+// hiddenするとはいえ全てのセルのデータを渡すとメモリを食うので、インジケータが表示される範囲のみ抽出
+const sliced = data.slice(firstRow, lastRow).map((row) => row.slice(firstCol, lastCol))
+
+const hiddenRows = Array.from({ length: sliced.length }, (_, i) => i).filter(
+  (_, i) => !pickRows.includes(i + 1 + firstRow)
+)
+const hiddenCols = Array.from({ length: sliced[0].length }, (_, i) => i).filter(
+  (_, i) => !pickColsAsIdx.includes(i + firstCol)
+)
+
+const highlights = highlightCells.map((cell) => ({
+  ...decodeCell(cell),
+  className: "highlight-cell"
+}))
+---
+
+<div class="my-10">
+  {sheetName && <SheetName name={sheetName} />}
+  <MiniExcelTable
+    data={sliced}
+    readonly
+    hiddenRows={hiddenRows}
+    hiddenCols={hiddenCols}
+    highlights={highlights}
+    client:load
+  />
+</div>

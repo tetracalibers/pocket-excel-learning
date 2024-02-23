@@ -1,6 +1,7 @@
 ---
 title: 生年月日のデータクレンジング
 created: 2024/02/04
+sheet: produce101japan-members-1
 useFn:
   - if
   - iserror
@@ -12,37 +13,66 @@ category:
   - string
 ---
 
-import data from "@/data/produce101japan-s1-original.json"
-import ExcelDataSlice from "@/components/excel/ExcelDataSlice.astro"
-import { IF, SEARCH, ISERROR, TRIM, MID, LEN } from "@/lib/formulajs"
+import data from "@/data/array/produce101japan-members-1.json"
+import InitializeExcelModule from "@/components/excel/InitializeExcelModule.astro"
+import ExcelTableSlice from "@/components/excel/ExcelTableSlice.astro"
+import ExcelDemoSlice from "@/components/excel/ExcelDemoSlice.astro"
 
-export const formula = (cvalue) =>
-  IF(ISERROR(SEARCH("(????-??-??)", cvalue)), "非公開", TRIM(MID(cvalue, 13, LEN(cvalue))))
+<InitializeExcelModule />
 
 ## Question
 
 C列の「生年月日」は現状、`(2001-08-04) 2001年8月4日（22歳）` みたいな形式になっている。
 
-D列を新規作成し、
+<ExcelTableSlice
+  data={data}
+  pickRows={[1, 2, 3, 4, 101]}
+  pickCols={["A", "C"]}
+  highlightCells={["C2"]}
+  sheetName="sheet1"
+/>
 
-- `(xxxx-xx-xx)` の部分を消す
+別なシート（sheet2）を作成し、そのC列に、
+
+- `(xxxx-xx-xx)` の部分を消して表示する
 - `-` とだけ入力されている番組辞退者のセルには、`非公開` と入力する
 
-<ExcelDataSlice
-  header={true}
-  data={data}
-  rows={[2, 101]}
-  columns={["C"]}
-  addColumns={[{ name: "D", header: "作業列", source: "C", formula }]}
+<ExcelDemoSlice
+  source={{ data, sheetName: "sheet1" }}
+  formula={{
+    C2: '=IF(ISERROR(SEARCH("(????-??-??)", sheet1!C2)), "非公開", TRIM(MID(sheet1!C2, 13, LEN(sheet1!C2))))'
+  }}
+  pickRows={[1, 2, 3, 4, 101]}
+  pickCols={["A", "C"]}
+  emptyCols={["C"]}
+  highlightCells={["C2"]}
+  sheetName="sheet2"
 />
+
+:::details[デモの操作方法]
+
+- C2セルをダブルクリックして関数を確認
+- C2セルをクリックし、右下の四角を下にドラッグして関数をコピー
+
+:::
 
 ## Answer
 
-セルD2に以下の関数を入力する。
+sheet2のセルC2に以下の関数を入力し、ドラッグ操作でセルC102までコピーする。
 
-:::answer
+:::details[解答例]
 
 ```
+=IF(ISERROR(SEARCH("(????-??-??)", C2)), "非公開", TRIM(MID(C2, 13, LEN(C2))))
+```
+
+:::
+
+Excel 2021以降やOffice 365では、関数内で`C2:C102`のように複数のセルを一度に指定して、Enterを押すことで、C102セルまで一気に関数が実行される。（スピル機能）
+
+:::details[解答例（スピル機能が使える場合）]
+
+```elm caption="「C2」ではなく「C2:C102」のようにセル範囲を指定"
 =IF(ISERROR(SEARCH("(????-??-??)", C2:C102)), "非公開", TRIM(MID(C2:C102, 13, LEN(C2:C102))))
 ```
 

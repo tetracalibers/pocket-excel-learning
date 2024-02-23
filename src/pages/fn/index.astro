@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content"
-import RootDocument from "../../layout/RootDocument.astro"
+import PageRoot from "@/layout/PageRoot.astro"
 import FunctionSignature from "@/components/fn/FunctionSignature.astro"
 import Breadcrumb from "@/components/article/Breadcrumb.astro"
 import { Heading } from "flowbite-svelte"
@@ -9,7 +9,7 @@ import { SITE_BASE } from "@/site-config"
 const all = await getCollection("fn")
 ---
 
-<RootDocument>
+<PageRoot>
   <div class="w-full max-w-screen-md mx-auto">
     <Breadcrumb />
     <Heading tag="h1" class="mb-10 mt-14">Functions</Heading>
@@ -25,4 +25,4 @@ const all = await getCollection("fn")
       }
     </ul>
   </div>
-</RootDocument>
+</PageRoot>

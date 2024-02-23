@@ -1,5 +1,5 @@
 ---
-import RootDocument from "../layout/RootDocument.astro"
+import PageRoot from "@/layout/PageRoot.astro"
 import { Heading } from "flowbite-svelte"
 import { SITE_TITLE, NAV } from "@/site-config"
 
@@ -7,7 +7,7 @@ const [_, ..._pages] = NAV
 const pages = import.meta.env.DEV ? _pages : _pages.filter((page) => !page.draft)
 ---
 
-<RootDocument>
+<PageRoot>
   <div class="max-w-screen-md mx-auto">
     <Heading tag="h1" class="my-10">{SITE_TITLE}</Heading>
     <ul>
@@ -20,4 +20,4 @@ const pages = import.meta.env.DEV ? _pages : _pages.filter((page) => !page.draft
       }
     </ul>
   </div>
-</RootDocument>
+</PageRoot>

@@ -1,0 +1,26 @@
+---
+import "@/style/global.css"
+import "@/style/pretty-code.css"
+
+import CommonHead from "./head/CommonHead.astro"
+import { SITE_TITLE } from "@/site-config"
+
+interface Props {
+  bodyClass?: string
+}
+
+const { bodyClass = "" } = Astro.props
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <CommonHead />
+    <slot name="head">
+      <title>{SITE_TITLE}</title>
+    </slot>
+  </head>
+  <body class={bodyClass}>
+    <slot />
+  </body>
+</html>

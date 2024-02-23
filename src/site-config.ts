@@ -13,10 +13,5 @@ export const NAV = [
   {
     title: "Excel関数リファレンス",
     href: SITE_BASE + "/fn"
-  },
-  {
-    title: "プレイグラウンド",
-    href: SITE_BASE + "/sheet",
-    draft: true
   }
 ]

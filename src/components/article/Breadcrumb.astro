@@ -1,5 +1,6 @@
 ---
 import { NAV } from "@/site-config"
+import SlashIcon from "@/icons/iconamoon/sign-division-slash-thin.astro"
 
 const routes = Astro.url.pathname.split("/").filter(Boolean)
 const [base, category] = routes
@@ -16,17 +17,7 @@ const prevItems = [NAV[0], current]
           <a href={item.href} class="no-underline">
             {item.title}
           </a>
-          {i < prevItems.length - 1 && (
-            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="7.5 3.5 9 17">
-              <path
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M16 4L8 20"
-              />
-            </svg>
-          )}
+          {i < prevItems.length - 1 && <SlashIcon />}
         </li>
       ))
     }

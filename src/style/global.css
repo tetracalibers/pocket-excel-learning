@@ -18,6 +18,7 @@
   --bg-color: #fff;
   --tx-color: #354259;
 
+  --body-padding-x: 1.5rem;
   --body-padding-y: 2rem;
 }
 
@@ -27,7 +28,7 @@ body {
   font-weight: var(--font-weight-content);
 
   color: var(--tx-color);
-  padding: var(--body-padding-y) 1.5rem;
+  padding: var(--body-padding-y) var(--body-padding-x);
   background-color: var(--bg-color);
   line-height: 2.5rem;
 }

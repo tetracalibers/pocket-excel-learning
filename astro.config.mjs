@@ -6,9 +6,9 @@ import tailwind from "@astrojs/tailwind"
 import AutoImport from "astro-auto-import"
 import { astroMdxDirective, directiveAutoImport } from "./integration/mdx-directive"
 import { resolve } from "node:path"
+import react from "@astrojs/react"
 
 const __dirname = new URL(".", import.meta.url).pathname
-
 const prettyCodeOptions = {
   theme: "dracula",
   keepBackground: false,
@@ -20,11 +20,14 @@ export default defineConfig({
   site: "https://tetracalibers.github.io",
   base: "/pocket-excel-learning",
   integrations: [
-    AutoImport({ imports: [directiveAutoImport] }),
+    AutoImport({
+      imports: [directiveAutoImport]
+    }),
     astroMdxDirective(),
     svelte(),
     mdx(),
-    tailwind()
+    tailwind(),
+    react()
   ],
   markdown: {
     syntaxHighlight: false,

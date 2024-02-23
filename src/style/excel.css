@@ -92,3 +92,8 @@ table.Excel-table tr:first-child > :first-child {
   left: 0;
   z-index: 2;
 }
+
+/** ハイライト */
+.handsontable td.highlight-cell {
+  background-color: #d7f1e1;
+}
