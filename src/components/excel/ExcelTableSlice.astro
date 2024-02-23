@@ -1,0 +1,40 @@
+---
+import MiniExcelTable from "./MiniExcelTable"
+import { decodeColumnAlpha, decodeCell, encodeColumn } from "./utils"
+
+interface Props {
+  data: unknown[][]
+  pickRows: number[]
+  pickColumns: string[]
+  highlightCells?: string[]
+}
+
+const { data, pickRows, pickColumns, highlightCells = [] } = Astro.props
+
+const rowCount = data.length
+const columnCount = data[0].length
+
+const allRowNumber = Array.from({ length: rowCount }, (_, i) => i)
+const allColumnAlpha = Array.from({ length: columnCount }, (_, i) => encodeColumn(i))
+
+const hiddenRows = allRowNumber.filter((row) => !pickRows.includes(row + 1))
+const hiddenColumns = allColumnAlpha
+  .filter((col) => !pickColumns.includes(col))
+  .map(decodeColumnAlpha)
+
+const highlights = highlightCells.map((cell) => ({
+  ...decodeCell(cell),
+  className: "highlight-cell"
+}))
+---
+
+<div class="my-10">
+  <MiniExcelTable
+    data={data}
+    readonly
+    hiddenRows={hiddenRows}
+    hiddenColumns={hiddenColumns}
+    highlights={highlights}
+    client:only="react"
+  />
+</div>

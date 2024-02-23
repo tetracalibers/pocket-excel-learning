@@ -12,8 +12,10 @@ category:
   - string
 ---
 
-import data from "@/data/json/produce101japan-s1-original.json"
+import _data from "@/data/json/produce101japan-s1-original.json"
+import data from "@/data/array/produce101japan-s1-original.json"
 import ExcelDataSlice from "@/components/excel/ExcelDataSlice.astro"
+import ExcelTableSlice from "@/components/excel/ExcelTableSlice.astro"
 import { IF, SEARCH, ISERROR, TRIM, MID, LEN } from "@/lib/formulajs"
 
 export const formula = (cvalue) =>
@@ -23,6 +25,13 @@ export const formula = (cvalue) =>
 
 C列の「生年月日」は現状、`(2001-08-04) 2001年8月4日（22歳）` みたいな形式になっている。
 
+<ExcelTableSlice
+  data={data}
+  pickRows={[1, 2, 101]}
+  pickColumns={["A", "C"]}
+  highlightCells={["C2", "C101"]}
+/>
+
 D列を新規作成し、
 
 - `(xxxx-xx-xx)` の部分を消す
@@ -30,7 +39,7 @@ D列を新規作成し、
 
 <ExcelDataSlice
   header={true}
-  data={data}
+  data={_data}
   rows={[2, 101]}
   columns={["C"]}
   addColumns={[{ name: "D", header: "作業列", source: "C", formula }]}
