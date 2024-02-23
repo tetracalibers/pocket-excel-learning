@@ -7,7 +7,7 @@ interface Props {
   data: unknown[][]
   readonly?: boolean
   hiddenRows: number[]
-  hiddenColumns: number[]
+  hiddenCols: number[]
   highlights: { row: number; col: number; className: string }[]
 }
 
@@ -15,7 +15,7 @@ const MiniExcelTable: React.FC<Props> = ({
   data,
   readonly = false,
   hiddenRows,
-  hiddenColumns,
+  hiddenCols,
   highlights
 }) => {
   return (
@@ -31,7 +31,7 @@ const MiniExcelTable: React.FC<Props> = ({
         }}
         hiddenColumns={{
           indicators: true,
-          columns: hiddenColumns
+          columns: hiddenCols
         }}
         cell={highlights}
         width="100%"

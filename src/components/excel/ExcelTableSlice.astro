@@ -1,26 +1,36 @@
 ---
 import MiniExcelTable from "./MiniExcelTable"
-import { decodeColumnAlpha, decodeCell, encodeColumn } from "./utils"
+import { decodeColumnAlpha, decodeCell } from "./utils"
 
 interface Props {
   data: unknown[][]
   pickRows: number[]
-  pickColumns: string[]
+  pickCols: string[]
   highlightCells?: string[]
 }
 
-const { data, pickRows, pickColumns, highlightCells = [] } = Astro.props
+const { data, pickRows, pickCols, highlightCells = [] } = Astro.props
 
-const rowCount = data.length
-const columnCount = data[0].length
+const pickColsAsIdx = pickCols.map(decodeColumnAlpha)
 
-const allRowNumber = Array.from({ length: rowCount }, (_, i) => i)
-const allColumnAlpha = Array.from({ length: columnCount }, (_, i) => encodeColumn(i))
+const allRowCount = data.length
+const allColCount = data[0].length
 
-const hiddenRows = allRowNumber.filter((row) => !pickRows.includes(row + 1))
-const hiddenColumns = allColumnAlpha
-  .filter((col) => !pickColumns.includes(col))
-  .map(decodeColumnAlpha)
+const firstRow = Math.max(Math.min(...pickRows) - 1, 0)
+const firstCol = Math.max(Math.min(...pickColsAsIdx), 0)
+
+const lastRow = Math.min(Math.max(...pickRows) + 1, allRowCount)
+const lastCol = Math.min(Math.max(...pickColsAsIdx) + 2, allColCount)
+
+// hiddenするとはいえ全てのセルのデータを渡すとメモリを食うので、インジケータが表示される範囲のみ抽出
+const sliced = data.slice(firstRow, lastRow).map((row) => row.slice(firstCol, lastCol))
+
+const hiddenRows = Array.from({ length: sliced.length }, (_, i) => i).filter(
+  (_, i) => !pickRows.includes(i + 1 + firstRow)
+)
+const hiddenCols = Array.from({ length: sliced[0].length }, (_, i) => i).filter(
+  (_, i) => !pickColsAsIdx.includes(i + firstCol)
+)
 
 const highlights = highlightCells.map((cell) => ({
   ...decodeCell(cell),
@@ -30,11 +40,11 @@ const highlights = highlightCells.map((cell) => ({
 
 <div class="my-10">
   <MiniExcelTable
-    data={data}
+    data={sliced}
     readonly
     hiddenRows={hiddenRows}
-    hiddenColumns={hiddenColumns}
+    hiddenCols={hiddenCols}
     highlights={highlights}
-    client:only="react"
+    client:load
   />
 </div>
