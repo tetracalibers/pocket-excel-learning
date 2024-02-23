@@ -46,3 +46,14 @@ a {
   text-decoration-thickness: 1px;
   text-decoration-color: #cbd5e1;
 }
+
+strong {
+  --_marker-rgb: 253, 255, 171;
+  font-weight: 500;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0) 70%,
+    rgba(var(--_marker-rgb), 0.2) 70%,
+    rgb(var(--_marker-rgb)) 85%,
+    rgba(var(--_marker-rgb), 0.2)
+  );
+}

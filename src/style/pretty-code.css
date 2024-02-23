@@ -44,6 +44,11 @@ pre > code > [data-line] {
   border-radius: 0.3em;
 }
 
+/** Safari, iOS で上下が見切れる問題への対処 */
+span[data-rehype-pretty-code-figure] {
+  display: inline-block;
+}
+
 /** title */
 
 div[data-rehype-pretty-code-title] + pre {
