@@ -1,7 +1,4 @@
 import { HotTable } from "@handsontable/react"
-import { registerAllModules } from "handsontable/registry"
-
-registerAllModules()
 
 interface Props {
   data: unknown[][]

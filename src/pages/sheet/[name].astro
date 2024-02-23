@@ -1,6 +1,7 @@
 ---
 import WorksheetPageRoot from "@/layout/WorksheetPageRoot.astro"
 import ExcelTable from "@/components/excel/ExcelTable.tsx"
+import InitializeExcelModule from "@/components/excel/InitializeExcelModule.astro"
 
 export async function getStaticPaths() {
   const sheets = import.meta.glob("../../data/array/*.json")
@@ -21,5 +22,6 @@ const { data } = Astro.props
 ---
 
 <WorksheetPageRoot>
+  <InitializeExcelModule />
   <ExcelTable data={data} readonly client:load />
 </WorksheetPageRoot>
