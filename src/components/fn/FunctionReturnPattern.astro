@@ -14,8 +14,8 @@ const { patterns } = Astro.props
     {
       patterns.map((pattern) => (
         <TableBodyRow class="border-none">
-          <TableBodyCell class="text-inherit py-2">{pattern.if}</TableBodyCell>
-          <TableBodyCell class="text-inherit py-2">{pattern.summary}</TableBodyCell>
+          <TableBodyCell class="text-inherit py-2 font-normal">{pattern.if}</TableBodyCell>
+          <TableBodyCell class="text-inherit py-2 font-normal">{pattern.summary}</TableBodyCell>
         </TableBodyRow>
       ))
     }
