@@ -1,0 +1,93 @@
+---
+import { decodeColumnAlpha, decodeCell, encodeColumn } from "./utils"
+import MiniExcelDemo from "./MiniExcelDemo"
+
+interface Props {
+  source: {
+    data: any[][]
+    sheetName: string
+  }
+  formula: Record<string, string> // { [cellAddress]: formula }
+  pickRows: number[]
+  pickCols: string[]
+  emptyCols?: string[]
+  emptyRows?: number[]
+  sheetName: string
+  highlightCells?: string[]
+}
+
+const {
+  source,
+  formula,
+  pickCols,
+  pickRows,
+  sheetName,
+  emptyCols = [],
+  emptyRows = [],
+  highlightCells = []
+} = Astro.props
+
+const data = source.data
+
+const pickColsAsIdx = pickCols.map(decodeColumnAlpha)
+const emptyColsAsIdx = emptyCols.map(decodeColumnAlpha)
+
+const allRowCount = data.length
+const allColCount = data[0].length
+
+const firstRow = Math.max(Math.min(...pickRows) - 1, 0)
+const firstCol = Math.max(Math.min(...pickColsAsIdx), 0)
+
+const lastRow = Math.min(Math.max(...pickRows) + 1, allRowCount)
+const lastCol = Math.min(Math.max(...pickColsAsIdx) + 2, allColCount)
+
+// hiddenするとはいえ全てのセルを表示するとメモリを食うので、インジケータが表示される範囲のみ抽出
+const sliced = source.data.slice(firstRow, lastRow).map((row) => row.slice(firstCol, lastCol))
+
+// emptyColsのセルを空文字列にする
+emptyColsAsIdx.forEach((col) => {
+  // ヘッダは残したいのでi=1から
+  for (let i = 1; i < sliced.length; i++) {
+    sliced[i][col - firstCol] = ""
+  }
+})
+
+// emptyRowsのセルを空文字列にする
+emptyRows.forEach((row) => {
+  // ヘッダは残したいのでi=1から
+  for (let i = 1; i < sliced[0].length; i++) {
+    sliced[row - firstRow][i] = ""
+  }
+})
+
+const formulaCells = Object.keys(formula).map(decodeCell)
+
+// formulaをセット
+formulaCells.forEach(({ row, col }) => {
+  const rowIdx = row - firstRow
+  const colIdx = col - firstCol
+  sliced[rowIdx][colIdx] = formula[`${encodeColumn(col)}${row + 1}`]
+})
+
+const hiddenRows = Array.from({ length: sliced.length }, (_, i) => i).filter(
+  (_, i) => !pickRows.includes(i + 1 + firstRow)
+)
+const hiddenCols = Array.from({ length: sliced[0].length }, (_, i) => i).filter(
+  (_, i) => !pickColsAsIdx.includes(i + firstCol)
+)
+
+const highlights = highlightCells.map((cell) => ({
+  ...decodeCell(cell),
+  className: "highlight-cell"
+}))
+---
+
+<MiniExcelDemo
+  source={source}
+  data={sliced}
+  hiddenRows={hiddenRows}
+  hiddenCols={hiddenCols}
+  sheetName={sheetName}
+  highlights={highlights}
+  client:load
+/>
