@@ -31,7 +31,7 @@ const { Content, headings } = await entry.render()
       <table class="grid auto-cols-[minmax(0,max-content)] leading-snug gap-y-4 py-3">
         <tbody class="contents">
           <tr class="grid grid-cols-subgrid col-span-2 items-baseline gap-6">
-            <th class="flex whitespace-nowrap">使う関数</th>
+            <th class="flex whitespace-nowrap font-normal">使う関数</th>
             <td>
               <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
                 {
@@ -45,7 +45,7 @@ const { Content, headings } = await entry.render()
             </td>
           </tr>
           <tr class="grid grid-cols-subgrid col-span-2 items-baseline gap-6">
-            <th class="flex whitespace-nowrap">カテゴリー</th>
+            <th class="flex whitespace-nowrap font-normal">カテゴリー</th>
             <td>
               <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
                 {
@@ -59,7 +59,7 @@ const { Content, headings } = await entry.render()
             </td>
           </tr>
           <tr class="grid grid-cols-subgrid col-span-2 items-baseline gap-6">
-            <th class="flex whitespace-nowrap">使えるバージョン</th>
+            <th class="flex whitespace-nowrap font-normal">使えるバージョン</th>
             <td>
               <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
                 {
@@ -75,7 +75,7 @@ const { Content, headings } = await entry.render()
           {
             data.sheet && (
               <tr class="grid grid-cols-subgrid col-span-2 items-baseline gap-6">
-                <th class="flex whitespace-nowrap">作業に使うデータ</th>
+                <th class="flex whitespace-nowrap font-normal">作業に使うデータ</th>
                 <td>
                   <a
                     href={`${SITE_BASE}/sheet/${data.sheet}`}
