@@ -1,0 +1,25 @@
+---
+import WorksheetPageRoot from "@/layout/WorksheetPageRoot.astro"
+import ExcelTable from "@/components/excel/ExcelTable.tsx"
+
+export async function getStaticPaths() {
+  const sheets = import.meta.glob("../../data/array/*.json")
+
+  return await Promise.all(
+    Object.keys(sheets).map(async (path) => {
+      const data: any = await sheets[path]()
+      const name = path.replace("../../data/array/", "").replace(".json", "")
+      return {
+        params: { name },
+        props: { data: data.default }
+      }
+    })
+  )
+}
+
+const { data } = Astro.props
+---
+
+<WorksheetPageRoot>
+  <ExcelTable data={data} readonly client:load />
+</WorksheetPageRoot>
