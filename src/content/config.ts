@@ -2,10 +2,11 @@ import { z, defineCollection, reference } from "astro:content"
 
 const COLORS = {
   string: "rgb(219, 237, 219)",
-  logical: "rgb(232, 222, 238)"
+  logical: "rgb(232, 222, 238)",
+  ref: "#FAF3DD"
 }
 
-const zCategory = z.enum(["lookup", "string", "condition"]).transform((val) => {
+const zCategory = z.enum(["lookup", "string", "condition", "ref"]).transform((val) => {
   if (val === "lookup")
     return {
       label: "表引き",
@@ -21,6 +22,7 @@ const zCategory = z.enum(["lookup", "string", "condition"]).transform((val) => {
       label: "条件分岐",
       color: COLORS.logical
     }
+  if (val === "ref") return { label: "セル参照", color: COLORS.ref }
 })
 
 const zAvailableVersion = z
