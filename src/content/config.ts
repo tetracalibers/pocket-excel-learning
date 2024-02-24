@@ -2,10 +2,11 @@ import { z, defineCollection, reference } from "astro:content"
 
 const COLORS = {
   string: "rgb(219, 237, 219)",
-  logical: "rgb(232, 222, 238)"
+  logical: "rgb(232, 222, 238)",
+  ref: "#FAF3DD"
 }
 
-const zCategory = z.enum(["lookup", "string", "condition"]).transform((val) => {
+const zCategory = z.enum(["lookup", "string", "condition", "ref"]).transform((val) => {
   if (val === "lookup")
     return {
       label: "表引き",
@@ -21,6 +22,7 @@ const zCategory = z.enum(["lookup", "string", "condition"]).transform((val) => {
       label: "条件分岐",
       color: COLORS.logical
     }
+  if (val === "ref") return { label: "セル参照", color: COLORS.ref }
 })
 
 const zAvailableVersion = z
@@ -90,6 +92,14 @@ const functionCollections = defineCollection({
   })
 })
 
+const topicCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    category: zCategory
+  })
+})
+
 const questionsCollection = defineCollection({
   type: "content",
   schema: z.object({
@@ -97,7 +107,7 @@ const questionsCollection = defineCollection({
     created: z.coerce.date(),
     updated: z.coerce.date().optional(),
     category: zCategory.array(),
-    topics: z.array(z.string()).default([]),
+    topics: z.array(reference("topic")).default([]),
     useFn: z.array(reference("fn")).default([]),
     available: zAvailableVersion,
     sheet: z.string().optional()
@@ -106,5 +116,6 @@ const questionsCollection = defineCollection({
 
 export const collections = {
   fn: functionCollections,
+  topic: topicCollection,
   questions: questionsCollection
 }
