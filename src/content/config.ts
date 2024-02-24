@@ -105,7 +105,7 @@ const questionsCollection = defineCollection({
     created: z.coerce.date(),
     updated: z.coerce.date().optional(),
     category: zCategory.array(),
-    topics: z.array(z.string()).default([]),
+    topics: z.array(reference("topic")).default([]),
     useFn: z.array(reference("fn")).default([]),
     available: zAvailableVersion,
     sheet: z.string().optional()
