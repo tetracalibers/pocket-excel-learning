@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content"
+import PageRoot from "@/layout/PageRoot.astro"
+import Breadcrumb from "@/components/article/Breadcrumb.astro"
+import { Heading } from "flowbite-svelte"
+import { SITE_BASE } from "@/site-config"
+
+const all = await getCollection("topic")
+---
+
+<PageRoot>
+  <div class="max-w-screen-md mx-auto">
+    <Breadcrumb />
+    <Heading tag="h1" class="mb-10 mt-14">Topics</Heading>
+    <ul>
+      {
+        all.map((q) => (
+          <li>
+            <a href={`${SITE_BASE}/topic/${q.slug}`}>{q.data.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</PageRoot>
