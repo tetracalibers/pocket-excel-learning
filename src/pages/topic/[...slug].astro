@@ -1,0 +1,62 @@
+---
+import { getCollection } from "astro:content"
+import ArticlePageRoot from "@/layout/ArticlePageRoot.astro"
+import ColorTag from "@/components/tag/ColorTag.astro"
+import Breadcrumb from "@/components/article/Breadcrumb.astro"
+import { Heading, Hr } from "flowbite-svelte"
+
+export async function getStaticPaths() {
+  const entries = await getCollection("topic")
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry }
+  }))
+}
+
+const { entry } = Astro.props
+const { data } = entry
+const { Content } = await entry.render()
+
+const { category } = data
+---
+
+<ArticlePageRoot>
+  <main class="max-w-screen-md mx-auto">
+    <Breadcrumb />
+    <article>
+      <Heading tag="h1" class="mb-10 mt-14 font-normal">{data.title}</Heading>
+      <table>
+        <tr>
+          <th class="flex mr-6 whitespace-nowrap font-normal">カテゴリー</th>
+          <td>
+            <ColorTag {...category} />
+          </td>
+        </tr>
+      </table>
+      <Hr />
+      <div class="_content">
+        <Content />
+      </div>
+    </article>
+  </main>
+</ArticlePageRoot>
+
+<style>
+  ._content :global(h2) {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 400;
+  }
+
+  ._content :global(h3) {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 400;
+  }
+</style>
