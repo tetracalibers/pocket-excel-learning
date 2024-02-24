@@ -90,6 +90,14 @@ const functionCollections = defineCollection({
   })
 })
 
+const topicCollection = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    category: zCategory
+  })
+})
+
 const questionsCollection = defineCollection({
   type: "content",
   schema: z.object({
@@ -106,5 +114,6 @@ const questionsCollection = defineCollection({
 
 export const collections = {
   fn: functionCollections,
+  topic: topicCollection,
   questions: questionsCollection
 }
