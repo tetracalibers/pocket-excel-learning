@@ -10,12 +10,8 @@ const OUTPUT_DIR = path.join(__dirname, "../src/data/array")
  * @return {string[]}
  */
 const getHeaders = (data) => {
-  // Object.keysの要素数が最も大きいものを採用
-  const keys = data.map((row) => Object.keys(row))
-  const header = keys.reduce((acc, cur) => {
-    return cur.length > acc.length ? cur : acc
-  }, [])
-  return header
+  const [first] = data
+  return Object.keys(first)
 }
 
 /**
