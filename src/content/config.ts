@@ -110,7 +110,8 @@ const questionsCollection = defineCollection({
     topics: z.array(reference("topic")).default([]),
     useFn: z.array(reference("fn")).default([]),
     available: zAvailableVersion,
-    sheet: z.string().optional()
+    sheet: z.string().optional(),
+    draft: z.boolean().default(false)
   })
 })
 
