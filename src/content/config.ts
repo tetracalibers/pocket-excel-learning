@@ -86,8 +86,7 @@ const zValueType = z.enum(["string", "number", "boolean", "error"]).transform((v
 
 const zFnReturn = z.object({
   type: zValueType.optional(),
-  summary: z.coerce.string(),
-  if: z.string().optional()
+  summary: z.coerce.string()
 })
 export type FnReturn = z.infer<typeof zFnReturn>
 
@@ -97,7 +96,7 @@ const functionCollections = defineCollection({
     name: z.string(),
     summary: z.string(),
     args: z.array(zFnArgument).default([]),
-    return: z.union([zFnReturn, z.array(zFnReturn.required())]).optional(),
+    return: z.union([zFnReturn, z.array(zFnReturn.extend({ if: z.string() }))]).optional(),
     category: zCategory,
     available: zAvailableVersion,
     similarFn: z.array(reference("fn")).default([]),
