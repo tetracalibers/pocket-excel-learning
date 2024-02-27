@@ -91,7 +91,9 @@ const functionCollections = defineCollection({
     args: z.array(zFnArgument).default([]),
     return: z.union([zFnReturn, z.array(zFnReturn.required())]).optional(),
     category: zCategory,
-    available: zAvailableVersion
+    available: zAvailableVersion,
+    similarFn: z.array(reference("fn")).default([]),
+    relatedTopics: z.array(reference("topic")).default([])
   })
 })
 
