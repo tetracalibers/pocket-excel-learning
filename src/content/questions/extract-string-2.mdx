@@ -1,0 +1,24 @@
+---
+title: 括弧が含まれていればその中の文字列を抽出する
+created: 2024-02-26
+sheet: produce101japan-members-2
+useFn:
+  - if
+  - iserror
+  - search
+  - mid
+  - len
+category:
+  - string
+draft: true
+---
+
+## Question
+
+- 年齢のみ抽出
+
+## Answer
+
+```
+=IF(ISERROR(SEARCH("（*歳）",D2:D102)), D2:D102, MID(D2:D102,SEARCH("（*歳）", D2:D102), LEN(D2:D102)))
+```

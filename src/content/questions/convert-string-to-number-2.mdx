@@ -1,0 +1,23 @@
+---
+title: 文字列から単位を取り除いて数値に変換する（桁数が異なる場合）
+created: 2024-02-26
+sheet: produce101japan-members-3
+useFn:
+  - if
+  - value
+  - left
+  - find
+category:
+  - string
+draft: true
+---
+
+## Question
+
+- 順位から「位」を取り除いて数値に変換する
+
+## Answer
+
+```
+=IF(data!L2:L102="辞退","-", VALUE(LEFT(data!L2:L102, FIND("位", data!L2:L102) - 1)))
+```

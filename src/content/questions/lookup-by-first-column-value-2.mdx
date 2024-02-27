@@ -1,0 +1,21 @@
+---
+title: コピーを利用して複数項目を一気に検索する
+created: 2024-02-26
+sheet: produce101japan-members-3
+useFn:
+  - vlookup
+  - column
+category:
+  - lookup
+draft: true
+---
+
+## Question
+
+- コピーを利用して複数項目を一気に検索
+
+## Answer
+
+```
+=VLOOKUP($E4, data!$A$1:$N$102, COLUMN(K1), FALSE)
+```
