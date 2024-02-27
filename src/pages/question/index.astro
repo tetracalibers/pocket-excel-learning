@@ -5,7 +5,9 @@ import Breadcrumb from "@/components/article/Breadcrumb.astro"
 import { Heading } from "flowbite-svelte"
 import { SITE_BASE } from "@/site-config"
 
-const all = await getCollection("questions")
+const all = await getCollection("questions", (entry) => {
+  return import.meta.env.DEV || !entry.data.draft
+})
 ---
 
 <PageRoot>
