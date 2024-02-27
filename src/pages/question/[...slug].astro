@@ -11,7 +11,9 @@ import { Heading, Li, Hr } from "flowbite-svelte"
 import { SITE_BASE } from "@/site-config"
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection("questions")
+  const blogEntries = await getCollection("questions", (entry) => {
+    return import.meta.env.DEV || !entry.data.draft
+  })
   return blogEntries.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry }
