@@ -1,0 +1,21 @@
+---
+title: 表の特定の列の値から前にある列の値を求める
+created: 2024-02-26
+sheet: produce101japan-members-3
+useFn:
+  - index
+  - match
+category:
+  - lookup
+draft: true
+---
+
+## Question
+
+- 最終順位から名前を検索
+
+## Answer
+
+```
+=INDEX(data!A2:A102, MATCH(C8 & "位", data!L2:L102, 0))
+```

@@ -1,0 +1,21 @@
+---
+title: 表の1列目の値から他の列の値を求める
+created: 2024-02-26
+sheet: produce101japan-members-3
+useFn:
+  - vlookup
+  - column
+category:
+  - lookup
+draft: true
+---
+
+## Question
+
+- 名前から最終順位を検索
+
+## Answer
+
+```
+=VLOOKUP(C3, data!A1:N102, COLUMN(L1), FALSE)
+```

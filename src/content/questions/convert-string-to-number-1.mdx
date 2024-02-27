@@ -1,0 +1,22 @@
+---
+title: 文字列から単位を取り除いて数値に変換する
+created: 2024-02-26
+sheet: produce101japan-members-3
+useFn:
+  - if
+  - value
+  - left
+category:
+  - string
+draft: true
+---
+
+## Question
+
+- 身長から「cm」を取り除いて数値に変換する
+
+## Answer
+
+```
+=IF(data!G2:G102="-", data!G2:G102, VALUE(LEFT(data!G2:G102, 3)))
+```

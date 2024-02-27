@@ -3,27 +3,38 @@ import { z, defineCollection, reference } from "astro:content"
 const COLORS = {
   string: "rgb(219, 237, 219)",
   logical: "rgb(232, 222, 238)",
-  ref: "#FAF3DD"
+  ref: "#FAF3DD",
+  lookup: "#F3EEEE",
+  convert: "#FAECEC",
+  total: "#F9F2F5",
+  rank: "#F9F2F5",
+  sequence: "#E9F3F7"
 }
 
-const zCategory = z.enum(["lookup", "string", "condition", "ref"]).transform((val) => {
-  if (val === "lookup")
-    return {
-      label: "表引き",
-      color: "#fdba74"
-    }
-  if (val === "string")
-    return {
-      label: "文字列操作",
-      color: COLORS.string
-    }
-  if (val === "condition")
-    return {
-      label: "条件分岐",
-      color: COLORS.logical
-    }
-  if (val === "ref") return { label: "セル参照", color: COLORS.ref }
-})
+const zCategory = z
+  .enum(["lookup", "string", "condition", "ref", "convert", "total", "rank", "sequence"])
+  .transform((val) => {
+    if (val === "lookup")
+      return {
+        label: "表引き",
+        color: COLORS.lookup
+      }
+    if (val === "string")
+      return {
+        label: "文字列操作",
+        color: COLORS.string
+      }
+    if (val === "condition")
+      return {
+        label: "条件分岐",
+        color: COLORS.logical
+      }
+    if (val === "ref") return { label: "セル参照", color: COLORS.ref }
+    if (val === "convert") return { label: "データ型の変換", color: COLORS.convert }
+    if (val === "total") return { label: "集計", color: COLORS.total }
+    if (val === "rank") return { label: "データの順序", color: COLORS.rank }
+    if (val === "sequence") return { label: "連続データ", color: COLORS.sequence }
+  })
 
 const zAvailableVersion = z
   .array(
@@ -74,9 +85,8 @@ const zValueType = z.enum(["string", "number", "boolean", "error"]).transform((v
 })
 
 const zFnReturn = z.object({
-  type: zValueType,
-  summary: z.coerce.string(),
-  if: z.string().optional()
+  type: zValueType.optional(),
+  summary: z.coerce.string()
 })
 export type FnReturn = z.infer<typeof zFnReturn>
 
@@ -86,9 +96,12 @@ const functionCollections = defineCollection({
     name: z.string(),
     summary: z.string(),
     args: z.array(zFnArgument).default([]),
-    return: z.union([zFnReturn, z.array(zFnReturn.required())]).optional(),
+    return: z.union([zFnReturn, z.array(zFnReturn.extend({ if: z.string() }))]).optional(),
     category: zCategory,
-    available: zAvailableVersion
+    available: zAvailableVersion,
+    similarFn: z.array(reference("fn")).default([]),
+    togetherFn: z.array(reference("fn")).default([]),
+    relatedTopics: z.array(reference("topic")).default([])
   })
 })
 
@@ -110,7 +123,8 @@ const questionsCollection = defineCollection({
     topics: z.array(reference("topic")).default([]),
     useFn: z.array(reference("fn")).default([]),
     available: zAvailableVersion,
-    sheet: z.string().optional()
+    sheet: z.string().optional(),
+    draft: z.boolean().default(false)
   })
 })
 

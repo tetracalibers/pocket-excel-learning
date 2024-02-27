@@ -1,0 +1,26 @@
+---
+title: 矢印の後の文字列を抽出する
+created: 2024-02-26
+sheet: produce101japan-members-2
+useFn:
+  - if
+  - iserror
+  - find
+  - mid
+  - len
+category:
+  - string
+draft: true
+---
+
+## Question
+
+TODO: produce101japan-members-2.csvのクラスをデータクレンジングする
+
+- 再評価後のクラスを抽出する
+
+## Answer
+
+```
+=IF(ISERROR(FIND("→",L2:L102)), L2:L102, MID(L2:L102,FIND("→",L2:L102)+1,LEN(L2:L102)))
+```

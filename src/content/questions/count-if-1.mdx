@@ -1,0 +1,20 @@
+---
+title: 同じ値ごとにカウントした表を作成する
+created: 2024-02-26
+sheet: produce101japan-members-3
+useFn:
+  - countif
+category:
+  - total
+draft: true
+---
+
+## Question
+
+- クラスごとの人数を求める
+
+## Answer
+
+```
+=COUNTIF(data!I$2:I$102, $I4)
+```

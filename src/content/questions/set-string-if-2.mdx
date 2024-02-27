@@ -1,0 +1,22 @@
+---
+title: 特定の形式でない文字列は同じ文字列に統一する
+created: 2024-02-26
+sheet: produce101japan-members-1
+useFn:
+  - if
+  - iserror
+  - find
+category:
+  - string
+draft: true
+---
+
+## Question
+
+- 最終順位のデータクレンジング
+
+## Answer
+
+```
+=IF(ISERROR(FIND("位",Q2:Q102)),"辞退", Q2:Q102)
+```
