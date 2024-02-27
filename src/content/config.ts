@@ -4,10 +4,11 @@ const COLORS = {
   string: "rgb(219, 237, 219)",
   logical: "rgb(232, 222, 238)",
   ref: "#FAF3DD",
-  lookup: "#F3EEEE"
+  lookup: "#F3EEEE",
+  convert: "#FAECEC"
 }
 
-const zCategory = z.enum(["lookup", "string", "condition", "ref"]).transform((val) => {
+const zCategory = z.enum(["lookup", "string", "condition", "ref", "convert"]).transform((val) => {
   if (val === "lookup")
     return {
       label: "表引き",
@@ -24,6 +25,7 @@ const zCategory = z.enum(["lookup", "string", "condition", "ref"]).transform((va
       color: COLORS.logical
     }
   if (val === "ref") return { label: "セル参照", color: COLORS.ref }
+  if (val === "convert") return { label: "データ型の変換", color: COLORS.convert }
 })
 
 const zAvailableVersion = z
