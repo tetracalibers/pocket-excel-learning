@@ -5,28 +5,32 @@ const COLORS = {
   logical: "rgb(232, 222, 238)",
   ref: "#FAF3DD",
   lookup: "#F3EEEE",
-  convert: "#FAECEC"
+  convert: "#FAECEC",
+  total: "#F9F2F5"
 }
 
-const zCategory = z.enum(["lookup", "string", "condition", "ref", "convert"]).transform((val) => {
-  if (val === "lookup")
-    return {
-      label: "表引き",
-      color: COLORS.lookup
-    }
-  if (val === "string")
-    return {
-      label: "文字列操作",
-      color: COLORS.string
-    }
-  if (val === "condition")
-    return {
-      label: "条件分岐",
-      color: COLORS.logical
-    }
-  if (val === "ref") return { label: "セル参照", color: COLORS.ref }
-  if (val === "convert") return { label: "データ型の変換", color: COLORS.convert }
-})
+const zCategory = z
+  .enum(["lookup", "string", "condition", "ref", "convert", "total"])
+  .transform((val) => {
+    if (val === "lookup")
+      return {
+        label: "表引き",
+        color: COLORS.lookup
+      }
+    if (val === "string")
+      return {
+        label: "文字列操作",
+        color: COLORS.string
+      }
+    if (val === "condition")
+      return {
+        label: "条件分岐",
+        color: COLORS.logical
+      }
+    if (val === "ref") return { label: "セル参照", color: COLORS.ref }
+    if (val === "convert") return { label: "データ型の変換", color: COLORS.convert }
+    if (val === "total") return { label: "集計", color: COLORS.total }
+  })
 
 const zAvailableVersion = z
   .array(
