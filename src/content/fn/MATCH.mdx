@@ -1,0 +1,16 @@
+---
+name: MATCH
+summary: 指定したデータが指定した範囲内の何番目にあるかを調べる関数
+args:
+  - summary: 検索する値
+  - summary: 検索範囲（1列または1行に収まる範囲）
+  - summary: 検索方法（0:完全一致、1:範囲内で最大値に近い値、-1:範囲内で最小値に近い値）
+return:
+  - if: 検索する値が検索範囲内に存在する場合
+    summary: 検索範囲内の何番目にあるかを表す数値
+    type: number
+  - if: 検索する値が見つからない && 検索方法が0の場合
+    summary: "#N/Aエラー"
+    type: error
+category: lookup
+---

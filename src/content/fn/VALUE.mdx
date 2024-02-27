@@ -1,0 +1,14 @@
+---
+name: VALUE
+summary: 数値を表す文字列を数値に変換する関数
+args:
+  - summary: 文字列
+return:
+  - if: 指定した文字列が数値・日付・時刻を表す場合
+    summary: 数値
+    type: number
+  - if: 数値に変換できない文字列を指定した場合
+    summary: "#VALUEエラー"
+    type: error
+category: convert
+---
