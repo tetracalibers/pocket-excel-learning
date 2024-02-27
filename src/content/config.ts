@@ -77,7 +77,7 @@ const zValueType = z.enum(["string", "number", "boolean", "error"]).transform((v
 })
 
 const zFnReturn = z.object({
-  type: zValueType,
+  type: zValueType.optional(),
   summary: z.coerce.string(),
   if: z.string().optional()
 })
