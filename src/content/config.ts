@@ -7,11 +7,12 @@ const COLORS = {
   lookup: "#F3EEEE",
   convert: "#FAECEC",
   total: "#F9F2F5",
-  rank: "#F9F2F5"
+  rank: "#F9F2F5",
+  sequence: "#E9F3F7"
 }
 
 const zCategory = z
-  .enum(["lookup", "string", "condition", "ref", "convert", "total", "rank"])
+  .enum(["lookup", "string", "condition", "ref", "convert", "total", "rank", "sequence"])
   .transform((val) => {
     if (val === "lookup")
       return {
@@ -32,6 +33,7 @@ const zCategory = z
     if (val === "convert") return { label: "データ型の変換", color: COLORS.convert }
     if (val === "total") return { label: "集計", color: COLORS.total }
     if (val === "rank") return { label: "データの順序", color: COLORS.rank }
+    if (val === "sequence") return { label: "連続データ", color: COLORS.sequence }
   })
 
 const zAvailableVersion = z
