@@ -4,6 +4,7 @@ import ArticlePageRoot from "@/layout/ArticlePageRoot.astro"
 import ColorTag from "@/components/tag/ColorTag.astro"
 import FunctionSignature from "@/components/fn/FunctionSignature.astro"
 import FunctionReturn from "@/components/fn/FunctionReturn.astro"
+import FunctionArgument from "@/components/fn/FunctionArgument.astro"
 import Breadcrumb from "@/components/article/Breadcrumb.astro"
 import { Heading, Hr } from "flowbite-svelte"
 import TopicTag from "@/components/tag/TopicTag.astro"
@@ -31,6 +32,15 @@ const { category } = data
       <Heading tag="h1" class="mb-10 mt-14 font-normal">{data.name}</Heading>
       <FunctionSignature name={data.name} args={data.args} coloring />
       <p class="my-6">{data.summary}</p>
+      <Hr />
+      {
+        data.args.length > 0 && (
+          <>
+            <h2>引数の詳細</h2>
+            <FunctionArgument args={data.args} />
+          </>
+        )
+      }
       {
         data.return && (
           <>
