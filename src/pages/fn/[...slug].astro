@@ -75,6 +75,22 @@ const { category } = data
             </tr>
           )
         }
+        {
+          data.togetherFn.length > 0 && (
+            <tr>
+              <th class="flex mr-6 whitespace-nowrap font-normal">よく一緒に使う関数</th>
+              <td>
+                <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+                  {data.togetherFn.map((fn) => (
+                    <li>
+                      <FunctionTag slug={fn.slug} />
+                    </li>
+                  ))}
+                </ul>
+              </td>
+            </tr>
+          )
+        }
       </table>
       <Hr />
       <div class="_content">
