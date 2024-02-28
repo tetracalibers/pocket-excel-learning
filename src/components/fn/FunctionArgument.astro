@@ -6,14 +6,18 @@ interface Props {
 }
 
 const { args } = Astro.props
+
+const hues = args.map((_, i) => i * (360 / args.length) + "deg")
 ---
 
 <div class="grid md:grid-cols-2 gap-4 pb-8 leading-loose text-sm">
   {
-    args.map((arg) => (
+    args.map((arg, i) => (
       <div class="pt-4 px-4">
         <div>
-          <span class="text-base">{arg.summary}</span>
+          <span class="text-base _arg-name" style={`--hue: ${hues[i]}`}>
+            {arg.summary}
+          </span>
           {(arg.optional || arg.default) && <span>（省略可能）</span>}
         </div>
         {arg.detail && <p class="pt-2 ps-4">{arg.detail}</p>}
@@ -34,3 +38,12 @@ const { args } = Astro.props
     ))
   }
 </div>
+
+<style>
+  ._arg-name {
+    font-family: var(--font-code);
+    font-weight: var(--font-weight-code);
+
+    background: linear-gradient(rgba(255, 255, 255, 0) 40%, hsl(var(--hue), 100%, 95%) 70%);
+  }
+</style>
