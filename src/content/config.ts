@@ -39,7 +39,7 @@ const zCategory = z
 const zAvailableVersion = z
   .array(
     z.enum(["365", "2021", "old"]).transform((val) => {
-      if (val === "365") return "Office 365"
+      if (val === "365") return "Microsoft 365"
       if (val === "2021") return "Excel 2021"
       if (val === "old") return "古いExcelでも可"
     })
