@@ -6,6 +6,7 @@ import FunctionSignature from "@/components/fn/FunctionSignature.astro"
 import FunctionReturn from "@/components/fn/FunctionReturn.astro"
 import Breadcrumb from "@/components/article/Breadcrumb.astro"
 import { Heading, Hr } from "flowbite-svelte"
+import TopicTag from "@/components/tag/TopicTag.astro"
 import FunctionTag from "@/components/tag/FunctionTag.astro"
 
 export async function getStaticPaths() {
@@ -59,6 +60,22 @@ const { category } = data
             <ColorTag {...category} />
           </td>
         </tr>
+        {
+          data.relatedTopics.length > 0 && (
+            <tr>
+              <th class="flex mr-6 whitespace-nowrap font-normal">関連するトピック</th>
+              <td>
+                <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+                  {data.relatedTopics.map((topic) => (
+                    <li>
+                      <TopicTag slug={topic.slug} />
+                    </li>
+                  ))}
+                </ul>
+              </td>
+            </tr>
+          )
+        }
         {
           data.similarFn.length > 0 && (
             <tr>
