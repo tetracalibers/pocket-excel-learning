@@ -29,7 +29,15 @@ const { category } = data
       <Heading tag="h1" class="mb-10 mt-14 font-normal">{data.name}</Heading>
       <FunctionSignature name={data.name} args={data.args} coloring />
       <p class="my-6">{data.summary}</p>
-      <table>
+      {
+        data.return && (
+          <>
+            <h2>実行結果</h2>
+            <FunctionReturn returns={data.return} />
+          </>
+        )
+      }
+      <table class="mt-6">
         <tr>
           <th class="flex mr-6 whitespace-nowrap font-normal">カテゴリー</th>
           <td>
@@ -51,14 +59,6 @@ const { category } = data
           </td>
         </tr>
       </table>
-      {
-        data.return && (
-          <>
-            <h2>実行結果</h2>
-            <FunctionReturn returns={data.return} />
-          </>
-        )
-      }
       <Hr />
       <div class="_content">
         <Content />
