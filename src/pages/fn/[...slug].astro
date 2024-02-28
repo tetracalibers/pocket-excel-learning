@@ -6,6 +6,7 @@ import FunctionSignature from "@/components/fn/FunctionSignature.astro"
 import FunctionReturn from "@/components/fn/FunctionReturn.astro"
 import Breadcrumb from "@/components/article/Breadcrumb.astro"
 import { Heading, Hr } from "flowbite-svelte"
+import FunctionTag from "@/components/tag/FunctionTag.astro"
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("fn")
@@ -58,6 +59,22 @@ const { category } = data
             <ColorTag {...category} />
           </td>
         </tr>
+        {
+          data.similarFn.length > 0 && (
+            <tr>
+              <th class="flex mr-6 whitespace-nowrap font-normal">似ている関数</th>
+              <td>
+                <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+                  {data.similarFn.map((fn) => (
+                    <li>
+                      <FunctionTag slug={fn.slug} />
+                    </li>
+                  ))}
+                </ul>
+              </td>
+            </tr>
+          )
+        }
       </table>
       <Hr />
       <div class="_content">
