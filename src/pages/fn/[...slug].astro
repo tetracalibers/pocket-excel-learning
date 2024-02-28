@@ -6,6 +6,8 @@ import FunctionSignature from "@/components/fn/FunctionSignature.astro"
 import FunctionReturn from "@/components/fn/FunctionReturn.astro"
 import Breadcrumb from "@/components/article/Breadcrumb.astro"
 import { Heading, Hr } from "flowbite-svelte"
+import TopicTag from "@/components/tag/TopicTag.astro"
+import FunctionTag from "@/components/tag/FunctionTag.astro"
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("fn")
@@ -29,13 +31,15 @@ const { category } = data
       <Heading tag="h1" class="mb-10 mt-14 font-normal">{data.name}</Heading>
       <FunctionSignature name={data.name} args={data.args} coloring />
       <p class="my-6">{data.summary}</p>
-      <table>
-        <tr>
-          <th class="flex mr-6 whitespace-nowrap font-normal">カテゴリー</th>
-          <td>
-            <ColorTag {...category} />
-          </td>
-        </tr>
+      {
+        data.return && (
+          <>
+            <h2>実行結果</h2>
+            <FunctionReturn returns={data.return} />
+          </>
+        )
+      }
+      <table class="mt-6">
         <tr>
           <th class="flex mr-6 whitespace-nowrap font-normal">使えるバージョン</th>
           <td>
@@ -50,15 +54,61 @@ const { category } = data
             </ul>
           </td>
         </tr>
+        <tr>
+          <th class="flex mr-6 whitespace-nowrap font-normal">カテゴリー</th>
+          <td>
+            <ColorTag {...category} />
+          </td>
+        </tr>
+        {
+          data.relatedTopics.length > 0 && (
+            <tr>
+              <th class="flex mr-6 whitespace-nowrap font-normal">関連するトピック</th>
+              <td>
+                <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+                  {data.relatedTopics.map((topic) => (
+                    <li>
+                      <TopicTag slug={topic.slug} />
+                    </li>
+                  ))}
+                </ul>
+              </td>
+            </tr>
+          )
+        }
+        {
+          data.similarFn.length > 0 && (
+            <tr>
+              <th class="flex mr-6 whitespace-nowrap font-normal">似ている関数</th>
+              <td>
+                <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+                  {data.similarFn.map((fn) => (
+                    <li>
+                      <FunctionTag slug={fn.slug} />
+                    </li>
+                  ))}
+                </ul>
+              </td>
+            </tr>
+          )
+        }
+        {
+          data.togetherFn.length > 0 && (
+            <tr>
+              <th class="flex mr-6 whitespace-nowrap font-normal">よく一緒に使う関数</th>
+              <td>
+                <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+                  {data.togetherFn.map((fn) => (
+                    <li>
+                      <FunctionTag slug={fn.slug} />
+                    </li>
+                  ))}
+                </ul>
+              </td>
+            </tr>
+          )
+        }
       </table>
-      {
-        data.return && (
-          <>
-            <h2>実行結果</h2>
-            <FunctionReturn returns={data.return} />
-          </>
-        )
-      }
       <Hr />
       <div class="_content">
         <Content />
