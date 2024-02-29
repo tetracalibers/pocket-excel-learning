@@ -61,7 +61,8 @@ const zFnArgument = z
           .strict()
       )
       .optional(),
-    detail: z.string().optional()
+    detail: z.string().optional(),
+    multiple: z.boolean().optional()
   })
   .strict()
 
