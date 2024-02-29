@@ -22,7 +22,7 @@ const hues = args.map((_, i) => i * (360 / args.length) + "deg")
         </div>
         {arg.detail && <p class="pl-4">{arg.detail}</p>}
         {arg.pattern && (
-          <ul class="ml-4 list-disc whitespace-nowrap overflow-x-auto w-fit grid auto-cols-[minmax(auto,max-content)] max-w-full">
+          <ul class="ml-4 pb-2 list-disc whitespace-nowrap overflow-x-auto w-fit grid auto-cols-[minmax(auto,max-content)] max-w-full">
             {arg.pattern.map((p) => (
               <li class="grid grid-cols-subgrid col-span-2 gap-4">
                 <div>
