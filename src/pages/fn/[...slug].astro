@@ -9,6 +9,7 @@ import Breadcrumb from "@/components/article/Breadcrumb.astro"
 import { Heading, Hr } from "flowbite-svelte"
 import TopicTag from "@/components/tag/TopicTag.astro"
 import FunctionTag from "@/components/tag/FunctionTag.astro"
+import FormulaIcon from "@/icons/fluent/math-formula-20-regular.astro"
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("fn")
@@ -38,8 +39,10 @@ const isShowArgDetails =
     <article>
       <Heading tag="h1" class="mb-10 mt-14 font-normal">{data.name}</Heading>
       <FunctionSignature name={data.name} args={data.args} coloring />
-      <p class="my-6">{data.summary}</p>
-      <Hr />
+      <p class="mt-8 leading-loose">{data.summary}</p>
+      <Hr hrClass="w-full my-12" icon>
+        <FormulaIcon svgClass="text-gray-400" />
+      </Hr>
       {
         isShowArgDetails && (
           <>
@@ -50,13 +53,13 @@ const isShowArgDetails =
       }
       {
         data.return && (
-          <>
+          <div class="mt-12">
             <h2>実行結果</h2>
             <FunctionReturn returns={data.return} />
-          </>
+          </div>
         )
       }
-      <table class="mt-6">
+      <table class="mt-12">
         <tr>
           <th class="flex mr-6 whitespace-nowrap font-normal">使えるバージョン</th>
           <td>

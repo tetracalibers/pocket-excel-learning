@@ -10,7 +10,7 @@ const { args } = Astro.props
 const hues = args.map((_, i) => i * (360 / args.length) + "deg")
 ---
 
-<div class="grid auto-cols-[minmax(0,max-content)] gap-x-8 gap-y-4 pb-8 leading-loose text-sm">
+<div class="grid auto-cols-[minmax(0,max-content)] gap-x-8 gap-y-4 leading-loose text-sm">
   {
     args.map((arg, i) => (
       <div class="pt-4 px-4 gap-x-8 gap-y-4 grid grid-cols-subgrid sm:col-span-2">
