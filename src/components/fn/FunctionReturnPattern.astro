@@ -16,7 +16,7 @@ const { patterns } = Astro.props
         <div class="py-2 text-sm leading-relaxed">{pattern.if}</div>
         <div class="inline-flex items-baseline gap-2">
           <ReturnArrow svgClass="rotate-90 relative top-1" />
-          <span class="leading-loose">{pattern.summary}</span>
+          {pattern.summary}
         </div>
       </li>
     ))
