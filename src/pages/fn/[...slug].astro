@@ -60,77 +60,77 @@ const isShowArgDetails =
             </div>
           )
         }
+        <table>
+          <tr>
+            <th class="flex mr-6 whitespace-nowrap font-normal">使えるバージョン</th>
+            <td>
+              <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+                {
+                  data.available.map((version) => (
+                    <li>
+                      <ColorTag label={version} color="rgba(227, 226, 224, 0.5)" />
+                    </li>
+                  ))
+                }
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <th class="flex mr-6 whitespace-nowrap font-normal">カテゴリー</th>
+            <td>
+              <ColorTag {...category} />
+            </td>
+          </tr>
+          {
+            data.relatedTopics.length > 0 && (
+              <tr>
+                <th class="flex mr-6 whitespace-nowrap font-normal">関連するトピック</th>
+                <td>
+                  <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+                    {data.relatedTopics.map((topic) => (
+                      <li>
+                        <TopicTag slug={topic.slug} />
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            )
+          }
+          {
+            data.similarFn.length > 0 && (
+              <tr>
+                <th class="flex mr-6 whitespace-nowrap font-normal">似ている関数</th>
+                <td>
+                  <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+                    {data.similarFn.map((fn) => (
+                      <li>
+                        <FunctionTag slug={fn.slug} />
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            )
+          }
+          {
+            data.togetherFn.length > 0 && (
+              <tr>
+                <th class="flex mr-6 whitespace-nowrap font-normal">よく一緒に使う関数</th>
+                <td>
+                  <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
+                    {data.togetherFn.map((fn) => (
+                      <li>
+                        <FunctionTag slug={fn.slug} />
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            )
+          }
+        </table>
       </div>
-      <table class="mt-12">
-        <tr>
-          <th class="flex mr-6 whitespace-nowrap font-normal">使えるバージョン</th>
-          <td>
-            <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
-              {
-                data.available.map((version) => (
-                  <li>
-                    <ColorTag label={version} color="rgba(227, 226, 224, 0.5)" />
-                  </li>
-                ))
-              }
-            </ul>
-          </td>
-        </tr>
-        <tr>
-          <th class="flex mr-6 whitespace-nowrap font-normal">カテゴリー</th>
-          <td>
-            <ColorTag {...category} />
-          </td>
-        </tr>
-        {
-          data.relatedTopics.length > 0 && (
-            <tr>
-              <th class="flex mr-6 whitespace-nowrap font-normal">関連するトピック</th>
-              <td>
-                <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
-                  {data.relatedTopics.map((topic) => (
-                    <li>
-                      <TopicTag slug={topic.slug} />
-                    </li>
-                  ))}
-                </ul>
-              </td>
-            </tr>
-          )
-        }
-        {
-          data.similarFn.length > 0 && (
-            <tr>
-              <th class="flex mr-6 whitespace-nowrap font-normal">似ている関数</th>
-              <td>
-                <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
-                  {data.similarFn.map((fn) => (
-                    <li>
-                      <FunctionTag slug={fn.slug} />
-                    </li>
-                  ))}
-                </ul>
-              </td>
-            </tr>
-          )
-        }
-        {
-          data.togetherFn.length > 0 && (
-            <tr>
-              <th class="flex mr-6 whitespace-nowrap font-normal">よく一緒に使う関数</th>
-              <td>
-                <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
-                  {data.togetherFn.map((fn) => (
-                    <li>
-                      <FunctionTag slug={fn.slug} />
-                    </li>
-                  ))}
-                </ul>
-              </td>
-            </tr>
-          )
-        }
-      </table>
       <Hr />
       <div class="_content">
         <Content />
