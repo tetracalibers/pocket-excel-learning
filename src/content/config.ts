@@ -48,15 +48,17 @@ const zAvailableVersion = z
 
 const zFnArgument = z.object({
   summary: z.string(),
-  default: z.string().optional(),
+  optional: z.boolean().default(false),
+  default: z.coerce.string().optional(),
   pattern: z
     .array(
       z.object({
-        value: z.string(),
+        value: z.coerce.string(),
         behavior: z.string()
       })
     )
-    .optional()
+    .optional(),
+  detail: z.string().optional()
 })
 
 export type FnArgument = z.infer<typeof zFnArgument>
