@@ -10,6 +10,27 @@ interface Props {
 const { name, args, coloring = false } = Astro.props
 
 const hues = coloring ? args.map((_, i) => i * (360 / args.length) + "deg") : []
+
+const repeatGroup = (() => {
+  const restStartIdx = args.findIndex((arg) => arg.multiple)
+  if (restStartIdx === -1) return []
+
+  const rest = args.slice(restStartIdx)
+  if (rest.length === 0) return []
+
+  return Array.from({ length: 2 }, (_, i) =>
+    rest.map((arg, j) => ({
+      ...arg,
+      summary: `${arg.summary}${i + 1}`,
+      hue: hues[restStartIdx + j]
+    }))
+  )
+})()
+
+const argsList: (FnArgument & { hue: string })[] = [
+  ...args.filter((arg) => !arg.multiple).map((arg, i) => ({ ...arg, hue: hues[i] })),
+  ...repeatGroup.flat()
+]
 ---
 
 <code class="siguneture text-lg pb-2">
@@ -17,12 +38,13 @@ const hues = coloring ? args.map((_, i) => i * (360 / args.length) + "deg") : []
   <span>(</span>
   <div class:list={["arguments", { coloring }]}>
     {
-      args.map((arg, i) => (
-        <span class="argument" style={hues[i] ? `--hue: ${hues[i]}` : ""}>
+      argsList.map((arg) => (
+        <span class="argument" style={arg.hue ? `--hue: ${arg.hue}` : ""}>
           <span class="summary">{arg.summary}</span>
         </span>
       ))
     }
+    {repeatGroup.length > 0 && <span class="argument">...</span>}
   </div>
   <div>)</div>
 </code>
