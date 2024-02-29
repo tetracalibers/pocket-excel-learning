@@ -46,20 +46,24 @@ const zAvailableVersion = z
   )
   .default(["old"])
 
-const zFnArgument = z.object({
-  summary: z.string(),
-  optional: z.boolean().default(false),
-  default: z.coerce.string().optional(),
-  pattern: z
-    .array(
-      z.object({
-        value: z.coerce.string(),
-        behavior: z.string()
-      })
-    )
-    .optional(),
-  detail: z.string().optional()
-})
+const zFnArgument = z
+  .object({
+    summary: z.string(),
+    optional: z.boolean().default(false),
+    default: z.coerce.string().optional(),
+    pattern: z
+      .array(
+        z
+          .object({
+            value: z.coerce.string(),
+            behavior: z.string()
+          })
+          .strict()
+      )
+      .optional(),
+    detail: z.string().optional()
+  })
+  .strict()
 
 export type FnArgument = z.infer<typeof zFnArgument>
 
@@ -86,48 +90,56 @@ const zValueType = z.enum(["string", "number", "boolean", "error"]).transform((v
     }
 })
 
-const zFnReturn = z.object({
-  type: zValueType.optional(),
-  summary: z.coerce.string()
-})
+const zFnReturn = z
+  .object({
+    type: zValueType.optional(),
+    summary: z.coerce.string()
+  })
+  .strict()
 export type FnReturn = z.infer<typeof zFnReturn>
 
 const functionCollections = defineCollection({
   type: "content",
-  schema: z.object({
-    name: z.string(),
-    summary: z.string(),
-    args: z.array(zFnArgument).default([]),
-    return: z.union([zFnReturn, z.array(zFnReturn.extend({ if: z.string() }))]).optional(),
-    category: zCategory,
-    available: zAvailableVersion,
-    similarFn: z.array(reference("fn")).default([]),
-    togetherFn: z.array(reference("fn")).default([]),
-    relatedTopics: z.array(reference("topic")).default([])
-  })
+  schema: z
+    .object({
+      name: z.string(),
+      summary: z.string(),
+      args: z.array(zFnArgument).default([]),
+      return: z.union([zFnReturn, z.array(zFnReturn.extend({ if: z.string() }))]).optional(),
+      category: zCategory,
+      available: zAvailableVersion,
+      similarFn: z.array(reference("fn")).default([]),
+      togetherFn: z.array(reference("fn")).default([]),
+      relatedTopics: z.array(reference("topic")).default([])
+    })
+    .strict()
 })
 
 const topicCollection = defineCollection({
   type: "content",
-  schema: z.object({
-    title: z.string(),
-    category: zCategory
-  })
+  schema: z
+    .object({
+      title: z.string(),
+      category: zCategory
+    })
+    .strict()
 })
 
 const questionsCollection = defineCollection({
   type: "content",
-  schema: z.object({
-    title: z.string(),
-    created: z.coerce.date(),
-    updated: z.coerce.date().optional(),
-    category: zCategory.array(),
-    topics: z.array(reference("topic")).default([]),
-    useFn: z.array(reference("fn")).default([]),
-    available: zAvailableVersion,
-    sheet: z.string().optional(),
-    draft: z.boolean().default(false)
-  })
+  schema: z
+    .object({
+      title: z.string(),
+      created: z.coerce.date(),
+      updated: z.coerce.date().optional(),
+      category: zCategory.array(),
+      topics: z.array(reference("topic")).default([]),
+      useFn: z.array(reference("fn")).default([]),
+      available: zAvailableVersion,
+      sheet: z.string().optional(),
+      draft: z.boolean().default(false)
+    })
+    .strict()
 })
 
 export const collections = {
