@@ -49,7 +49,7 @@ const zAvailableVersion = z
 const zFnArgument = z
   .object({
     summary: z.string(),
-    optional: z.boolean().default(false),
+    optional: z.boolean().optional(),
     default: z.coerce.string().optional(),
     pattern: z
       .array(
