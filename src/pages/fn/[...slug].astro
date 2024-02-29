@@ -39,26 +39,28 @@ const isShowArgDetails =
     <article>
       <Heading tag="h1" class="mb-10 mt-14 font-normal">{data.name}</Heading>
       <FunctionSignature name={data.name} args={data.args} coloring />
-      <p class="mt-8 leading-loose">{data.summary}</p>
-      <Hr hrClass="w-full my-12" icon>
+      <p class="mt-8 mb-1 leading-loose">{data.summary}</p>
+      <Hr hrClass="w-full my-10" icon>
         <FormulaIcon svgClass="text-gray-400" />
       </Hr>
-      {
-        isShowArgDetails && (
-          <>
-            <h2>引数の詳細</h2>
-            <FunctionArgument args={data.args} />
-          </>
-        )
-      }
-      {
-        data.return && (
-          <div class="mt-12">
-            <h2>実行結果</h2>
-            <FunctionReturn returns={data.return} />
-          </div>
-        )
-      }
+      <div class="grid gap-12">
+        {
+          isShowArgDetails && (
+            <div>
+              <h2>引数の詳細</h2>
+              <FunctionArgument args={data.args} />
+            </div>
+          )
+        }
+        {
+          data.return && (
+            <div>
+              <h2>実行結果</h2>
+              <FunctionReturn returns={data.return} />
+            </div>
+          )
+        }
+      </div>
       <table class="mt-12">
         <tr>
           <th class="flex mr-6 whitespace-nowrap font-normal">使えるバージョン</th>
