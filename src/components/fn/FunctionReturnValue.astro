@@ -1,5 +1,6 @@
 ---
 import { type FnReturn } from "../../content/config"
+import ReturnArrow from "@/icons/fluent/arrow-curve-up-right-20-regular.astro"
 
 interface Props {
   value: Omit<FnReturn, "if">
@@ -8,6 +9,7 @@ interface Props {
 const { value } = Astro.props
 ---
 
-<div class="px-6 text-sm">
+<div class="px-5 leading-loose inline-flex items-baseline gap-2">
+  <ReturnArrow svgClass="rotate-90 relative top-1" />
   {value.summary}
 </div>
