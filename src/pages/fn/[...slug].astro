@@ -26,9 +26,13 @@ const { Content } = await entry.render()
 const { category } = data
 
 // 引数の詳細を表示する条件
-// - summary以外の詳細フィールドを設定している引数がある
+// - summaryとmultiple以外の詳細フィールドを設定している引数がある
 const isShowArgDetails =
-  data.args.length > 0 && data.args.some((arg) => Object.keys(arg).length > 1)
+  data.args.length > 0 &&
+  data.args.some((arg) => {
+    const count = Object.keys(arg).filter((key) => !["summary", "multiple"].includes(key)).length
+    return count > 0
+  })
 ---
 
 <ArticlePageRoot>

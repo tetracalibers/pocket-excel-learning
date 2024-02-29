@@ -1,5 +1,6 @@
 ---
 import { type FnArgument } from "../../content/config"
+import { getArgColorHues, remapArgs } from "./args"
 
 interface Props {
   name: string
@@ -9,7 +10,8 @@ interface Props {
 
 const { name, args, coloring = false } = Astro.props
 
-const hues = coloring ? args.map((_, i) => i * (360 / args.length) + "deg") : []
+const hues = coloring ? getArgColorHues(args) : []
+const { args: showArgs, rest } = remapArgs(args, hues)
 ---
 
 <code class="siguneture text-lg pb-2">
@@ -17,12 +19,13 @@ const hues = coloring ? args.map((_, i) => i * (360 / args.length) + "deg") : []
   <span>(</span>
   <div class:list={["arguments", { coloring }]}>
     {
-      args.map((arg, i) => (
-        <span class="argument" style={hues[i] ? `--hue: ${hues[i]}` : ""}>
+      showArgs.map((arg) => (
+        <span class="argument" style={arg.hue ? `--hue: ${arg.hue}` : ""}>
           <span class="summary">{arg.summary}</span>
         </span>
       ))
     }
+    {rest && <span class="argument">...</span>}
   </div>
   <div>)</div>
 </code>
