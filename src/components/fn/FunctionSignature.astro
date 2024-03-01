@@ -19,13 +19,16 @@ const { args: showArgs, rest } = remapArgs(args, hues)
   <span>(</span>
   <div class:list={["arguments", { coloring }]}>
     {
-      showArgs.map((arg) => (
-        <span class="argument" style={arg.hue ? `--hue: ${arg.hue}` : ""}>
-          <span class="summary">{arg.summary}</span>
-        </span>
+      showArgs.map((arg, i) => (
+        <>
+          <span class="summary" style={arg.hue ? `--hue: ${arg.hue}` : ""}>
+            {arg.summary}
+          </span>
+          {i < showArgs.length - 1 && <span>,&ensp;</span>}
+        </>
       ))
     }
-    {rest && <span class="argument">...</span>}
+    {rest && <span>,&ensp;...</span>}
   </div>
   <div>)</div>
 </code>
@@ -44,11 +47,6 @@ const { args: showArgs, rest } = remapArgs(args, hues)
   }
 
   .arguments {
-    display: contents;
-  }
-
-  .argument:not(:last-child)::after {
-    content: ",";
     display: contents;
   }
 
