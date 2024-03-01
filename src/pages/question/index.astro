@@ -1,27 +1,60 @@
 ---
-import { getCollection } from "astro:content"
+import { getCollection, type CollectionEntry } from "astro:content"
 import PageRoot from "@/layout/PageRoot.astro"
 import Breadcrumb from "@/components/article/Breadcrumb.astro"
-import { Heading } from "flowbite-svelte"
+import { Heading, Hr } from "flowbite-svelte"
 import { SITE_BASE } from "@/site-config"
+import { type CategoryKey } from "@/content/config"
+import FunctionTag from "@/components/tag/FunctionTag.astro"
 
 const all = await getCollection("questions", (entry) => {
   return import.meta.env.DEV || !entry.data.draft
 })
+
+const allByCategory = all.reduce(
+  (acc, q) => {
+    const category = q.data.category[0].label
+    if (!acc[category]) {
+      acc[category] = []
+    }
+    acc[category].push(q)
+    return acc
+  },
+  {} as Record<CategoryKey, CollectionEntry<"questions">[]>
+)
 ---
 
 <PageRoot>
   <div class="max-w-screen-md mx-auto">
     <Breadcrumb />
     <Heading tag="h1" class="mb-10 mt-14">Questions</Heading>
-    <ul>
-      {
-        all.map((q) => (
-          <li>
-            <a href={`${SITE_BASE}/question/${q.slug}`}>{q.data.title}</a>
-          </li>
-        ))
-      }
-    </ul>
+    {
+      Object.entries(allByCategory).map(([category, questions]) => (
+        <div class="last:mb-6">
+          <Hr hrClass="w-full my-14" iconDivClass="start-6 px-2 translate-x-0" icon>
+            {category}
+          </Hr>
+          <ul class="grid gap-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
+            {questions.map((q) => (
+              <li class="p-4 grid gap-2 border border-slate-200 rounded">
+                <a
+                  href={`${SITE_BASE}/question/${q.slug}`}
+                  class="w-fit no-underline leading-relaxed"
+                >
+                  {q.data.title}
+                </a>
+                <ul class="flex flex-wrap items-end gap-2 leading-none">
+                  {q.data.useFn.map((fn) => (
+                    <li>
+                      <FunctionTag slug={fn.slug} />
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
   </div>
 </PageRoot>
