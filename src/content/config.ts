@@ -11,30 +11,39 @@ const COLORS = {
   sequence: "#E9F3F7"
 }
 
-const zCategory = z
-  .enum(["lookup", "string", "condition", "ref", "convert", "total", "rank", "sequence"])
-  .transform((val) => {
-    if (val === "lookup")
-      return {
-        label: "表引き",
-        color: COLORS.lookup
-      }
-    if (val === "string")
-      return {
-        label: "文字列操作",
-        color: COLORS.string
-      }
-    if (val === "condition")
-      return {
-        label: "条件分岐",
-        color: COLORS.logical
-      }
-    if (val === "ref") return { label: "セル参照", color: COLORS.ref }
-    if (val === "convert") return { label: "データ型の変換", color: COLORS.convert }
-    if (val === "total") return { label: "集計", color: COLORS.total }
-    if (val === "rank") return { label: "データの順序", color: COLORS.rank }
-    if (val === "sequence") return { label: "連続データ", color: COLORS.sequence }
-  })
+const CATEGORIES = [
+  "lookup",
+  "string",
+  "condition",
+  "ref",
+  "convert",
+  "total",
+  "rank",
+  "sequence"
+] as const
+export type CategoryKey = (typeof CATEGORIES)[number]
+const zCategory = z.enum(CATEGORIES).transform((val) => {
+  if (val === "lookup")
+    return {
+      label: "表引き",
+      color: COLORS.lookup
+    }
+  if (val === "string")
+    return {
+      label: "文字列操作",
+      color: COLORS.string
+    }
+  if (val === "condition")
+    return {
+      label: "条件分岐",
+      color: COLORS.logical
+    }
+  if (val === "ref") return { label: "セル参照", color: COLORS.ref }
+  if (val === "convert") return { label: "データ型の変換", color: COLORS.convert }
+  if (val === "total") return { label: "集計", color: COLORS.total }
+  if (val === "rank") return { label: "データの順序", color: COLORS.rank }
+  if (val === "sequence") return { label: "連続データ", color: COLORS.sequence }
+})
 
 const zAvailableVersion = z
   .array(
