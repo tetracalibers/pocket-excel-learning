@@ -1,28 +1,47 @@
 ---
-import { getCollection } from "astro:content"
+import { getCollection, type CollectionEntry } from "astro:content"
 import PageRoot from "@/layout/PageRoot.astro"
 import FunctionSignature from "@/components/fn/FunctionSignature.astro"
 import Breadcrumb from "@/components/article/Breadcrumb.astro"
-import { Heading } from "flowbite-svelte"
+import { Heading, Hr } from "flowbite-svelte"
 import { SITE_BASE } from "@/site-config"
+import { type CategoryKey } from "@/content/config"
 
 const all = await getCollection("fn")
+const allByCategory = all.reduce(
+  (acc, fn) => {
+    const category = fn.data.category.label
+    if (!acc[category]) {
+      acc[category] = []
+    }
+    acc[category].push(fn)
+    return acc
+  },
+  {} as Record<CategoryKey, CollectionEntry<"fn">[]>
+)
 ---
 
 <PageRoot>
   <div class="w-full max-w-screen-md mx-auto">
     <Breadcrumb />
-    <Heading tag="h1" class="mb-10 mt-14">Functions</Heading>
-    <ul class="grid gap-4 overflow-x-auto pt-8 pb-2">
-      {
-        all.map((fn) => (
-          <li>
-            <a href={`${SITE_BASE}/fn/${fn.slug}`} class="underline-offset-[10px] decoration-solid">
-              <FunctionSignature name={fn.data.name} args={fn.data.args} coloring />
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <Heading tag="h1" class="mb-6 mt-14">Functions</Heading>
+    {
+      Object.entries(allByCategory).map(([category, entry]) => (
+        <div class="last:mb-6">
+          <Hr hrClass="w-full my-14" iconDivClass="start-6 px-2 translate-x-0" icon>
+            {category}
+          </Hr>
+          <ul class="grid gap-4 overflow-x-auto">
+            {entry.map((fn) => (
+              <li>
+                <a href={`${SITE_BASE}/fn/${fn.slug}`} class="no-underline">
+                  <FunctionSignature name={fn.data.name} args={fn.data.args} coloring />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
   </div>
 </PageRoot>
