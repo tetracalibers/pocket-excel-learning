@@ -49,15 +49,7 @@ const { Content, headings } = await entry.render()
           <tr class="grid grid-cols-subgrid col-span-2 items-baseline gap-6">
             <th class="flex whitespace-nowrap font-normal">カテゴリー</th>
             <td>
-              <ul class="flex flex-wrap gap-y-[6px] gap-x-[8px]">
-                {
-                  data.category.map((cat) => (
-                    <li>
-                      <ColorTag {...cat} />
-                    </li>
-                  ))
-                }
-              </ul>
+              <ColorTag {...data.category} />
             </td>
           </tr>
           <tr class="grid grid-cols-subgrid col-span-2 items-baseline gap-6">
