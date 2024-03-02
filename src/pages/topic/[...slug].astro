@@ -3,7 +3,8 @@ import { getCollection } from "astro:content"
 import ArticlePageRoot from "@/layout/ArticlePageRoot.astro"
 import ColorTag from "@/components/tag/ColorTag.astro"
 import Breadcrumb from "@/components/article/Breadcrumb.astro"
-import { Heading, Hr } from "flowbite-svelte"
+import { Heading, Hr, Li } from "flowbite-svelte"
+import UList from "@/components/content/UList.astro"
 
 export async function getStaticPaths() {
   const entries = await getCollection("topic")
@@ -35,7 +36,7 @@ const { category } = data
       </table>
       <Hr />
       <div class="_content">
-        <Content />
+        <Content components={{ ul: UList, li: Li }} />
       </div>
     </article>
   </main>
