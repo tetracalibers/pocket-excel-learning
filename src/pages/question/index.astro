@@ -6,6 +6,7 @@ import { Heading, Hr } from "flowbite-svelte"
 import { SITE_BASE } from "@/site-config"
 import { type CategoryKey } from "@/content/config"
 import FunctionTag from "@/components/tag/FunctionTag.astro"
+import LevelStars from "@/components/item/LevelStars.astro"
 
 const all = await getCollection("questions", (entry) => {
   return import.meta.env.DEV || !entry.data.draft
@@ -50,6 +51,9 @@ const allByCategory = all.reduce(
                     </li>
                   ))}
                 </ul>
+                <div class="justify-self-end self-end h-fit text-xs text-gray-400">
+                  <LevelStars level={q.data.level} />
+                </div>
               </li>
             ))}
           </ul>
