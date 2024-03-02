@@ -5,6 +5,7 @@ import ColorTag from "@/components/tag/ColorTag.astro"
 import Breadcrumb from "@/components/article/Breadcrumb.astro"
 import { Heading, Hr, Li } from "flowbite-svelte"
 import UList from "@/components/content/UList.astro"
+import Toc from "@/components/article/Toc.astro"
 
 export async function getStaticPaths() {
   const entries = await getCollection("topic")
@@ -16,7 +17,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props
 const { data } = entry
-const { Content } = await entry.render()
+const { Content, headings } = await entry.render()
 
 const { category } = data
 ---
@@ -35,6 +36,7 @@ const { category } = data
         </tr>
       </table>
       <Hr />
+      <Toc headings={headings} />
       <div class="_content">
         <Content components={{ ul: UList, li: Li }} />
       </div>
