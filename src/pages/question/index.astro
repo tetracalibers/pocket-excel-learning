@@ -14,7 +14,7 @@ const all = await getCollection("questions", (entry) => {
 
 const allByCategory = all.reduce(
   (acc, q) => {
-    const category = q.data.category[0].label
+    const category = q.data.category.label
     if (!acc[category]) {
       acc[category] = []
     }

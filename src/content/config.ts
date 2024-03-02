@@ -142,7 +142,7 @@ const questionsCollection = defineCollection({
       title: z.string(),
       created: z.coerce.date(),
       updated: z.coerce.date().optional(),
-      category: zCategory.array(),
+      category: zCategory,
       topics: z.array(reference("topic")).default([]),
       useFn: z.array(reference("fn")).default([]),
       available: zAvailableVersion,
