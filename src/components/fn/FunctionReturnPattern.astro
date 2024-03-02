@@ -1,6 +1,6 @@
 ---
 import { type FnReturn } from "../../content/config"
-import { Table, TableBody, TableBodyCell, TableBodyRow } from "flowbite-svelte"
+import ReturnArrow from "@/icons/fluent/arrow-curve-up-right-20-regular.astro"
 
 interface Props {
   patterns: FnReturn[]
@@ -9,15 +9,16 @@ interface Props {
 const { patterns } = Astro.props
 ---
 
-<Table>
-  <TableBody>
-    {
-      patterns.map((pattern) => (
-        <TableBodyRow class="border-none">
-          <TableBodyCell class="text-inherit py-2 font-normal">{pattern.if}</TableBodyCell>
-          <TableBodyCell class="text-inherit py-2 font-normal">{pattern.summary}</TableBodyCell>
-        </TableBodyRow>
-      ))
-    }
-  </TableBody>
-</Table>
+<ul class="list-disc px-6 leading-loose">
+  {
+    patterns.map((pattern) => (
+      <li class="pb-2 last:pb-0">
+        <div class="py-2 text-sm leading-relaxed">{pattern.if}</div>
+        <div class="inline-flex items-baseline gap-2">
+          <ReturnArrow svgClass="rotate-90 relative top-1" />
+          {pattern.summary}
+        </div>
+      </li>
+    ))
+  }
+</ul>

@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write --plugin prettier-plugin-astro --plugin prettier-plugin-svelte .",
-    "json-to-array": "node ./script/json-to-array.js"
+    "json-to-array": "node ./script/json-to-array.js",
+    "csv-to-json": "node ./script/csv-to-json.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.2",
@@ -36,6 +37,8 @@
     "unist-util-remove": "^4.0.0"
   },
   "devDependencies": {
+    "@types/papaparse": "^5.3.14",
+    "papaparse": "^5.4.1",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0",
     "prettier-plugin-svelte": "^3.1.2"

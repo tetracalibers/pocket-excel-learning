@@ -1,0 +1,24 @@
+---
+title: 空白行を詰める
+created: 2024-02-26
+sheet: produce101japan-members-4
+useFn:
+  - iferror
+  - index
+  - small
+  - if
+  - row
+category: total
+level: 5
+draft: true
+---
+
+## Question
+
+- 重複を削除した生まれ年一覧の空白行を詰める
+
+## Answer
+
+```
+=IFERROR(INDEX($B$1:$B$13, SMALL(IF(B:B<>"", ROW(B:B)), ROW())), "")
+```

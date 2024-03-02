@@ -1,0 +1,25 @@
+---
+title: 矢印の前の文字列を抽出する
+created: 2024-02-26
+sheet: produce101japan-members-2
+useFn:
+  - if
+  - iserror
+  - find
+  - left
+category: string
+level: 2
+draft: true
+---
+
+## Question
+
+TODO: produce101japan-members-2.csvのクラスをデータクレンジングする
+
+- 初回レベル分け時点でのクラスを抽出する
+
+## Answer
+
+```
+=IF(ISERROR(FIND("→", L2:L102)), L2:L102, LEFT(L2:L102, 1))
+```

@@ -1,0 +1,21 @@
+---
+title: 入力されている文字列によって出力する文字列を変える
+created: 2024-02-26
+sheet: produce101japan-members-3
+useFn:
+  - if
+category: string
+level: 1
+draft: true
+---
+
+## Question
+
+- 「非公開」は「-」に置き換える
+- それ以外はそのまま表示する
+
+## Answer
+
+```
+=IF(sheet1!C2:C102="非公開", "-", sheet1!C2:C102)
+```

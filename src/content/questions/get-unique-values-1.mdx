@@ -1,0 +1,21 @@
+---
+title: 既に登場したデータは空文字に置き換える
+created: 2024-02-26
+sheet: produce101japan-members-4
+useFn:
+  - if
+  - countif
+category: total
+level: 3
+draft: true
+---
+
+## Question
+
+- 生まれ年一覧から重複を削除したリストを作成する
+
+## Answer
+
+```
+=IF(COUNTIF($A$1:A1,A1)>1, "", A1)
+```

@@ -1,0 +1,26 @@
+---
+name: VLOOKUP
+summary: 特定のキーワードに該当するデータを取り出す関数
+args:
+  - summary: 検索キーワード
+  - summary: 検索範囲
+    detail: 検索キーワードを1列目に含む範囲
+  - summary: 列番号
+    detail: 取り出したいデータが範囲内の何列目にあるかを表す列番号
+  - summary: 検索オプション
+    default: "TRUE"
+    pattern:
+      - value: "FALSE"
+        behavior: 完全一致検索を行う
+      - value: "TRUE"
+        behavior: 検索値が見つからなければ検索値未満の最大値で検索する
+return:
+  - if: 検索キーワードが見つかった場合
+    summary: 検索キーワードを含む行の指定された列の値
+  - if: 検索オプションがFALSE && 検索キーワードが見つからなかった場合
+    summary: "#N/Aエラー"
+    type: error
+  - if: 検索オプションがTRUE && 検索キーワードが見つからなかった場合
+    summary: 検索値未満の最大値を持つ行の指定された列の値
+category: lookup
+---

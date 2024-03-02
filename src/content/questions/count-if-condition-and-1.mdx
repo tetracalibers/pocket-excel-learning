@@ -1,0 +1,20 @@
+---
+title: 2つの条件を満たすデータの数を数える
+created: 2024-02-26
+sheet: produce101japan-members-3
+useFn:
+  - countifs
+category: total
+level: 2
+draft: true
+---
+
+## Question
+
+- AクラスからBクラスになった人数を数える
+
+## Answer
+
+```
+=COUNTIFS(data!I2:I102, "A", data!J2:J102, "B")
+```
