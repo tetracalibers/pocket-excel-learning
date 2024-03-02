@@ -147,6 +147,7 @@ const questionsCollection = defineCollection({
       useFn: z.array(reference("fn")).default([]),
       available: zAvailableVersion,
       sheet: z.string().optional(),
+      level: z.number().int().min(1).max(5),
       draft: z.boolean().default(false)
     })
     .strict()
