@@ -37,10 +37,10 @@ const allByCategory = all.reduce(
           </Hr>
           <ul class="grid gap-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
             {questions.map((q) => (
-              <li class="p-4 grid gap-2 border border-slate-200 rounded">
+              <li class="p-4 flex flex-col justify-end gap-2 border border-slate-200 rounded">
                 <a
                   href={`${SITE_BASE}/question/${q.slug}`}
-                  class="w-fit no-underline leading-relaxed"
+                  class="flex-grow w-fit no-underline leading-relaxed"
                 >
                   {q.data.title}
                 </a>
@@ -51,7 +51,7 @@ const allByCategory = all.reduce(
                     </li>
                   ))}
                 </ul>
-                <div class="justify-self-end self-end h-fit text-xs text-gray-400">
+                <div class="self-end text-xs text-gray-400">
                   <LevelStars level={q.data.level} />
                 </div>
               </li>
