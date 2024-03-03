@@ -1,0 +1,16 @@
+---
+import InfoIcon from "@/icons/ph/info.astro"
+---
+
+<div
+  class="_info flex items-center gap-3 py-2 px-3 min-h-14 my-10 leading-relaxed text-sm rounded bg-slate-100 text-slate-500 border border-indigo-300"
+>
+  <div><InfoIcon svgClass="shrink-0 text-xl text-indigo-400" /></div>
+  <slot />
+</div>
+
+<style>
+  ._info :global(> *) {
+    @apply m-0 leading-relaxed;
+  }
+</style>

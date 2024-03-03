@@ -8,9 +8,11 @@ import { makeComponentNode } from "./ast-node"
 import { closureContainer } from "./component/closure"
 import { popoverExcelFnText } from "./component/popover-excel-fn"
 import { kbdText } from "./component/kbd"
+import { infoContainer } from "./component/info"
 
 export const directiveAutoImport: Record<string, [string, string][]> = {
   ...closureContainer.import,
+  ...infoContainer.import,
   ...popoverExcelFnText.import,
   ...kbdText.import
 }
@@ -28,6 +30,11 @@ function remarkDirectiveComponent(): unified.Plugin<[], mdast.Root> {
 
         if (closureContainer.is(node)) {
           parent.children[index] = makeComponentNode(closureContainer.parse(node))
+          return
+        }
+
+        if (infoContainer.is(node)) {
+          parent.children[index] = makeComponentNode(infoContainer.parse(node))
           return
         }
       }
