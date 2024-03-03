@@ -95,20 +95,14 @@ const { Content, headings } = await entry.render()
 
 <style>
   ._content :global(h2) {
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
-    width: 100%;
-    font-size: 2.25rem;
-    line-height: 2.5rem;
-    font-weight: 400;
+    @apply my-10 text-4xl font-normal;
   }
 
   ._content :global(h3) {
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
-    width: 100%;
-    font-size: 1.875rem;
-    line-height: 2.25rem;
-    font-weight: 400;
+    @apply my-10 text-3xl font-normal;
+  }
+
+  ._content :global(h4) {
+    @apply my-10 text-2xl font-normal;
   }
 </style>

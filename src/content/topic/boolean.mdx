@@ -1,0 +1,94 @@
+---
+title: TRUE・FALSEと論理式
+category: condition
+---
+
+import data from "@/data/array/produce101japan-members-4.json"
+import InitializeExcelModule from "@/components/excel/InitializeExcelModule.astro"
+import ExcelDemo from "@/components/excel/FormulaResultPreviewRaw.astro"
+
+<InitializeExcelModule />
+
+## 論理値・論理式とは
+
+### 論理値は条件に対する答え
+
+**条件**とは、「〜かどうか？」という問い。
+
+それに対して、FALSEは「そうじゃない」、TRUEは「そうです」という意味を持つ。
+
+TRUEとFALSEをまとめて**論理値**と呼ぶ。
+
+### 論理式は条件そのもの
+
+結果がTRUEかFALSEになるものを**論理式**と呼ぶ。
+
+## 論理式を作るもの
+
+### 比較演算子で論理式を作る
+
+2つの値を比較することでさまざまな条件（論理式）を作ることができる。
+
+#### 等しい（等しくない）かどうか
+
+2つの値を`=`で結ぶと、「等しいかどうか？」という条件になる。
+
+```elm caption="例：セルA1の中身がハイフンであればTRUE、そうでなければFALSE"
+=A1="-"
+```
+
+<ExcelDemo data={{ A1: "1995年9月26日", A2: "-" }} formula={{ "B1:B2": '=A1:A2="-"' }} />
+
+:::info
+B列のセルをダブルクリックすると、関数を編集できます
+:::
+
+2つの値を`<>`で結ぶと、`=`とは反対に、等しくない場合にTRUEになる。
+
+```elm caption="例：セルA1の中身がハイフンでなければTRUE、そうでなければFALSE"
+=A1<>"-"
+```
+
+<ExcelDemo data={{ A1: "1995年9月26日", A2: "-" }} formula={{ "B1:B2": '=A1:A2<>"-"' }} />
+
+#### より小さい（大きい）かどうか
+
+2つの値を`>`で結ぶと、左の値が右の値より「大きいかどうか？」という条件になる。
+
+```elm caption="例：セルA1の値が50より大きければTRUE、そうでなければFALSE"
+=A1>50
+```
+
+<ExcelDemo data={{ A1: 51, A2: 50, A3: 49 }} formula={{ "B1:B3": "=A1:A3>50" }} />
+
+2つの値を`<`で結ぶと、左の値が右の値より「小さいかどうか？」という条件になる。
+
+```elm caption="例：セルA1の値が50より小さければTRUE、そうでなければFALSE"
+=A1<50
+```
+
+<ExcelDemo data={{ A1: 51, A2: 50, A3: 49 }} formula={{ "B1:B3": "=A1:A3<50" }} />
+
+#### 以下（以上）かどうか
+
+2つの値を`>=`で結ぶと、左の値が右の値「以上かどうか？」という条件になる。
+
+```elm caption="例：セルA1の値が50以上であればTRUE、そうでなければFALSE"
+=A1>=50
+```
+
+<ExcelDemo data={{ A1: 51, A2: 50, A3: 49 }} formula={{ "B1:B3": "=A1:A3>=50" }} />
+
+2つの値を`<=`で結ぶと、左の値が右の値「以下かどうか？」という条件になる。
+
+```elm caption="例：セルA1の値が50以下であればTRUE、そうでなければFALSE"
+=A1<=50
+```
+
+<ExcelDemo data={{ A1: 51, A2: 50, A3: 49 }} formula={{ "B1:B3": "=A1:A3<=50" }} />
+
+### ISから始まる関数で論理式を作る
+
+名前がISから始まる関数は、値が特定の形式（型）かどうかを調べて、その結果がどうだったか（TRUEかFALSE）を返してくれる。
+
+- :fn[ISERROR]関数：エラーかどうか？

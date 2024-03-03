@@ -12,11 +12,10 @@ const entry = await getEntry("topic", slug)
 const { color } = entry.data.category
 ---
 
-<a class="tag" href={`${SITE_BASE}/topic/${slug}`}>{entry.data.title}</a>
+<a class="inline-flex break-all tag" href={`${SITE_BASE}/topic/${slug}`}>{entry.data.title}</a>
 
 <style define:vars={{ "category-color": color }}>
   .tag {
-    display: inline-block;
     border-radius: 3px;
     padding-left: 6px;
     padding-right: 6px;
@@ -24,7 +23,6 @@ const { color } = entry.data.category
     line-height: 1.2;
     background: var(--category-color);
     margin: 0;
-    white-space: nowrap;
     text-decoration: none;
   }
 </style>

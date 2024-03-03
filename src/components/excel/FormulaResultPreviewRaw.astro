@@ -1,0 +1,59 @@
+---
+import { decodeCell, type CellAddress, spillY, parseSpillFormula, spillX } from "./utils"
+import FormulaResultPreview from "./FormulaResultPreview"
+
+interface Props {
+  data: Record<string, string | number | boolean>
+  formula: Record<string, string>
+}
+
+const { data, formula } = Astro.props
+
+const formulaCells: Record<string, CellAddress[]> = Object.keys(formula).reduce((prev, addr) => {
+  if (addr.includes(":")) {
+    const [start, end] = addr.split(":").map(decodeCell)
+
+    // 縦にスピルさせる
+    // 例： C2:C5 => C2,C3,C4,C5
+    if (start.col === end.col) {
+      const range = spillY(start, end)
+      return { ...prev, [addr]: range }
+    }
+    // 横にスピルさせる
+    // 例： C2:F2 => C2,D2,E2,F2
+    if (start.row === end.row) {
+      const range = spillX(start, end)
+      return { ...prev, [addr]: range }
+    }
+
+    // 無効な範囲指定
+    return { ...prev, [addr]: [] }
+  }
+
+  return { ...prev, [addr]: [decodeCell(addr)] }
+}, {})
+
+const dataArray: any[][] = Object.entries(data).reduce((prev, [addr, value]) => {
+  const { row, col } = decodeCell(addr)
+  prev[row] = prev[row] || []
+  prev[row][col] = value
+  return prev
+}, [] as any[][])
+
+// formulaCellsをdataArrayに追加
+Object.entries(formulaCells).forEach(([addr, cells]) => {
+  const getSpilledFormula = parseSpillFormula(formula[addr])
+
+  cells.forEach((cell) => {
+    const { row: _row, col } = cell
+    const row = _row - 1
+
+    dataArray[row] = dataArray[row] || []
+    dataArray[row][col] = getSpilledFormula(row, col)
+  })
+})
+---
+
+<div class="my-10">
+  <FormulaResultPreview data={dataArray} client:load />
+</div>
