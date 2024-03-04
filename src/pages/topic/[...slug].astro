@@ -5,6 +5,10 @@ import ColorTag from "@/components/tag/ColorTag.astro"
 import Breadcrumb from "@/components/article/Breadcrumb.astro"
 import { Heading, Hr, Li } from "flowbite-svelte"
 import UList from "@/components/content/UList.astro"
+import Heading2 from "@/components/content/Heading2.astro"
+import Heading3 from "@/components/content/Heading3.astro"
+import Heading4 from "@/components/content/Heading4.astro"
+import Heading5 from "@/components/content/Heading5.astro"
 import Toc from "@/components/article/Toc.astro"
 
 export async function getStaticPaths() {
@@ -38,41 +42,10 @@ const { category } = data
       <Hr />
       <Toc headings={headings} />
       <div class="_content">
-        <Content components={{ ul: UList, li: Li }} />
+        <Content
+          components={{ ul: UList, li: Li, h2: Heading2, h3: Heading3, h4: Heading4, h5: Heading5 }}
+        />
       </div>
     </article>
   </main>
 </ArticlePageRoot>
-
-<style>
-  ._content :global(h2) {
-    @apply py-2 mb-10 mt-20 text-3xl font-normal border-y border-zinc-300;
-    margin-inline: calc(-1 * var(--body-padding-x));
-    padding-inline-start: var(--body-padding-x);
-  }
-
-  ._content :global(h3) {
-    @apply my-10 text-2xl font-normal flex items-center;
-    margin-inline-start: calc(-1 * var(--body-padding-x));
-  }
-  ._content :global(h3::before) {
-    @apply block h-px content-[""] bg-zinc-300;
-    width: calc(var(--body-padding-x) - 0.5ch);
-    margin-inline-end: 0.5ch;
-  }
-  ._content :global(h3::after) {
-    @apply block h-px content-[""] flex-grow bg-zinc-300;
-    margin-inline-start: 0.5ch;
-    margin-inline-end: calc(-1 * var(--body-padding-x));
-  }
-
-  ._content :global(h4) {
-    @apply my-10 text-xl font-normal inline-block border-b-[3px] border-double border-zinc-200;
-    margin-inline-start: calc(-0.5 * var(--body-padding-x));
-    padding-inline: calc(0.5 * var(--body-padding-x));
-  }
-
-  ._content :global(h5) {
-    @apply my-10 text-lg font-normal inline-block border-b-[3px] border-dotted border-zinc-200;
-  }
-</style>

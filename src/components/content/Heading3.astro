@@ -1,0 +1,25 @@
+<h3>
+  <span class="text-justify">
+    <slot />
+  </span>
+</h3>
+
+<style>
+  h3 {
+    @apply my-10 text-2xl font-normal flex items-center;
+    margin-inline-start: calc(-1 * var(--body-padding-x));
+  }
+  h3 > span {
+    max-width: calc(100% - var(--body-padding-x) * 2);
+  }
+  h3::before {
+    @apply block h-px content-[""] bg-zinc-300;
+    width: calc(var(--body-padding-x) - 0.5ch);
+    margin-inline-end: 0.5ch;
+  }
+  h3::after {
+    @apply block h-px content-[""] flex-grow bg-zinc-300;
+    margin-inline-start: 0.5ch;
+    margin-inline-end: calc(-1 * var(--body-padding-x));
+  }
+</style>
