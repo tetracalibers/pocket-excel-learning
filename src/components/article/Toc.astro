@@ -8,12 +8,15 @@ interface Props {
 const { headings } = Astro.props
 ---
 
-<nav>
+<nav class="border border-slate-200 p-4">
   <ul>
     {
       headings.map((heading) => (
-        <li class="flex" style={`margin-left: ${(heading.depth - 2) * 24}px`}>
-          <a href={`#${heading.slug}`} class="_text">
+        <li class="flex" style={`margin-left: ${(heading.depth - 2) * 16}px`}>
+          <a
+            href={`#${heading.slug}`}
+            class="text-sm leading-tight inline-block py-1.5 px-0.5 overflow-hidden text-ellipsis whitespace-nowrap underline-offset-4 decoration-zinc-200 text-neutral-500"
+          >
             {heading.text}
           </a>
         </li>
@@ -21,19 +24,3 @@ const { headings } = Astro.props
     }
   </ul>
 </nav>
-
-<style>
-  ._text {
-    padding: 6px 2px;
-    font-size: 14px;
-    line-height: 1.3;
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    color: rgb(120, 119, 116);
-    text-overflow: ellipsis;
-    text-decoration: underline;
-    text-decoration-color: rgba(55, 53, 47, 0.16);
-    text-underline-offset: 3px;
-  }
-</style>
