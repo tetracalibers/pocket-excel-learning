@@ -46,14 +46,33 @@ const { category } = data
 
 <style>
   ._content :global(h2) {
-    @apply my-10 text-3xl font-normal;
+    @apply py-2 mb-10 mt-20 text-3xl font-normal border-y border-zinc-300;
+    margin-inline: calc(-1 * var(--body-padding-x));
+    padding-inline-start: var(--body-padding-x);
   }
 
   ._content :global(h3) {
-    @apply my-10 text-2xl font-normal;
+    @apply my-10 text-2xl font-normal flex items-center;
+    margin-inline-start: calc(-1 * var(--body-padding-x));
+  }
+  ._content :global(h3::before) {
+    @apply block h-px content-[""] bg-zinc-300;
+    width: calc(var(--body-padding-x) - 0.5ch);
+    margin-inline-end: 0.5ch;
+  }
+  ._content :global(h3::after) {
+    @apply block h-px content-[""] flex-grow bg-zinc-300;
+    margin-inline-start: 0.5ch;
+    margin-inline-end: calc(-1 * var(--body-padding-x));
   }
 
   ._content :global(h4) {
-    @apply my-10 text-xl font-normal;
+    @apply my-10 text-xl font-normal inline-block border-b-[3px] border-double border-zinc-200;
+    margin-inline-start: calc(-0.5 * var(--body-padding-x));
+    padding-inline: calc(0.5 * var(--body-padding-x));
+  }
+
+  ._content :global(h5) {
+    @apply my-10 text-lg font-normal inline-block border-b-[3px] border-dotted border-zinc-200;
   }
 </style>
