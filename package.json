@@ -26,6 +26,8 @@
     "flowbite": "^2.3.0",
     "flowbite-svelte": "^0.44.23",
     "handsontable": "^14.1.0",
+    "hast": "^1.0.0",
+    "hast-util-heading-rank": "^3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rehype-pretty-code": "^0.13.0",
