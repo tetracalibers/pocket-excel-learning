@@ -9,10 +9,12 @@ import { closureContainer } from "./component/closure"
 import { popoverExcelFnText } from "./component/popover-excel-fn"
 import { kbdText } from "./component/kbd"
 import { infoContainer } from "./component/info"
+import { topicLinkText } from "./component/topic-link"
 
 export const directiveAutoImport: Record<string, [string, string][]> = {
   ...closureContainer.import,
   ...infoContainer.import,
+  ...topicLinkText.import,
   ...popoverExcelFnText.import,
   ...kbdText.import
 }
@@ -56,6 +58,11 @@ function remarkDirectiveComponent(): unified.Plugin<[], mdast.Root> {
 
         if (kbdText.is(node)) {
           parent.children[index] = makeComponentNode(kbdText.parse(node))
+          return
+        }
+
+        if (topicLinkText.is(node)) {
+          parent.children[index] = makeComponentNode(topicLinkText.parse(node))
           return
         }
       }
