@@ -46,7 +46,7 @@ Object.entries(formulaCells).forEach(([addr, cells]) => {
 
   cells.forEach((cell) => {
     const { row: _row, col } = cell
-    const row = _row - 1
+    const row = Math.max(_row - 1, 0)
 
     dataArray[row] = dataArray[row] || []
     dataArray[row][col] = getSpilledFormula(row, col)

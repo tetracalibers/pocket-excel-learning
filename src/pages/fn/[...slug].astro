@@ -11,6 +11,11 @@ import UList from "@/components/content/UList.astro"
 import TopicTag from "@/components/tag/TopicTag.astro"
 import FunctionTag from "@/components/tag/FunctionTag.astro"
 import FormulaIcon from "@/icons/fluent/math-formula-20-regular.astro"
+import Heading2 from "@/components/content/Heading2.astro"
+import Heading3 from "@/components/content/Heading3.astro"
+import Heading4 from "@/components/content/Heading4.astro"
+import Heading5 from "@/components/content/Heading5.astro"
+import Toc from "@/components/article/Toc.astro"
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("fn")
@@ -22,7 +27,7 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props
 const { data } = entry
-const { Content } = await entry.render()
+const { Content, headings } = await entry.render()
 
 const { category } = data
 
@@ -135,23 +140,12 @@ const isShowArgDetails =
         </table>
       </div>
       <Hr hrClass="mt-8 mb-12" />
+      {headings.length > 0 && <Toc headings={headings} />}
       <div class="_content">
-        <Content components={{ ul: UList, li: Li }} />
+        <Content
+          components={{ ul: UList, li: Li, h2: Heading2, h3: Heading3, h4: Heading4, h5: Heading5 }}
+        />
       </div>
     </article>
   </main>
 </ArticlePageRoot>
-
-<style>
-  ._content :global(h2) {
-    @apply my-10 text-3xl font-normal;
-  }
-
-  ._content :global(h3) {
-    @apply my-10 text-2xl font-normal;
-  }
-
-  ._content :global(h4) {
-    @apply my-10 text-xl font-normal;
-  }
-</style>
