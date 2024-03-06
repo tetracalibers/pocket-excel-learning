@@ -9,3 +9,50 @@ category: condition
 relatedTopics:
   - boolean
 ---
+
+import InitializeExcelModule from "@/components/excel/InitializeExcelModule.astro"
+import ExcelDemo from "@/components/excel/FormulaResultPreviewRaw.astro"
+
+<InitializeExcelModule />
+
+## 一番目は必ずTRUEかFALSE
+
+一番目の引数には、必ずTRUEかFALSEしか指定できない。
+
+### TRUEを指定した場合
+
+一番目が`TRUE`の場合、必ず二番目の表示（`OK`）になる。
+
+```
+=IF(TRUE, "OK", "NG")
+```
+
+<ExcelDemo data={{ A1: true }} formula={{ B1: '=IF(A1, "OK","NG")' }} />
+
+### FALSEを指定した場合
+
+一番目が`FALSE`の場合、必ず三番目の表示（`NG`）になる。
+
+```
+=IF(FALSE, "OK", "NG")
+```
+
+<ExcelDemo data={{ A1: false }} formula={{ B1: '=IF(A1, "OK","NG")' }} />
+
+## 条件分岐
+
+TRUEやFALSEをただ指定するだけでは、結果が分かりきっていてつまらないので、第一引数（一番目）には、場合によってTRUEかFALSEかが変わる式（**条件**）を指定することが多い。
+
+こうして結果が場合によって異なるようにすることを、**条件分岐**という。
+
+```
+=IF(A1 > 50, "50より大きい", "50以下")
+```
+
+<ExcelDemo data={{ A1: 55 }} formula={{ B1: '=IF(A1 > 50, "50より大きい", "50以下")' }} />
+
+:::info
+A1セルをダブルクリックすると値を書き換えられます（PC推奨）
+
+その結果、B1セルの値がどう変化するか見てみよう
+:::

@@ -17,3 +17,24 @@ similarFn:
 relatedTopics:
   - boolean
 ---
+
+## IF & ISERRORとの使い分け
+
+### IFERRORでできることはIF & ISERRORでもできる
+
+次の2つの関数は全く同じ動作になる。
+
+```
+=IFERROR(C2, "エラーでした")
+```
+
+```
+=IF(ISERROR(C2), "エラーでした", C2)
+```
+
+### いつIFERRORを選ぶべきか？
+
+次の2つを満たす場合は、`IF & ISERROR`ではなく、`IFERROR`を使うことで簡潔に書くことができる。
+
+- エラーの場合だけ何か別なことをしたい
+- エラーじゃなかった場合はそのままで良い
