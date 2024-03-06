@@ -87,7 +87,7 @@ const { Content, headings } = await entry.render()
         </tbody>
       </table>
       <Hr />
-      <Toc headings={headings} />
+      {headings.length > 0 && <Toc headings={headings} />}
       <div class="_content"><Content components={{ ul: UList, li: Li }} /></div>
     </article>
   </main>
