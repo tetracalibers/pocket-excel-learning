@@ -1,0 +1,28 @@
+---
+import { SITE_BASE } from "@/site-config"
+import NoteRefIcon from "@/icons/carbon/notebook-reference.astro"
+import { getEntry } from "astro:content"
+
+interface Props {
+  id: string
+}
+
+const { id } = Astro.props
+
+const entry = await getEntry("topic", id)
+const { color } = entry.data.category
+---
+
+<a
+  href={`${SITE_BASE}/topic/${id}`}
+  class="_link inline-flex no-underline leading-tight p-0.5 rounded border-2 border-dotted"
+>
+  <slot />
+  <NoteRefIcon svgClass="w-2.5 h-2.5 shrink-0 opacity-60" />
+</a>
+
+<style define:vars={{ "category-color": color }}>
+  ._link {
+    border-color: var(--category-color);
+  }
+</style>
