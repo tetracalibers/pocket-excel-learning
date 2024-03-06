@@ -7,7 +7,7 @@ import { SITE_BASE } from "@/site-config"
 
 const processor = unified().use(rehypeParse).use(rehypeSlug).use(rehypeStringify)
 
-const APPLY_TARGET = ["topic"]
+const APPLY_TARGET = ["topic", "fn"]
 
 export const addHeadingIds: MiddlewareHandler = async (context, next) => {
   const response = await next()
