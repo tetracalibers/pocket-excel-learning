@@ -8,3 +8,30 @@ return:
   type: number
 category: string
 ---
+
+import InitializeExcelModule from "@/components/excel/InitializeExcelModule.astro"
+import ExcelDemo from "@/components/excel/FormulaResultPreviewRaw.astro"
+
+<InitializeExcelModule />
+
+## 文字数を求める
+
+LEN関数は、文字数を求める関数。
+
+半角文字と全角文字が混ざっていても、見た目通りの文字数が求められる。
+
+たとえば、「1995年」は**5文字**の文字列なので、次の**LEN関数の結果は5**になる。
+
+```
+=LEN("1995年")
+```
+
+### Demo
+
+<ExcelDemo data={{ A1: "1995年" }} formula={{ B1: "=LEN(A1)" }} />
+
+:::info
+A1セルをダブルクリックすると値を書き換えられます（PC推奨）
+
+その結果、B1セルの値がどう変化するか見てみよう
+:::
