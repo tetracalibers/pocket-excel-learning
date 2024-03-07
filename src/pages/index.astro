@@ -9,7 +9,7 @@ const pages = import.meta.env.DEV ? _pages : _pages.filter((page) => !page.draft
 
 <PageRoot>
   <div class="max-w-screen-md mx-auto">
-    <Heading tag="h1" class="my-10">{SITE_TITLE}</Heading>
+    <Heading tag="h1" class="my-10 font-medium">{SITE_TITLE}</Heading>
     <ul>
       {
         pages.map((page) => (
