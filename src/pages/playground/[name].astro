@@ -1,0 +1,28 @@
+---
+import WorksheetPageRoot from "@/layout/WorksheetPageRoot.astro"
+import ExcelPlayground from "@/components/excel/ExcelPlayground.tsx"
+import InitializeExcelModule from "@/components/excel/InitializeExcelModule.astro"
+
+export async function getStaticPaths() {
+  const sheets = import.meta.glob("../../data/array/*.json")
+
+  return await Promise.all(
+    Object.keys(sheets).map(async (path) => {
+      const data: any = await sheets[path]()
+      const name = path.replace("../../data/array/", "").replace(".json", "")
+      return {
+        params: { name },
+        props: { data: data.default }
+      }
+    })
+  )
+}
+
+const { data } = Astro.props
+const { name } = Astro.params
+---
+
+<WorksheetPageRoot>
+  <InitializeExcelModule />
+  <ExcelPlayground data={data} slugName={name} client:load />
+</WorksheetPageRoot>
